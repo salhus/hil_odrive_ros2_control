@@ -1,0 +1,29 @@
+xml name=description/urdf/motor.urdf.xacro
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="odrive_single_motor">
+
+  <!-- Minimal kinematic tree -->
+  <link name="base_link"/>
+  <link name="motor_link"/>
+  <joint name="motor_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="motor_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <!-- ros2_control hardware -->
+  <ros2_control name="ODriveSystem" type="system">
+    <hardware>
+      <plugin>odrive_ros2_control_plugin/ODriveHardwareInterface</plugin>
+      <!-- CAN interface name -->
+      <param name="can">can0</param>
+    </hardware>
+
+    <!-- Single joint mapping to ODrive node_id -->
+    <joint name="motor_joint">
+      <param name="node_id">0</param>
+    </joint>
+  </ros2_control>
+
+</robot>
