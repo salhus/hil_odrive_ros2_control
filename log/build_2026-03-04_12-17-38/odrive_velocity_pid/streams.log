@@ -1,0 +1,57 @@
+[0.038s] Invoking command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_velocity_pid -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid
+[0.199s] -- The C compiler identification is GNU 13.3.0
+[0.357s] -- The CXX compiler identification is GNU 13.3.0
+[0.405s] -- Detecting C compiler ABI info
+[0.726s] -- Detecting C compiler ABI info - done
+[0.743s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.743s] -- Detecting C compile features
+[0.744s] -- Detecting C compile features - done
+[0.764s] -- Detecting CXX compiler ABI info
+[1.078s] -- Detecting CXX compiler ABI info - done
+[1.104s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.104s] -- Detecting CXX compile features
+[1.105s] -- Detecting CXX compile features - done
+[1.111s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[1.453s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[1.660s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[1.722s] -- Found rclcpp: 28.1.13 (/opt/ros/jazzy/share/rclcpp/cmake)
+[1.782s] -- Found rosidl_generator_c: 4.6.6 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[1.812s] -- Found rosidl_generator_cpp: 4.6.6 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[1.837s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.865s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.992s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[2.001s] -- Found rmw_fastrtps_cpp: 8.4.3 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[2.182s] -- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[2.228s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[2.270s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[2.396s] -- Found sensor_msgs: 5.3.6 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[2.757s] -- Configuring done (2.7s)
+[2.797s] -- Generating done (0.0s)
+[2.822s] -- Build files have been written to: /home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid
+[2.848s] Invoked command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_velocity_pid -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid
+[2.851s] Invoking command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid -- -j4 -l4
+[2.979s] [ 50%] [32mBuilding CXX object CMakeFiles/velocity_pid_node.dir/src/velocity_pid_node.cpp.o[0m
+[26.604s] [100%] [32m[1mLinking CXX executable velocity_pid_node[0m
+[27.663s] [100%] Built target velocity_pid_node
+[27.703s] Invoked command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid -- -j4 -l4
+[27.705s] Invoking command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid
+[27.724s] -- Install configuration: ""
+[27.724s] -- Execute custom install script
+[27.725s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/lib/odrive_velocity_pid/velocity_pid_node
+[27.745s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/config/controllers.yaml
+[27.765s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/ament_index/resource_index/package_run_dependencies/odrive_velocity_pid
+[27.796s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/ament_index/resource_index/parent_prefix_path/odrive_velocity_pid
+[27.816s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/environment/ament_prefix_path.sh
+[27.835s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/environment/ament_prefix_path.dsv
+[27.856s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/environment/path.sh
+[27.886s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/environment/path.dsv
+[27.906s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/local_setup.bash
+[27.925s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/local_setup.sh
+[27.944s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/local_setup.zsh
+[27.963s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/local_setup.dsv
+[27.994s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/package.dsv
+[28.013s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/ament_index/resource_index/packages/odrive_velocity_pid
+[28.033s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/cmake/odrive_velocity_pidConfig.cmake
+[28.055s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/cmake/odrive_velocity_pidConfig-version.cmake
+[28.084s] -- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/package.xml
+[28.112s] Invoked command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid
