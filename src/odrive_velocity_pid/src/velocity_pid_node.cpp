@@ -30,6 +30,7 @@ public:
     this->declare_parameter<double>("kp", 1.0);
     this->declare_parameter<double>("ki", 0.0);
     this->declare_parameter<double>("kd", 0.0);
+    this->declare_parameter<double>("kff", 0.0);
 
     this->declare_parameter<double>("torque_limit_nm", 10.0);
     this->declare_parameter<double>("integral_limit", 5.0);
@@ -49,6 +50,7 @@ public:
     kp_ = this->get_parameter("kp").as_double();
     ki_ = this->get_parameter("ki").as_double();
     kd_ = this->get_parameter("kd").as_double();
+    kff_ = this->get_parameter("kff").as_double();
 
     torque_limit_nm_ = this->get_parameter("torque_limit_nm").as_double();
     integral_limit_  = this->get_parameter("integral_limit").as_double();
@@ -96,8 +98,8 @@ public:
     start_time_ = this->now();
 
     RCLCPP_INFO(this->get_logger(),
-      "VelocityPidNode started: joint='%s', rate=%.1f Hz, kp=%.3f ki=%.3f kd=%.3f",
-      joint_name_.c_str(), rate_hz_, kp_, ki_, kd_);
+      "VelocityPidNode started: joint='%s', rate=%.1f Hz, kp=%.3f ki=%.3f kd=%.3f kff=%.3f",
+      joint_name_.c_str(), rate_hz_, kp_, ki_, kd_, kff_);
   }
 
 private:
@@ -162,8 +164,12 @@ private:
       integral_ = std::clamp(integral_, -integral_limit_, integral_limit_);
     }
 
-    // PID output
-    double output = kp_ * error + ki_ * integral_ + kd_ * derivative;
+    // Feedforward: desired acceleration = d/dt[A·sin(ω·t)] = A·ω·cos(ω·t)
+    const double desired_accel = amplitude_rad_s_ * omega_rad_s_ * std::cos(omega_rad_s_ * t);
+    const double feedforward = kff_ * desired_accel;
+
+    // PID output with feedforward
+    double output = feedforward + kp_ * error + ki_ * integral_ + kd_ * derivative;
 
     // Torque saturation
     const bool was_saturated = saturated_;
@@ -204,6 +210,7 @@ private:
   double kp_;
   double ki_;
   double kd_;
+  double kff_;
   double torque_limit_nm_;
   double integral_limit_;
   double deadband_rad_s_;
