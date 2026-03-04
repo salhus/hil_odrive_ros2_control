@@ -61,6 +61,7 @@ ros2 launch <your_hardware_launch> \
 | `kp` | `double` | `1.0` | Proportional gain |
 | `ki` | `double` | `0.0` | Integral gain |
 | `kd` | `double` | `0.0` | Derivative gain |
+| `kff` | `double` | `0.0` | Feedforward gain — scales desired acceleration to produce anticipatory torque |
 | `torque_limit_nm` | `double` | `10.0` | Output torque saturation limit (N·m) |
 | `integral_limit` | `double` | `5.0` | Integral term clamp (rad/s · s) |
 | `deadband_rad_s` | `double` | `0.0` | Error deadband — errors smaller than this are treated as zero |
