@@ -54,7 +54,7 @@ ros2 launch <your_hardware_launch> \
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `joint_state_topic` | `string` | `/joint_states` | Topic for `sensor_msgs/JointState` feedback |
-| `command_topic` | `string` | `/motor_effort_controller/commands` | Topic for `std_msgs/Float64` torque output |
+| `command_topic` | `string` | `/motor_effort_controller/commands` | Topic for `std_msgs/Float64MultiArray` torque output |
 | `joint_name` | `string` | `motor_joint` | Name of the joint inside `JointState.name[]` |
 | `amplitude_rad_s` | `double` | `1.0` | Amplitude of the sine reference in rad/s |
 | `omega_rad_s` | `double` | `1.0` | Angular frequency of the sine reference in rad/s |
