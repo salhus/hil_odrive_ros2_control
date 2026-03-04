@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid/velocity_pid_node" "TARGETS" "velocity_pid_node" "DESTINATION" "lib/odrive_velocity_pid")
