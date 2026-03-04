@@ -1,0 +1,317 @@
+[0.159s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[0.160s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=4, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0xffffa613cb00>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0xffffa6c43920>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0xffffa6c43920>>, mixin_verb=('build',))
+[0.228s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.228s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.228s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.228s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.228s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.229s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.229s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/pneumatic8/Documents/odrive_hil_ros2control'
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.229s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.276s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.277s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/hil_odrive_ros2_control) by extensions ['ignore', 'ignore_ament_install']
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/hil_odrive_ros2_control) by extension 'ignore'
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/hil_odrive_ros2_control) by extension 'ignore_ament_install'
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/hil_odrive_ros2_control) by extensions ['colcon_pkg']
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/hil_odrive_ros2_control) by extension 'colcon_pkg'
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/hil_odrive_ros2_control) by extensions ['colcon_meta']
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/hil_odrive_ros2_control) by extension 'colcon_meta'
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/hil_odrive_ros2_control) by extensions ['ros']
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/hil_odrive_ros2_control) by extension 'ros'
+[0.283s] DEBUG:colcon.colcon_core.package_identification:Package 'src/hil_odrive_ros2_control' with type 'ros.ament_cmake' and name 'hil_odrive_ros2_control'
+[0.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base) by extensions ['ignore', 'ignore_ament_install']
+[0.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base) by extension 'ignore'
+[0.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base) by extension 'ignore_ament_install'
+[0.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base) by extensions ['colcon_pkg']
+[0.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base) by extension 'colcon_pkg'
+[0.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base) by extensions ['colcon_meta']
+[0.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base) by extension 'colcon_meta'
+[0.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base) by extensions ['ros']
+[0.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base) by extension 'ros'
+[0.283s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base) by extensions ['cmake', 'python']
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base) by extension 'cmake'
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base) by extension 'python'
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base) by extensions ['python_setup_py']
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base) by extension 'python_setup_py'
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/include) by extensions ['ignore', 'ignore_ament_install']
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/include) by extension 'ignore'
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/include) by extension 'ignore_ament_install'
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/include) by extensions ['colcon_pkg']
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/include) by extension 'colcon_pkg'
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/include) by extensions ['colcon_meta']
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/include) by extension 'colcon_meta'
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/include) by extensions ['ros']
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/include) by extension 'ros'
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/include) by extensions ['cmake', 'python']
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/include) by extension 'cmake'
+[0.284s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/include) by extension 'python'
+[0.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/include) by extensions ['python_setup_py']
+[0.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/include) by extension 'python_setup_py'
+[0.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/src) by extensions ['ignore', 'ignore_ament_install']
+[0.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/src) by extension 'ignore'
+[0.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/src) by extension 'ignore_ament_install'
+[0.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/src) by extensions ['colcon_pkg']
+[0.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/src) by extension 'colcon_pkg'
+[0.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/src) by extensions ['colcon_meta']
+[0.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/src) by extension 'colcon_meta'
+[0.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/src) by extensions ['ros']
+[0.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/src) by extension 'ros'
+[0.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/src) by extensions ['cmake', 'python']
+[0.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/src) by extension 'cmake'
+[0.285s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/src) by extension 'python'
+[0.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/src) by extensions ['python_setup_py']
+[0.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_base/src) by extension 'python_setup_py'
+[0.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_ros2_control) by extensions ['ignore', 'ignore_ament_install']
+[0.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_ros2_control) by extension 'ignore'
+[0.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_ros2_control) by extension 'ignore_ament_install'
+[0.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_ros2_control) by extensions ['colcon_pkg']
+[0.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_ros2_control) by extension 'colcon_pkg'
+[0.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_ros2_control) by extensions ['colcon_meta']
+[0.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_ros2_control) by extension 'colcon_meta'
+[0.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_ros2_control) by extensions ['ros']
+[0.286s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_ros2_control) by extension 'ros'
+[0.287s] DEBUG:colcon.colcon_core.package_identification:Package 'src/odrive_ros2_control' with type 'ros.ament_cmake' and name 'odrive_ros2_control'
+[0.287s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_velocity_pid) by extensions ['ignore', 'ignore_ament_install']
+[0.288s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_velocity_pid) by extension 'ignore'
+[0.288s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_velocity_pid) by extension 'ignore_ament_install'
+[0.288s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_velocity_pid) by extensions ['colcon_pkg']
+[0.288s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_velocity_pid) by extension 'colcon_pkg'
+[0.288s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_velocity_pid) by extensions ['colcon_meta']
+[0.288s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_velocity_pid) by extension 'colcon_meta'
+[0.288s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_velocity_pid) by extensions ['ros']
+[0.288s] Level 1:colcon.colcon_core.package_identification:_identify(src/odrive_velocity_pid) by extension 'ros'
+[0.289s] DEBUG:colcon.colcon_core.package_identification:Package 'src/odrive_velocity_pid' with type 'ros.ament_cmake' and name 'odrive_velocity_pid'
+[0.289s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.289s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.289s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.289s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.289s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.316s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.316s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.319s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 3 installed packages in /home/pneumatic8/Documents/odrive_hil_ros2control/install
+[0.321s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 341 installed packages in /opt/ros/jazzy
+[0.324s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.394s] Level 5:colcon.colcon_core.verb:set package 'odrive_ros2_control' build argument 'cmake_args' from command line to 'None'
+[0.394s] Level 5:colcon.colcon_core.verb:set package 'odrive_ros2_control' build argument 'cmake_target' from command line to 'None'
+[0.394s] Level 5:colcon.colcon_core.verb:set package 'odrive_ros2_control' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.394s] Level 5:colcon.colcon_core.verb:set package 'odrive_ros2_control' build argument 'cmake_clean_cache' from command line to 'False'
+[0.394s] Level 5:colcon.colcon_core.verb:set package 'odrive_ros2_control' build argument 'cmake_clean_first' from command line to 'False'
+[0.394s] Level 5:colcon.colcon_core.verb:set package 'odrive_ros2_control' build argument 'cmake_force_configure' from command line to 'False'
+[0.394s] Level 5:colcon.colcon_core.verb:set package 'odrive_ros2_control' build argument 'ament_cmake_args' from command line to 'None'
+[0.394s] Level 5:colcon.colcon_core.verb:set package 'odrive_ros2_control' build argument 'catkin_cmake_args' from command line to 'None'
+[0.394s] Level 5:colcon.colcon_core.verb:set package 'odrive_ros2_control' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.394s] DEBUG:colcon.colcon_core.verb:Building package 'odrive_ros2_control' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control', 'merge_install': False, 'path': '/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control', 'symlink_install': False, 'test_result_base': None}
+[0.394s] Level 5:colcon.colcon_core.verb:set package 'odrive_velocity_pid' build argument 'cmake_args' from command line to 'None'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'odrive_velocity_pid' build argument 'cmake_target' from command line to 'None'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'odrive_velocity_pid' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'odrive_velocity_pid' build argument 'cmake_clean_cache' from command line to 'False'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'odrive_velocity_pid' build argument 'cmake_clean_first' from command line to 'False'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'odrive_velocity_pid' build argument 'cmake_force_configure' from command line to 'False'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'odrive_velocity_pid' build argument 'ament_cmake_args' from command line to 'None'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'odrive_velocity_pid' build argument 'catkin_cmake_args' from command line to 'None'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'odrive_velocity_pid' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.395s] DEBUG:colcon.colcon_core.verb:Building package 'odrive_velocity_pid' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid', 'merge_install': False, 'path': '/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_velocity_pid', 'symlink_install': False, 'test_result_base': None}
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'hil_odrive_ros2_control' build argument 'cmake_args' from command line to 'None'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'hil_odrive_ros2_control' build argument 'cmake_target' from command line to 'None'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'hil_odrive_ros2_control' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'hil_odrive_ros2_control' build argument 'cmake_clean_cache' from command line to 'False'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'hil_odrive_ros2_control' build argument 'cmake_clean_first' from command line to 'False'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'hil_odrive_ros2_control' build argument 'cmake_force_configure' from command line to 'False'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'hil_odrive_ros2_control' build argument 'ament_cmake_args' from command line to 'None'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'hil_odrive_ros2_control' build argument 'catkin_cmake_args' from command line to 'None'
+[0.395s] Level 5:colcon.colcon_core.verb:set package 'hil_odrive_ros2_control' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.395s] DEBUG:colcon.colcon_core.verb:Building package 'hil_odrive_ros2_control' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control', 'merge_install': False, 'path': '/home/pneumatic8/Documents/odrive_hil_ros2control/src/hil_odrive_ros2_control', 'symlink_install': False, 'test_result_base': None}
+[0.396s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.397s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.397s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control' with build type 'ament_cmake'
+[0.398s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control'
+[0.402s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.403s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.403s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.412s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_velocity_pid' with build type 'ament_cmake'
+[0.413s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_velocity_pid'
+[0.413s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.413s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.427s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control -- -j4 -l4
+[0.441s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid -- -j4 -l4
+[0.651s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control -- -j4 -l4
+[0.668s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control
+[0.672s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid -- -j4 -l4
+[0.673s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid
+[0.724s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(odrive_velocity_pid)
+[0.725s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid
+[0.730s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid' for CMake module files
+[0.731s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid' for CMake config files
+[0.732s] Level 1:colcon.colcon_core.shell:create_environment_hook('odrive_velocity_pid', 'cmake_prefix_path')
+[0.732s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/hook/cmake_prefix_path.ps1'
+[0.734s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/hook/cmake_prefix_path.dsv'
+[0.735s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/hook/cmake_prefix_path.sh'
+[0.737s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/lib'
+[0.737s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/bin'
+[0.737s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/lib/pkgconfig/odrive_velocity_pid.pc'
+[0.738s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/lib/python3.12/site-packages'
+[0.738s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/bin'
+[0.739s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/package.ps1'
+[0.741s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/package.dsv'
+[0.742s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/package.sh'
+[0.743s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/package.bash'
+[0.743s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/package.zsh'
+[0.745s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/colcon-core/packages/odrive_velocity_pid)
+[0.746s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(odrive_velocity_pid)
+[0.746s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid' for CMake module files
+[0.747s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid' for CMake config files
+[0.748s] Level 1:colcon.colcon_core.shell:create_environment_hook('odrive_velocity_pid', 'cmake_prefix_path')
+[0.748s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/hook/cmake_prefix_path.ps1'
+[0.748s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/hook/cmake_prefix_path.dsv'
+[0.750s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/hook/cmake_prefix_path.sh'
+[0.753s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/lib'
+[0.753s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/bin'
+[0.753s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/lib/pkgconfig/odrive_velocity_pid.pc'
+[0.753s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/lib/python3.12/site-packages'
+[0.754s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/bin'
+[0.754s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/package.ps1'
+[0.755s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/package.dsv'
+[0.756s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/package.sh'
+[0.757s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/package.bash'
+[0.758s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/package.zsh'
+[0.759s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/colcon-core/packages/odrive_velocity_pid)
+[0.761s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(odrive_ros2_control)
+[0.762s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control' for CMake module files
+[0.763s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control
+[0.764s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control' for CMake config files
+[0.765s] Level 1:colcon.colcon_core.shell:create_environment_hook('odrive_ros2_control', 'cmake_prefix_path')
+[0.766s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/hook/cmake_prefix_path.ps1'
+[0.774s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/hook/cmake_prefix_path.dsv'
+[0.775s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/hook/cmake_prefix_path.sh'
+[0.790s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/lib'
+[0.790s] Level 1:colcon.colcon_core.shell:create_environment_hook('odrive_ros2_control', 'ld_library_path_lib')
+[0.791s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/hook/ld_library_path_lib.ps1'
+[0.792s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/hook/ld_library_path_lib.dsv'
+[0.792s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/hook/ld_library_path_lib.sh'
+[0.793s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/bin'
+[0.793s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/lib/pkgconfig/odrive_ros2_control.pc'
+[0.793s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/lib/python3.12/site-packages'
+[0.794s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/bin'
+[0.794s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/package.ps1'
+[0.795s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/package.dsv'
+[0.796s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/package.sh'
+[0.797s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/package.bash'
+[0.797s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/package.zsh'
+[0.798s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/colcon-core/packages/odrive_ros2_control)
+[0.799s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(odrive_ros2_control)
+[0.799s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control' for CMake module files
+[0.800s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control' for CMake config files
+[0.800s] Level 1:colcon.colcon_core.shell:create_environment_hook('odrive_ros2_control', 'cmake_prefix_path')
+[0.801s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/hook/cmake_prefix_path.ps1'
+[0.802s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/hook/cmake_prefix_path.dsv'
+[0.803s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/hook/cmake_prefix_path.sh'
+[0.805s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/lib'
+[0.805s] Level 1:colcon.colcon_core.shell:create_environment_hook('odrive_ros2_control', 'ld_library_path_lib')
+[0.805s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/hook/ld_library_path_lib.ps1'
+[0.807s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/hook/ld_library_path_lib.dsv'
+[0.808s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/hook/ld_library_path_lib.sh'
+[0.809s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/bin'
+[0.809s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/lib/pkgconfig/odrive_ros2_control.pc'
+[0.810s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/lib/python3.12/site-packages'
+[0.810s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/bin'
+[0.811s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/package.ps1'
+[0.812s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/package.dsv'
+[0.813s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/package.sh'
+[0.813s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/package.bash'
+[0.814s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/package.zsh'
+[0.814s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/colcon-core/packages/odrive_ros2_control)
+[0.815s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/pneumatic8/Documents/odrive_hil_ros2control/src/hil_odrive_ros2_control' with build type 'ament_cmake'
+[0.815s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/pneumatic8/Documents/odrive_hil_ros2control/src/hil_odrive_ros2_control'
+[0.815s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.815s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.833s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control': CMAKE_PREFIX_PATH=/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control -- -j4 -l4
+[0.930s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control' returned '0': CMAKE_PREFIX_PATH=/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control -- -j4 -l4
+[0.932s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control': CMAKE_PREFIX_PATH=/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control
+[0.989s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(hil_odrive_ros2_control)
+[0.990s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control' for CMake module files
+[0.990s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control' returned '0': CMAKE_PREFIX_PATH=/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control
+[0.992s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control' for CMake config files
+[0.993s] Level 1:colcon.colcon_core.shell:create_environment_hook('hil_odrive_ros2_control', 'cmake_prefix_path')
+[0.993s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/hook/cmake_prefix_path.ps1'
+[0.994s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/hook/cmake_prefix_path.dsv'
+[0.996s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/hook/cmake_prefix_path.sh'
+[0.997s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/bin'
+[0.997s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/lib/pkgconfig/hil_odrive_ros2_control.pc'
+[0.998s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/lib/python3.12/site-packages'
+[0.998s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/bin'
+[0.999s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/package.ps1'
+[1.001s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/package.dsv'
+[1.003s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/package.sh'
+[1.006s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/package.bash'
+[1.007s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/package.zsh'
+[1.009s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/colcon-core/packages/hil_odrive_ros2_control)
+[1.012s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(hil_odrive_ros2_control)
+[1.012s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control' for CMake module files
+[1.013s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control' for CMake config files
+[1.014s] Level 1:colcon.colcon_core.shell:create_environment_hook('hil_odrive_ros2_control', 'cmake_prefix_path')
+[1.014s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/hook/cmake_prefix_path.ps1'
+[1.015s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/hook/cmake_prefix_path.dsv'
+[1.016s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/hook/cmake_prefix_path.sh'
+[1.018s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/bin'
+[1.018s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/lib/pkgconfig/hil_odrive_ros2_control.pc'
+[1.018s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/lib/python3.12/site-packages'
+[1.019s] Level 1:colcon.colcon_core.environment:checking '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/bin'
+[1.019s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/package.ps1'
+[1.020s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/package.dsv'
+[1.022s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/package.sh'
+[1.023s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/package.bash'
+[1.024s] INFO:colcon.colcon_core.shell:Creating package script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/package.zsh'
+[1.026s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/colcon-core/packages/hil_odrive_ros2_control)
+[1.028s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[1.029s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[1.030s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[1.031s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[1.050s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[1.051s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[1.051s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[1.090s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[1.090s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/local_setup.ps1'
+[1.092s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/pneumatic8/Documents/odrive_hil_ros2control/install/_local_setup_util_ps1.py'
+[1.093s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/setup.ps1'
+[1.095s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/local_setup.sh'
+[1.097s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/pneumatic8/Documents/odrive_hil_ros2control/install/_local_setup_util_sh.py'
+[1.098s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/setup.sh'
+[1.099s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/local_setup.bash'
+[1.100s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/setup.bash'
+[1.102s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/local_setup.zsh'
+[1.103s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/pneumatic8/Documents/odrive_hil_ros2control/install/setup.zsh'

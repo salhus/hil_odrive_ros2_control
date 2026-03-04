@@ -5,7 +5,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/joint_state.hpp"
-#include "std_msgs/msg/float64.hpp"
+#include "std_msgs/msg/float64_multi_array.hpp"
 
 class VelocityPidNode : public rclcpp::Node
 {
@@ -76,7 +76,7 @@ public:
       });
 
     // Publisher
-    torque_pub_ = this->create_publisher<std_msgs::msg::Float64>(command_topic_, 10);
+    torque_pub_ = this->create_publisher<std_msgs::msg::Float64MultiArray>(command_topic_, 10);
 
     // Control loop timer
     const auto period_ms = std::chrono::duration<double>(dt_);
@@ -170,14 +170,13 @@ private:
 
   void publish_torque(double torque)
   {
-    std_msgs::msg::Float64 msg;
-    msg.data = torque;
+    std_msgs::msg::Float64MultiArray msg;
+    msg.data = {torque};
     torque_pub_->publish(msg);
   }
-
   // ROS interfaces
   rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr joint_state_sub_;
-  rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr torque_pub_;
+  rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr torque_pub_;
   rclcpp::TimerBase::SharedPtr timer_;
 
   // Parameters
