@@ -4,14 +4,14 @@
 
 **Upstream repository:** https://github.com/odriverobotics/ros_odrive  
 **Upstream commit SHA:** `6386bf7871ec495c74f9a6d37de1fd6fa3bfdece`  
-**License:** MIT (see `vendor/ros_odrive/LICENSE`)
+**License:** MIT (upstream repository: https://github.com/odriverobotics/ros_odrive)
 
 ### Directories copied
 
 | Vendored path | Upstream path |
 |---|---|
-| `vendor/ros_odrive/odrive_base/` | `odrive_base/` |
-| `vendor/ros_odrive/odrive_ros2_control/` | `odrive_ros2_control/` |
+| `src/odrive_base/` | `odrive_base/` |
+| `src/odrive_ros2_control/` | `odrive_ros2_control/` |
 
 The following upstream packages were intentionally **not** vendored:
 - `odrive_node/`
@@ -24,16 +24,15 @@ The following upstream packages were intentionally **not** vendored:
 
 ### Build integration
 
-Both vendored directories live inside this repository under `vendor/ros_odrive/`.  
-Because this repository itself is placed under `src/` in a colcon workspace, colcon will
-automatically discover the `odrive_ros2_control` package (it contains a `package.xml`).  
+Both packages live directly under `src/` in this repository as sibling colcon packages.  
+Colcon will automatically discover `odrive_ros2_control` (it contains a `package.xml`).  
 `odrive_base` is not a standalone ROS package; its sources are compiled directly by
-`odrive_ros2_control/CMakeLists.txt` using the relative paths above.
+`odrive_ros2_control/CMakeLists.txt` using the relative paths `../odrive_base/include` and `../odrive_base/src/`.
 
 ### How to update from upstream
 
 1. Identify the new upstream commit SHA on https://github.com/odriverobotics/ros_odrive.
-2. Replace the contents of `vendor/ros_odrive/odrive_base/` and
-   `vendor/ros_odrive/odrive_ros2_control/` with the new upstream versions.
+2. Replace the contents of `src/odrive_base/` and
+   `src/odrive_ros2_control/` with the new upstream versions.
 3. Update the **Upstream commit SHA** field in this file.
 4. Review any CMakeLists.txt path changes if the upstream directory layout changed.

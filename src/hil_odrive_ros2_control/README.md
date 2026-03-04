@@ -25,14 +25,14 @@ It is designed so you can:
 - **`odrive_velocity_pid`** (package)
   - Purpose: reads measured velocity from `/joint_states`, tracks a sine-wave reference velocity, runs a PID loop, and publishes torque (effort) commands
 
-### Vendored upstream code
+### Upstream ODrive packages
 
-Under `vendor/ros_odrive/` you have the minimal required parts of the upstream repository:
+The following packages are sourced from the upstream [`odriverobotics/ros_odrive`](https://github.com/odriverobotics/ros_odrive) repository and live under `src/` as sibling colcon packages:
 
-- `vendor/ros_odrive/odrive_ros2_control` (ros2_control hardware interface plugin)
-- `vendor/ros_odrive/odrive_base` (base code used by the hardware plugin)
+- `src/odrive_ros2_control` (ros2_control hardware interface plugin)
+- `src/odrive_base` (base code used by the hardware plugin)
 
-See `VENDORED.md` and `vendor/ros_odrive/LICENSE` for provenance and licensing.
+See [`VENDORED.md`](VENDORED.md) for provenance and licensing details.
 
 ---
 
@@ -95,14 +95,14 @@ sudo apt-get install can-utils
 
 ## SocketCAN setup (example)
 
-ODrive CAN bitrate depends on your configuration. Example with `500000` (500k):
+ODrive CAN bitrate depends on your configuration. Example with `250000` (250k):
 
 ```bash
 # Bring interface down if it exists
 sudo ip link set can0 down 2>/dev/null || true
 
 # Configure bitrate and bring it up
-sudo ip link set can0 up type can bitrate 500000
+sudo ip link set can0 up type can bitrate 250000
 
 # Inspect interface state/details
 ip -details link show can0
@@ -173,8 +173,8 @@ colcon list
 You should see packages like:
 - `hil_odrive_ros2_control`
 - `odrive_velocity_pid`
-- `odrive_ros2_control` (vendored)
-- `odrive_base` (vendored)
+- `odrive_ros2_control`
+- `odrive_base`
 
 ---
 
@@ -342,10 +342,8 @@ Fix:
 
 ## Licensing / vendored code
 
-Vendored upstream code is under `vendor/ros_odrive/` and retains the upstream license:
-
-- `vendor/ros_odrive/LICENSE`
+The `src/odrive_base/` and `src/odrive_ros2_control/` packages are sourced from the upstream [`odriverobotics/ros_odrive`](https://github.com/odriverobotics/ros_odrive) repository and retain its MIT license.
 
 Provenance and update notes are documented in:
 
-- `VENDORED.md`
+- [`VENDORED.md`](VENDORED.md)

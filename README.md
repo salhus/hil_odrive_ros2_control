@@ -8,16 +8,16 @@ A self-contained **ROS 2 Jazzy** workspace for controlling an **ODrive** motor o
 
 ```
 hil_odrive_ros2_control/
-├── src/
-│   ├── hil_odrive_ros2_control/   # Launch files, controller YAML, URDF/Xacro for motor_joint
-│   └── odrive_velocity_pid/       # Velocity PID + feedforward node
-└── vendor/
-    └── ros_odrive/                # Vendored ODrive ros2_control hardware interface plugin and base code
+└── src/
+    ├── hil_odrive_ros2_control/   # Launch files, controller YAML, URDF/Xacro for motor_joint
+    ├── odrive_base/               # ODrive base library (from upstream odriverobotics/ros_odrive)
+    ├── odrive_ros2_control/       # ODrive ros2_control hardware interface plugin (from upstream odriverobotics/ros_odrive)
+    └── odrive_velocity_pid/       # Velocity PID + feedforward node
 ```
 
 - **`src/hil_odrive_ros2_control/`** — launch file (`motor_control.launch.py`), controller YAML (`config/controllers.yaml`), and URDF/Xacro (`description/urdf/motor.urdf.xacro`) for `motor_joint`
 - **`src/odrive_velocity_pid/`** — velocity PID + feedforward node that reads `/joint_states`, generates a sinusoidal velocity reference, and publishes torque commands
-- **`vendor/ros_odrive/`** — vendored ODrive `ros2_control` hardware interface plugin (`odrive_ros2_control`) and its base library (`odrive_base`)
+- **`src/odrive_base/`** and **`src/odrive_ros2_control/`** — ODrive `ros2_control` hardware interface plugin and its base library, sourced from the upstream [`odriverobotics/ros_odrive`](https://github.com/odriverobotics/ros_odrive) repository
 
 ---
 
@@ -182,4 +182,4 @@ ros2 run odrive_velocity_pid velocity_pid_node --ros-args \
 
 ## Licensing
 
-This repository's own code is original work. Vendored code under `vendor/ros_odrive/` retains the upstream MIT license — see `vendor/ros_odrive/LICENSE`. Provenance details (upstream repository, commit SHA, and which packages were vendored) are documented in [`VENDORED.md`](src/hil_odrive_ros2_control/VENDORED.md).
+This repository's own code is original work. The `src/odrive_base/` and `src/odrive_ros2_control/` packages are sourced from the upstream [`odriverobotics/ros_odrive`](https://github.com/odriverobotics/ros_odrive) repository and retain its MIT license. Provenance details (upstream repository, commit SHA, and which packages were included) are documented in [`src/hil_odrive_ros2_control/VENDORED.md`](src/hil_odrive_ros2_control/VENDORED.md).
