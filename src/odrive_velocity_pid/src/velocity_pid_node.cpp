@@ -15,6 +15,7 @@ public:
     integral_(0.0),
     prev_error_(0.0),
     last_measured_vel_(0.0),
+    filtered_vel_(0.0),
     joint_index_(-1),
     saturated_(false)
   {
@@ -34,6 +35,7 @@ public:
     this->declare_parameter<double>("integral_limit", 5.0);
     this->declare_parameter<double>("deadband_rad_s", 0.0);
     this->declare_parameter<double>("rate_hz", 100.0);
+    this->declare_parameter<double>("filter_alpha", 0.3);
 
     // Read parameters
     joint_state_topic_ = this->get_parameter("joint_state_topic").as_string();
@@ -51,6 +53,7 @@ public:
     integral_limit_  = this->get_parameter("integral_limit").as_double();
     deadband_rad_s_  = this->get_parameter("deadband_rad_s").as_double();
     rate_hz_         = this->get_parameter("rate_hz").as_double();
+    filter_alpha_    = this->get_parameter("filter_alpha").as_double();
 
     // Validate parameters
     if (rate_hz_ <= 0.0) {
@@ -64,6 +67,10 @@ public:
     if (integral_limit_ <= 0.0) {
       RCLCPP_WARN(this->get_logger(), "integral_limit must be positive; defaulting to 5.0");
       integral_limit_ = 5.0;
+    }
+    if (filter_alpha_ < 0.0 || filter_alpha_ >= 1.0) {
+      RCLCPP_WARN(this->get_logger(), "filter_alpha must be in [0.0, 1.0); defaulting to 0.3");
+      filter_alpha_ = 0.3;
     }
 
     dt_ = 1.0 / rate_hz_;
@@ -115,7 +122,9 @@ private:
 
     const size_t idx = static_cast<size_t>(joint_index_);
     if (idx < msg->velocity.size()) {
-      last_measured_vel_ = msg->velocity[idx];
+      double raw = msg->velocity[idx];
+      filtered_vel_ = filter_alpha_ * filtered_vel_ + (1.0 - filter_alpha_) * raw;
+      last_measured_vel_ = filtered_vel_;
     }
   }
 
@@ -193,11 +202,13 @@ private:
   double deadband_rad_s_;
   double rate_hz_;
   double dt_;
+  double filter_alpha_;
 
   // State
   double integral_;
   double prev_error_;
   double last_measured_vel_;
+  double filtered_vel_;
   int joint_index_;
   bool saturated_;
   rclcpp::Time start_time_;
