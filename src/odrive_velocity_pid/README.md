@@ -65,6 +65,7 @@ ros2 launch <your_hardware_launch> \
 | `integral_limit` | `double` | `5.0` | Integral term clamp (rad/s · s) |
 | `deadband_rad_s` | `double` | `0.0` | Error deadband — errors smaller than this are treated as zero |
 | `rate_hz` | `double` | `100.0` | Control loop rate (Hz) |
+| `filter_alpha` | `double` | `0.3` | Exponential moving average coefficient for velocity smoothing (0.0 = no filter, closer to 1.0 = heavier smoothing) |
 
 ---
 

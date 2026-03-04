@@ -49,7 +49,7 @@ See `VENDORED.md` and `vendor/ros_odrive/LICENSE` for provenance and licensing.
    - this provides measured velocity feedback used by the PID node
 
 3. **`motor_effort_controller`**
-   - accepts `std_msgs/msg/Float64` commands on `/motor_effort_controller/commands`
+   - accepts `std_msgs/msg/Float64MultiArray` commands on `/motor_effort_controller/commands`
    - forwards them to the ros2_control effort command interface for `motor_joint`
 
 4. **`odrive_velocity_pid/velocity_pid_node`**
@@ -58,7 +58,7 @@ See `VENDORED.md` and `vendor/ros_odrive/LICENSE` for provenance and licensing.
    - generates desired velocity:  
      **v_des(t) = amplitude_rad_s · sin(omega_rad_s · t)**
    - computes PID on velocity error
-   - publishes torque command as `std_msgs/msg/Float64` to `/motor_effort_controller/commands`
+   - publishes torque command as `std_msgs/msg/Float64MultiArray` to `/motor_effort_controller/commands`
 
 ### Data flow summary
 
@@ -252,7 +252,7 @@ ros2 run odrive_velocity_pid velocity_pid_node --ros-args \
 | Parameter | Type | Default | Description |
 |---|---:|---:|---|
 | `joint_state_topic` | string | `/joint_states` | JointState feedback topic |
-| `command_topic` | string | `/motor_effort_controller/commands` | Effort command output topic (`std_msgs/Float64`) |
+| `command_topic` | string | `/motor_effort_controller/commands` | Effort command output topic (`std_msgs/Float64MultiArray`) |
 | `joint_name` | string | `motor_joint` | Joint name inside `/joint_states.name[]` |
 | `amplitude_rad_s` | double | `1.0` | Sine velocity amplitude (rad/s) |
 | `omega_rad_s` | double | `1.0` | Sine angular frequency (rad/s). For 1 Hz use `2*pi ≈ 6.283` |
@@ -263,6 +263,7 @@ ros2 run odrive_velocity_pid velocity_pid_node --ros-args \
 | `integral_limit` | double | `5.0` | Integral accumulator clamp |
 | `deadband_rad_s` | double | `0.0` | Error deadband on velocity error |
 | `rate_hz` | double | `100.0` | Control-loop frequency |
+| `filter_alpha` | double | `0.3` | Exponential moving average coefficient for velocity smoothing (0.0 = no filter, closer to 1.0 = heavier smoothing) |
 
 ### Practical tuning guidance
 - Start with small `amplitude_rad_s` and small `torque_limit_nm`.
