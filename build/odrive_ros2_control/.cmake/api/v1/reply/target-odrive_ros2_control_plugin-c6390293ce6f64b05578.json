@@ -2225,6 +2225,11 @@
 			},
 			{
 				"backtrace" : 12,
+				"fragment" : "-latomic",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 12,
 				"fragment" : "/usr/lib/aarch64-linux-gnu/libfmt.so.9.1.0",
 				"role" : "libraries"
 			},

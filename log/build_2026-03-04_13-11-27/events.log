@@ -1,0 +1,360 @@
+[0.000000] (-) TimerEvent: {}
+[0.000303] (odrive_ros2_control) JobQueued: {'identifier': 'odrive_ros2_control', 'dependencies': OrderedDict()}
+[0.000512] (odrive_velocity_pid) JobQueued: {'identifier': 'odrive_velocity_pid', 'dependencies': OrderedDict()}
+[0.000543] (hil_odrive_ros2_control) JobQueued: {'identifier': 'hil_odrive_ros2_control', 'dependencies': OrderedDict({'odrive_ros2_control': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control'})}
+[0.000906] (odrive_ros2_control) JobStarted: {'identifier': 'odrive_ros2_control'}
+[0.025070] (odrive_velocity_pid) JobStarted: {'identifier': 'odrive_velocity_pid'}
+[0.043418] (odrive_ros2_control) JobProgress: {'identifier': 'odrive_ros2_control', 'progress': 'cmake'}
+[0.058469] (odrive_ros2_control) JobProgress: {'identifier': 'odrive_ros2_control', 'progress': 'build'}
+[0.058625] (odrive_ros2_control) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control', '--clean-first', '--', '-j4', '-l4'], 'cwd': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'pneumatic8', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/sdformat_vendor/share/gz', 'XDG_SESSION_TYPE': 'wayland', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/aarch64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/pneumatic8', 'OLDPWD': '/home/pneumatic8/Documents/odrive_hil_ros2control', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'SYSTEMD_EXEC_PID': '2701', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'GNOME_KEYRING_CONTROL': '/run/user/1000/keyring', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'COLCON_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'pneumatic8', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.SettingsDaemon.MediaKeys.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'pneumatic8', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'PATH': '/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/DEECPi5:@/tmp/.ICE-unix/2540,unix/DEECPi5:/tmp/.ICE-unix/2540', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/5ddbb6f9_358f_4491_a02d_8ecd9053b365', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.9BROL3', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.125', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy'}), 'shell': False}
+[0.079328] (odrive_velocity_pid) JobProgress: {'identifier': 'odrive_velocity_pid', 'progress': 'cmake'}
+[0.098512] (odrive_velocity_pid) JobProgress: {'identifier': 'odrive_velocity_pid', 'progress': 'build'}
+[0.098760] (odrive_velocity_pid) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid', '--clean-first', '--', '-j4', '-l4'], 'cwd': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'pneumatic8', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/sdformat_vendor/share/gz', 'XDG_SESSION_TYPE': 'wayland', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/aarch64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/pneumatic8', 'OLDPWD': '/home/pneumatic8/Documents/odrive_hil_ros2control', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'SYSTEMD_EXEC_PID': '2701', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'GNOME_KEYRING_CONTROL': '/run/user/1000/keyring', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'COLCON_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'pneumatic8', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.SettingsDaemon.MediaKeys.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'pneumatic8', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'PATH': '/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/DEECPi5:@/tmp/.ICE-unix/2540,unix/DEECPi5:/tmp/.ICE-unix/2540', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/5ddbb6f9_358f_4491_a02d_8ecd9053b365', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.9BROL3', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.125', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy'}), 'shell': False}
+[0.100665] (-) TimerEvent: {}
+[0.202462] (-) TimerEvent: {}
+[0.302941] (-) TimerEvent: {}
+[0.404675] (-) TimerEvent: {}
+[0.418078] (odrive_ros2_control) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/odrive_ros2_control_plugin.dir/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_base/src/socket_can.cpp.o\x1b[0m\n'}
+[0.426236] (odrive_ros2_control) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/odrive_ros2_control_plugin.dir/src/odrive_hardware_interface.cpp.o\x1b[0m\n'}
+[0.427864] (odrive_ros2_control) StdoutLine: {'line': b'[ 75%] \x1b[32mBuilding CXX object CMakeFiles/odrive_ros2_control_plugin.dir/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_base/src/epoll_event_loop.cpp.o\x1b[0m\n'}
+[0.464093] (odrive_velocity_pid) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/velocity_pid_node.dir/src/velocity_pid_node.cpp.o\x1b[0m\n'}
+[0.505642] (-) TimerEvent: {}
+[0.688840] (-) TimerEvent: {}
+[0.910591] (-) TimerEvent: {}
+[1.014833] (-) TimerEvent: {}
+[1.115493] (-) TimerEvent: {}
+[1.219938] (-) TimerEvent: {}
+[1.320544] (-) TimerEvent: {}
+[1.377954] (odrive_ros2_control) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control/src/odrive_hardware_interface.cpp:3\x1b[m\x1b[K:\n'}
+[1.378977] (odrive_ros2_control) StderrLine: {'line': b'\x1b[01m\x1b[K/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control/../odrive_base/include/can_simple_messages.hpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid Estop_msg_t::\x1b[01;32m\x1b[Kencode_buf\x1b[m\x1b[K(uint8_t*) const\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.384956] (odrive_ros2_control) StderrLine: {'line': b'\x1b[01m\x1b[K/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control/../odrive_base/include/can_simple_messages.hpp:116:30:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused parameter \xe2\x80\x98\x1b[01m\x1b[Kbuf\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter\x07-Wunused-parameter\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.385507] (odrive_ros2_control) StderrLine: {'line': b'  116 |     void encode_buf(\x1b[01;35m\x1b[Kuint8_t* buf\x1b[m\x1b[K) const {\n'}
+[1.386196] (odrive_ros2_control) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K~~~~~~~~~^~~\x1b[m\x1b[K\n'}
+[1.386531] (odrive_ros2_control) StderrLine: {'line': b'\x1b[01m\x1b[K/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control/../odrive_base/include/can_simple_messages.hpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid Estop_msg_t::\x1b[01;32m\x1b[Kdecode_buf\x1b[m\x1b[K(const uint8_t*)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.386901] (odrive_ros2_control) StderrLine: {'line': b'\x1b[01m\x1b[K/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control/../odrive_base/include/can_simple_messages.hpp:119:36:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused parameter \xe2\x80\x98\x1b[01m\x1b[Kbuf\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter\x07-Wunused-parameter\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.387191] (odrive_ros2_control) StderrLine: {'line': b'  119 |     void decode_buf(\x1b[01;35m\x1b[Kconst uint8_t* buf\x1b[m\x1b[K) {\n'}
+[1.387451] (odrive_ros2_control) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K~~~~~~~~~~~~~~~^~~\x1b[m\x1b[K\n'}
+[1.393417] (odrive_ros2_control) StderrLine: {'line': b'\x1b[01m\x1b[K/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control/../odrive_base/include/can_simple_messages.hpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid Enter_DFU_Mode_msg_t::\x1b[01;32m\x1b[Kencode_buf\x1b[m\x1b[K(uint8_t*) const\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.393983] (odrive_ros2_control) StderrLine: {'line': b'\x1b[01m\x1b[K/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control/../odrive_base/include/can_simple_messages.hpp:871:30:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused parameter \xe2\x80\x98\x1b[01m\x1b[Kbuf\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter\x07-Wunused-parameter\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.394355] (odrive_ros2_control) StderrLine: {'line': b'  871 |     void encode_buf(\x1b[01;35m\x1b[Kuint8_t* buf\x1b[m\x1b[K) const {\n'}
+[1.394593] (odrive_ros2_control) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K~~~~~~~~~^~~\x1b[m\x1b[K\n'}
+[1.394874] (odrive_ros2_control) StderrLine: {'line': b'\x1b[01m\x1b[K/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control/../odrive_base/include/can_simple_messages.hpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid Enter_DFU_Mode_msg_t::\x1b[01;32m\x1b[Kdecode_buf\x1b[m\x1b[K(const uint8_t*)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[1.395054] (odrive_ros2_control) StderrLine: {'line': b'\x1b[01m\x1b[K/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control/../odrive_base/include/can_simple_messages.hpp:874:36:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused parameter \xe2\x80\x98\x1b[01m\x1b[Kbuf\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter\x07-Wunused-parameter\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[1.395431] (odrive_ros2_control) StderrLine: {'line': b'  874 |     void decode_buf(\x1b[01;35m\x1b[Kconst uint8_t* buf\x1b[m\x1b[K) {\n'}
+[1.397964] (odrive_ros2_control) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K~~~~~~~~~~~~~~~^~~\x1b[m\x1b[K\n'}
+[1.421679] (-) TimerEvent: {}
+[1.524712] (-) TimerEvent: {}
+[1.627677] (-) TimerEvent: {}
+[1.728499] (-) TimerEvent: {}
+[1.829251] (-) TimerEvent: {}
+[1.932778] (-) TimerEvent: {}
+[2.033784] (-) TimerEvent: {}
+[2.134782] (-) TimerEvent: {}
+[2.236665] (-) TimerEvent: {}
+[2.340788] (-) TimerEvent: {}
+[2.441587] (-) TimerEvent: {}
+[2.542968] (-) TimerEvent: {}
+[2.643915] (-) TimerEvent: {}
+[2.744628] (-) TimerEvent: {}
+[2.845680] (-) TimerEvent: {}
+[2.950035] (-) TimerEvent: {}
+[3.050875] (-) TimerEvent: {}
+[3.153989] (-) TimerEvent: {}
+[3.254628] (-) TimerEvent: {}
+[3.355202] (-) TimerEvent: {}
+[3.455673] (-) TimerEvent: {}
+[3.556409] (-) TimerEvent: {}
+[3.656884] (-) TimerEvent: {}
+[3.757383] (-) TimerEvent: {}
+[3.858042] (-) TimerEvent: {}
+[3.958548] (-) TimerEvent: {}
+[4.059260] (-) TimerEvent: {}
+[4.159738] (-) TimerEvent: {}
+[4.260207] (-) TimerEvent: {}
+[4.360659] (-) TimerEvent: {}
+[4.461128] (-) TimerEvent: {}
+[4.561668] (-) TimerEvent: {}
+[4.662184] (-) TimerEvent: {}
+[4.762646] (-) TimerEvent: {}
+[4.863096] (-) TimerEvent: {}
+[4.963624] (-) TimerEvent: {}
+[5.064086] (-) TimerEvent: {}
+[5.164757] (-) TimerEvent: {}
+[5.265239] (-) TimerEvent: {}
+[5.365774] (-) TimerEvent: {}
+[5.466279] (-) TimerEvent: {}
+[5.566787] (-) TimerEvent: {}
+[5.667230] (-) TimerEvent: {}
+[5.767765] (-) TimerEvent: {}
+[5.868212] (-) TimerEvent: {}
+[5.968848] (-) TimerEvent: {}
+[6.069460] (-) TimerEvent: {}
+[6.169916] (-) TimerEvent: {}
+[6.270412] (-) TimerEvent: {}
+[6.371046] (-) TimerEvent: {}
+[6.471602] (-) TimerEvent: {}
+[6.572018] (-) TimerEvent: {}
+[6.672518] (-) TimerEvent: {}
+[6.773507] (-) TimerEvent: {}
+[6.874383] (-) TimerEvent: {}
+[6.974854] (-) TimerEvent: {}
+[7.075360] (-) TimerEvent: {}
+[7.175854] (-) TimerEvent: {}
+[7.276347] (-) TimerEvent: {}
+[7.376948] (-) TimerEvent: {}
+[7.477371] (-) TimerEvent: {}
+[7.578001] (-) TimerEvent: {}
+[7.678551] (-) TimerEvent: {}
+[7.779187] (-) TimerEvent: {}
+[7.879645] (-) TimerEvent: {}
+[7.980194] (-) TimerEvent: {}
+[8.080646] (-) TimerEvent: {}
+[8.181143] (-) TimerEvent: {}
+[8.281651] (-) TimerEvent: {}
+[8.382284] (-) TimerEvent: {}
+[8.482941] (-) TimerEvent: {}
+[8.583365] (-) TimerEvent: {}
+[8.684005] (-) TimerEvent: {}
+[8.784605] (-) TimerEvent: {}
+[8.885042] (-) TimerEvent: {}
+[8.985496] (-) TimerEvent: {}
+[9.085948] (-) TimerEvent: {}
+[9.186629] (-) TimerEvent: {}
+[9.287050] (-) TimerEvent: {}
+[9.388652] (-) TimerEvent: {}
+[9.489109] (-) TimerEvent: {}
+[9.589913] (-) TimerEvent: {}
+[9.690506] (-) TimerEvent: {}
+[9.791081] (-) TimerEvent: {}
+[9.825075] (odrive_ros2_control) StderrLine: {'line': b'\x1b[01m\x1b[K/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control/src/odrive_hardware_interface.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvirtual hardware_interface::CallbackReturn odrive_ros2_control::ODriveHardwareInterface::\x1b[01;32m\x1b[Kon_init\x1b[m\x1b[K(const hardware_interface::HardwareInfo&)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[9.825609] (odrive_ros2_control) StderrLine: {'line': b'\x1b[01m\x1b[K/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control/src/odrive_hardware_interface.cpp:111:53:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Kvirtual rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn hardware_interface::HardwareComponentInterface::\x1b[01;32m\x1b[Kon_init\x1b[m\x1b[K(const hardware_interface::HardwareInfo&)\x1b[m\x1b[K\xe2\x80\x99 is deprecated: Use on_init(const HardwareComponentInterfaceParams & params) instead. [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-declarations\x07-Wdeprecated-declarations\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[9.825824] (odrive_ros2_control) StderrLine: {'line': b'  111 |     if (\x1b[01;35m\x1b[Khardware_interface::SystemInterface::on_init(info)\x1b[m\x1b[K != CallbackReturn::SUCCESS) {\n'}
+[9.825932] (odrive_ros2_control) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~\x1b[m\x1b[K\n'}
+[9.826041] (odrive_ros2_control) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/opt/ros/jazzy/include/hardware_interface/hardware_interface/system_interface.hpp:18\x1b[m\x1b[K,\n'}
+[9.826133] (odrive_ros2_control) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/pneumatic8/Documents/odrive_hil_ros2control/src/odrive_ros2_control/src/odrive_hardware_interface.cpp:4\x1b[m\x1b[K:\n'}
+[9.826231] (odrive_ros2_control) StderrLine: {'line': b'\x1b[01m\x1b[K/opt/ros/jazzy/include/hardware_interface/hardware_interface/hardware_component_interface.hpp:140:26:\x1b[m\x1b[K \x1b[01;36m\x1b[Knote: \x1b[m\x1b[Kdeclared here\n'}
+[9.826325] (odrive_ros2_control) StderrLine: {'line': b'  140 |   virtual CallbackReturn \x1b[01;36m\x1b[Kon_init\x1b[m\x1b[K(const HardwareInfo & hardware_info);\n'}
+[9.826419] (odrive_ros2_control) StderrLine: {'line': b'      |                          \x1b[01;36m\x1b[K^~~~~~~\x1b[m\x1b[K\n'}
+[9.891207] (-) TimerEvent: {}
+[9.991841] (-) TimerEvent: {}
+[10.092271] (-) TimerEvent: {}
+[10.192715] (-) TimerEvent: {}
+[10.293205] (-) TimerEvent: {}
+[10.393727] (-) TimerEvent: {}
+[10.494232] (-) TimerEvent: {}
+[10.594674] (-) TimerEvent: {}
+[10.695169] (-) TimerEvent: {}
+[10.795809] (-) TimerEvent: {}
+[10.896379] (-) TimerEvent: {}
+[10.996984] (-) TimerEvent: {}
+[11.097608] (-) TimerEvent: {}
+[11.198212] (-) TimerEvent: {}
+[11.298826] (-) TimerEvent: {}
+[11.399361] (-) TimerEvent: {}
+[11.499779] (-) TimerEvent: {}
+[11.600459] (-) TimerEvent: {}
+[11.701041] (-) TimerEvent: {}
+[11.801472] (-) TimerEvent: {}
+[11.902126] (-) TimerEvent: {}
+[12.002699] (-) TimerEvent: {}
+[12.103292] (-) TimerEvent: {}
+[12.203839] (-) TimerEvent: {}
+[12.304286] (-) TimerEvent: {}
+[12.404752] (-) TimerEvent: {}
+[12.505210] (-) TimerEvent: {}
+[12.605723] (-) TimerEvent: {}
+[12.706262] (-) TimerEvent: {}
+[12.806795] (-) TimerEvent: {}
+[12.907214] (-) TimerEvent: {}
+[13.007634] (-) TimerEvent: {}
+[13.108090] (-) TimerEvent: {}
+[13.208709] (-) TimerEvent: {}
+[13.309125] (-) TimerEvent: {}
+[13.409606] (-) TimerEvent: {}
+[13.510079] (-) TimerEvent: {}
+[13.610534] (-) TimerEvent: {}
+[13.711020] (-) TimerEvent: {}
+[13.811582] (-) TimerEvent: {}
+[13.912012] (-) TimerEvent: {}
+[14.012746] (-) TimerEvent: {}
+[14.113428] (-) TimerEvent: {}
+[14.213862] (-) TimerEvent: {}
+[14.314341] (-) TimerEvent: {}
+[14.417279] (-) TimerEvent: {}
+[14.518006] (-) TimerEvent: {}
+[14.618437] (-) TimerEvent: {}
+[14.718913] (-) TimerEvent: {}
+[14.819551] (-) TimerEvent: {}
+[14.919977] (-) TimerEvent: {}
+[15.020490] (-) TimerEvent: {}
+[15.121156] (-) TimerEvent: {}
+[15.221747] (-) TimerEvent: {}
+[15.322412] (-) TimerEvent: {}
+[15.423284] (-) TimerEvent: {}
+[15.525219] (-) TimerEvent: {}
+[15.545101] (odrive_ros2_control) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX shared library libodrive_ros2_control_plugin.so\x1b[0m\n'}
+[15.626636] (-) TimerEvent: {}
+[15.727522] (-) TimerEvent: {}
+[15.828301] (-) TimerEvent: {}
+[15.929256] (-) TimerEvent: {}
+[16.030016] (-) TimerEvent: {}
+[16.130890] (-) TimerEvent: {}
+[16.231836] (-) TimerEvent: {}
+[16.332471] (-) TimerEvent: {}
+[16.358037] (odrive_ros2_control) StdoutLine: {'line': b'[100%] Built target odrive_ros2_control_plugin\n'}
+[16.385711] (odrive_ros2_control) CommandEnded: {'returncode': 0}
+[16.386721] (odrive_ros2_control) JobProgress: {'identifier': 'odrive_ros2_control', 'progress': 'install'}
+[16.408461] (odrive_ros2_control) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control'], 'cwd': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'pneumatic8', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/sdformat_vendor/share/gz', 'XDG_SESSION_TYPE': 'wayland', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/aarch64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/pneumatic8', 'OLDPWD': '/home/pneumatic8/Documents/odrive_hil_ros2control', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'SYSTEMD_EXEC_PID': '2701', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'GNOME_KEYRING_CONTROL': '/run/user/1000/keyring', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'COLCON_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'pneumatic8', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.SettingsDaemon.MediaKeys.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'pneumatic8', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'PATH': '/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/DEECPi5:@/tmp/.ICE-unix/2540,unix/DEECPi5:/tmp/.ICE-unix/2540', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/5ddbb6f9_358f_4491_a02d_8ecd9053b365', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.9BROL3', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.125', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_ros2_control', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy'}), 'shell': False}
+[16.425952] (odrive_ros2_control) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[16.432536] (-) TimerEvent: {}
+[16.436674] (odrive_ros2_control) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[16.439740] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control//odrive_hardware_interface.xml\n'}
+[16.444782] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/lib/libodrive_ros2_control_plugin.so\n'}
+[16.445281] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/ament_index/resource_index/package_run_dependencies/odrive_ros2_control\n'}
+[16.446270] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/ament_index/resource_index/parent_prefix_path/odrive_ros2_control\n'}
+[16.446903] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/environment/ament_prefix_path.sh\n'}
+[16.447462] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/environment/ament_prefix_path.dsv\n'}
+[16.448059] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/environment/path.sh\n'}
+[16.448431] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/environment/path.dsv\n'}
+[16.448880] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/local_setup.bash\n'}
+[16.449272] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/local_setup.sh\n'}
+[16.449703] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/local_setup.zsh\n'}
+[16.450169] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/local_setup.dsv\n'}
+[16.454644] (odrive_ros2_control) StdoutLine: {'line': b'-- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/package.dsv\n'}
+[16.482604] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/ament_index/resource_index/packages/odrive_ros2_control\n'}
+[16.483408] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/ament_index/resource_index/hardware_interface__pluginlib__plugin/odrive_ros2_control\n'}
+[16.483747] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[16.484075] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/cmake/odrive_ros2_controlConfig.cmake\n'}
+[16.484215] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/cmake/odrive_ros2_controlConfig-version.cmake\n'}
+[16.484322] (odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/share/odrive_ros2_control/package.xml\n'}
+[16.487644] (odrive_ros2_control) CommandEnded: {'returncode': 0}
+[16.533192] (-) TimerEvent: {}
+[16.545992] (odrive_ros2_control) JobEnded: {'identifier': 'odrive_ros2_control', 'rc': 0}
+[16.552210] (hil_odrive_ros2_control) JobStarted: {'identifier': 'hil_odrive_ros2_control'}
+[16.594531] (hil_odrive_ros2_control) JobProgress: {'identifier': 'hil_odrive_ros2_control', 'progress': 'cmake'}
+[16.598538] (hil_odrive_ros2_control) JobProgress: {'identifier': 'hil_odrive_ros2_control', 'progress': 'build'}
+[16.598705] (hil_odrive_ros2_control) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control', '--clean-first', '--', '-j4', '-l4'], 'cwd': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'pneumatic8', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/sdformat_vendor/share/gz', 'XDG_SESSION_TYPE': 'wayland', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/aarch64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/pneumatic8', 'OLDPWD': '/home/pneumatic8/Documents/odrive_hil_ros2control', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'SYSTEMD_EXEC_PID': '2701', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'GNOME_KEYRING_CONTROL': '/run/user/1000/keyring', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'COLCON_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'pneumatic8', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.SettingsDaemon.MediaKeys.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'pneumatic8', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'PATH': '/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/DEECPi5:@/tmp/.ICE-unix/2540,unix/DEECPi5:/tmp/.ICE-unix/2540', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/5ddbb6f9_358f_4491_a02d_8ecd9053b365', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.9BROL3', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.125', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy'}), 'shell': False}
+[16.633459] (-) TimerEvent: {}
+[16.734053] (-) TimerEvent: {}
+[16.836772] (-) TimerEvent: {}
+[16.881323] (hil_odrive_ros2_control) CommandEnded: {'returncode': 0}
+[16.884363] (hil_odrive_ros2_control) JobProgress: {'identifier': 'hil_odrive_ros2_control', 'progress': 'install'}
+[16.884429] (hil_odrive_ros2_control) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control'], 'cwd': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'pneumatic8', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/sdformat_vendor/share/gz', 'XDG_SESSION_TYPE': 'wayland', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/aarch64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/pneumatic8', 'OLDPWD': '/home/pneumatic8/Documents/odrive_hil_ros2control', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'SYSTEMD_EXEC_PID': '2701', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'GNOME_KEYRING_CONTROL': '/run/user/1000/keyring', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'COLCON_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'pneumatic8', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.SettingsDaemon.MediaKeys.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'pneumatic8', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'PATH': '/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/DEECPi5:@/tmp/.ICE-unix/2540,unix/DEECPi5:/tmp/.ICE-unix/2540', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/5ddbb6f9_358f_4491_a02d_8ecd9053b365', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.9BROL3', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.125', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy'}), 'shell': False}
+[16.903295] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[16.905136] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[16.905518] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/launch/motor_control.launch.py\n'}
+[16.905790] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/config/controllers.yaml\n'}
+[16.906427] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/description/urdf/motor.urdf.xacro\n'}
+[16.906980] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/ament_index/resource_index/package_run_dependencies/hil_odrive_ros2_control\n'}
+[16.907243] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/ament_index/resource_index/parent_prefix_path/hil_odrive_ros2_control\n'}
+[16.907431] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/environment/ament_prefix_path.sh\n'}
+[16.907711] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/environment/ament_prefix_path.dsv\n'}
+[16.907992] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/environment/path.sh\n'}
+[16.908278] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/environment/path.dsv\n'}
+[16.908532] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/local_setup.bash\n'}
+[16.908801] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/local_setup.sh\n'}
+[16.909053] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/local_setup.zsh\n'}
+[16.909299] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/local_setup.dsv\n'}
+[16.909483] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/package.dsv\n'}
+[16.929476] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/ament_index/resource_index/packages/hil_odrive_ros2_control\n'}
+[16.929899] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/cmake/hil_odrive_ros2_controlConfig.cmake\n'}
+[16.930119] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/cmake/hil_odrive_ros2_controlConfig-version.cmake\n'}
+[16.930309] (hil_odrive_ros2_control) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control/share/hil_odrive_ros2_control/package.xml\n'}
+[16.934323] (hil_odrive_ros2_control) CommandEnded: {'returncode': 0}
+[16.937008] (-) TimerEvent: {}
+[17.004700] (hil_odrive_ros2_control) JobEnded: {'identifier': 'hil_odrive_ros2_control', 'rc': 0}
+[17.037194] (-) TimerEvent: {}
+[17.137733] (-) TimerEvent: {}
+[17.238142] (-) TimerEvent: {}
+[17.338520] (-) TimerEvent: {}
+[17.438923] (-) TimerEvent: {}
+[17.539289] (-) TimerEvent: {}
+[17.639659] (-) TimerEvent: {}
+[17.740058] (-) TimerEvent: {}
+[17.840419] (-) TimerEvent: {}
+[17.940811] (-) TimerEvent: {}
+[18.041185] (-) TimerEvent: {}
+[18.141569] (-) TimerEvent: {}
+[18.241937] (-) TimerEvent: {}
+[18.342302] (-) TimerEvent: {}
+[18.442670] (-) TimerEvent: {}
+[18.543035] (-) TimerEvent: {}
+[18.643425] (-) TimerEvent: {}
+[18.743822] (-) TimerEvent: {}
+[18.844207] (-) TimerEvent: {}
+[18.944589] (-) TimerEvent: {}
+[19.044949] (-) TimerEvent: {}
+[19.145327] (-) TimerEvent: {}
+[19.245727] (-) TimerEvent: {}
+[19.346146] (-) TimerEvent: {}
+[19.446533] (-) TimerEvent: {}
+[19.546926] (-) TimerEvent: {}
+[19.647296] (-) TimerEvent: {}
+[19.747662] (-) TimerEvent: {}
+[19.848028] (-) TimerEvent: {}
+[19.948400] (-) TimerEvent: {}
+[20.048795] (-) TimerEvent: {}
+[20.149170] (-) TimerEvent: {}
+[20.249544] (-) TimerEvent: {}
+[20.349932] (-) TimerEvent: {}
+[20.450317] (-) TimerEvent: {}
+[20.550691] (-) TimerEvent: {}
+[20.651069] (-) TimerEvent: {}
+[20.751439] (-) TimerEvent: {}
+[20.851870] (-) TimerEvent: {}
+[20.952234] (-) TimerEvent: {}
+[21.052623] (-) TimerEvent: {}
+[21.153028] (-) TimerEvent: {}
+[21.253486] (-) TimerEvent: {}
+[21.353957] (-) TimerEvent: {}
+[21.454386] (-) TimerEvent: {}
+[21.554903] (-) TimerEvent: {}
+[21.655386] (-) TimerEvent: {}
+[21.755860] (-) TimerEvent: {}
+[21.856295] (-) TimerEvent: {}
+[21.956848] (-) TimerEvent: {}
+[22.057292] (-) TimerEvent: {}
+[22.157758] (-) TimerEvent: {}
+[22.258202] (-) TimerEvent: {}
+[22.358655] (-) TimerEvent: {}
+[22.459093] (-) TimerEvent: {}
+[22.559552] (-) TimerEvent: {}
+[22.659976] (-) TimerEvent: {}
+[22.716111] (odrive_velocity_pid) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable velocity_pid_node\x1b[0m\n'}
+[22.760152] (-) TimerEvent: {}
+[22.860774] (-) TimerEvent: {}
+[22.961346] (-) TimerEvent: {}
+[23.061989] (-) TimerEvent: {}
+[23.162819] (-) TimerEvent: {}
+[23.263498] (-) TimerEvent: {}
+[23.364121] (-) TimerEvent: {}
+[23.464704] (-) TimerEvent: {}
+[23.565124] (-) TimerEvent: {}
+[23.665512] (-) TimerEvent: {}
+[23.738045] (odrive_velocity_pid) StdoutLine: {'line': b'[100%] Built target velocity_pid_node\n'}
+[23.761609] (odrive_velocity_pid) CommandEnded: {'returncode': 0}
+[23.762513] (odrive_velocity_pid) JobProgress: {'identifier': 'odrive_velocity_pid', 'progress': 'install'}
+[23.763835] (odrive_velocity_pid) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid'], 'cwd': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'pneumatic8', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/sdformat_vendor/share/gz', 'XDG_SESSION_TYPE': 'wayland', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/aarch64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/pneumatic8', 'OLDPWD': '/home/pneumatic8/Documents/odrive_hil_ros2control', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'SYSTEMD_EXEC_PID': '2701', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'GNOME_KEYRING_CONTROL': '/run/user/1000/keyring', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'COLCON_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'pneumatic8', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.SettingsDaemon.MediaKeys.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'pneumatic8', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'PATH': '/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/DEECPi5:@/tmp/.ICE-unix/2540,unix/DEECPi5:/tmp/.ICE-unix/2540', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/5ddbb6f9_358f_4491_a02d_8ecd9053b365', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.9BROL3', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.125', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/pneumatic8/Documents/odrive_hil_ros2control/build/odrive_velocity_pid', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid:/home/pneumatic8/Documents/odrive_hil_ros2control/install/hil_odrive_ros2_control:/home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_ros2_control:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy'}), 'shell': False}
+[23.765580] (-) TimerEvent: {}
+[23.798041] (odrive_velocity_pid) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[23.799016] (odrive_velocity_pid) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[23.799990] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/lib/odrive_velocity_pid/velocity_pid_node\n'}
+[23.800950] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/config/controllers.yaml\n'}
+[23.801331] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/ament_index/resource_index/package_run_dependencies/odrive_velocity_pid\n'}
+[23.801573] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/ament_index/resource_index/parent_prefix_path/odrive_velocity_pid\n'}
+[23.801755] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/environment/ament_prefix_path.sh\n'}
+[23.801944] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/environment/ament_prefix_path.dsv\n'}
+[23.802176] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/environment/path.sh\n'}
+[23.805336] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/environment/path.dsv\n'}
+[23.805696] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/local_setup.bash\n'}
+[23.805827] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/local_setup.sh\n'}
+[23.805942] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/local_setup.zsh\n'}
+[23.806057] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/local_setup.dsv\n'}
+[23.806208] (odrive_velocity_pid) StdoutLine: {'line': b'-- Symlinking: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/package.dsv\n'}
+[23.838030] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/ament_index/resource_index/packages/odrive_velocity_pid\n'}
+[23.838384] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/cmake/odrive_velocity_pidConfig.cmake\n'}
+[23.838548] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/cmake/odrive_velocity_pidConfig-version.cmake\n'}
+[23.838735] (odrive_velocity_pid) StdoutLine: {'line': b'-- Up-to-date symlink: /home/pneumatic8/Documents/odrive_hil_ros2control/install/odrive_velocity_pid/share/odrive_velocity_pid/package.xml\n'}
+[23.842487] (odrive_velocity_pid) CommandEnded: {'returncode': 0}
+[23.860675] (odrive_velocity_pid) JobEnded: {'identifier': 'odrive_velocity_pid', 'rc': 0}
+[23.861808] (-) EventReactorShutdown: {}
