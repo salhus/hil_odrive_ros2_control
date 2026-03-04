@@ -36,6 +36,7 @@ public:
     this->declare_parameter<double>("deadband_rad_s", 0.0);
     this->declare_parameter<double>("rate_hz", 100.0);
     this->declare_parameter<double>("filter_alpha", 0.3);
+    this->declare_parameter<bool>("invert_output", false);
 
     // Read parameters
     joint_state_topic_ = this->get_parameter("joint_state_topic").as_string();
@@ -54,6 +55,7 @@ public:
     deadband_rad_s_  = this->get_parameter("deadband_rad_s").as_double();
     rate_hz_         = this->get_parameter("rate_hz").as_double();
     filter_alpha_    = this->get_parameter("filter_alpha").as_double();
+    invert_output_   = this->get_parameter("invert_output").as_bool();
 
     // Validate parameters
     if (rate_hz_ <= 0.0) {
@@ -174,6 +176,11 @@ private:
     }
 
     prev_error_ = error;
+    // Apply sign inversion if needed (to match motor/encoder convention)
+    if (invert_output_) {
+      output = -output;
+    }
+
     publish_torque(output);
   }
 
@@ -203,6 +210,7 @@ private:
   double rate_hz_;
   double dt_;
   double filter_alpha_;
+  bool invert_output_;
 
   // State
   double integral_;
