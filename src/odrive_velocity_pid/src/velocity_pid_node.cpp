@@ -127,6 +127,12 @@ private:
     const size_t idx = static_cast<size_t>(joint_index_);
     if (idx < msg->velocity.size()) {
       double raw = msg->velocity[idx];
+      // When invert_output is true the motor spins in the direction the encoder
+      // reports as negative, so negate the measurement here to keep the PID
+      // in a negative-feedback loop rather than a positive one.
+      if (invert_output_) {
+        raw = -raw;
+      }
       filtered_vel_ = filter_alpha_ * filtered_vel_ + (1.0 - filter_alpha_) * raw;
       last_measured_vel_ = filtered_vel_;
     }
@@ -182,10 +188,6 @@ private:
     }
 
     prev_error_ = error;
-    // Apply sign inversion if needed (to match motor/encoder convention)
-    if (invert_output_) {
-      output = -output;
-    }
 
     publish_torque(output);
   }
