@@ -174,6 +174,11 @@ private:
     }
 
     prev_error_ = error;
+
+    RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 100,
+      "[PID] des=%.3f meas=%.3f err=%.3f out=%.3f sat=%d",
+      desired_vel, last_measured_vel_, error, output, static_cast<int>(saturated_));
+
     publish_torque(output);
   }
 
