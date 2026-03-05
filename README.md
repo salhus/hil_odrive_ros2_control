@@ -88,36 +88,32 @@ Both `joint_state_broadcaster` and `motor_effort_controller` should show as **ac
 
 ## Run the velocity PID node
 
-> **Tested working command** — copy and run this directly:
+The defaults are hardware-tuned — no parameters needed for basic operation:
 
 ```bash
-ros2 run odrive_velocity_pid velocity_pid_node --ros-args \
-  -p kp:=0.025 \
-  -p ki:=0.02 \
-  -p kd:=0.0 \
-  -p kff:=1.0 \
-  -p kaff:=0.0 \
-  -p amplitude_rad_s:=0.5 \
-  -p omega_rad_s:=3.14 \
-  -p torque_limit_nm:=15.0 \
-  -p filter_alpha:=0.85 \
-  -p rate_hz:=50.0 \
-  -p invert_output:=false
+ros2 run odrive_velocity_pid velocity_pid_node
+```
+
+Override specific parameters with `--ros-args -p key:=value`. For example:
+
+```bash
+ros2 run odrive_velocity_pid velocity_pid_node --ros-args -p amplitude_rad_s:=5.0 -p torque_limit_nm:=0.3
 ```
 
 ### Tuning philosophy
 
 | Parameter | Value | Rationale |
-|---|---|---|
-| `kff` | `1.0` | **Velocity feedforward does the heavy lifting** — provides smooth anticipatory torque proportional to desired velocity (compensates viscous friction / back-EMF) |
-| `kaff` | `0.0` | Acceleration feedforward gain (compensates rotor inertia, `kaff ≈ J`); set to `0.0` to disable |
-| `kp` | `0.025` | Small proportional feedback corrects residual tracking errors without causing jitter |
-| `ki` | `0.02` | Removes steady-state drift once `kff` and `kp` are stable |
-| `kd` | `0.0` | Not needed — feedforward already handles the dynamics |
-| `filter_alpha` | `0.85` | Heavy smoothing on velocity feedback reduces CAN noise (closer to 1.0 = more smoothing) |
-| `rate_hz` | `50.0` | 50 Hz control loop |
-| `torque_limit_nm` | `15.0` | Enough headroom for the motor; start lower and increase once stable |
-| `invert_output` | `false` | Motor has normal sign convention — positive torque → positive velocity |
+|-----------|-------|-----------|
+| `kff` | `0.015` | Velocity feedforward — compensates viscous friction / back-EMF. Estimated from hardware: motor reaches ~2× desired speed with `kff=0.03`, so `0.015` gives correct steady-state torque |
+| `kaff` | `0.003` | Acceleration feedforward — compensates rotor inertia (`kaff ≈ J ≈ 0.003 kg·m²`). Produces 0.14 Nm peak at `ω=3.14` |
+| `kp` | `0.03` | Small proportional feedback for residual error correction. Higher values (>0.05) amplify CAN velocity noise (±5-10 rad/s) causing oscillation |
+| `ki` | `0.1` | Integral term removes steady-state drift. Directional anti-windup prevents lockup during saturation |
+| `kd` | `0.0` | Not needed — feedforward handles dynamics, and CAN noise makes derivative unreliable |
+| `filter_alpha` | `0.7` | 70% old + 30% new. Balances noise rejection vs. phase lag. `0.85` was too laggy, `0.5` too noisy |
+| `rate_hz` | `100.0` | 100 Hz control loop — doubled from 50 Hz for tighter tracking (200 samples per sine cycle) |
+| `torque_limit_nm` | `0.5` | Safe torque limit — motor trips at ±1.0 Nm during fast reversals. `0.5` provides margin |
+| `integral_limit` | `0.3` | Caps integrator contribution to `ki × 0.3 = 0.03 Nm` max |
+| `invert_output` | `false` | Normal sign convention: positive torque → positive velocity |
 
 ---
 
@@ -136,31 +132,45 @@ ros2 run odrive_velocity_pid velocity_pid_node --ros-args \
 | `joint_state_topic` | `string` | `/joint_states` | Topic for `sensor_msgs/JointState` feedback |
 | `command_topic` | `string` | `/motor_effort_controller/commands` | Topic for `std_msgs/Float64MultiArray` torque output |
 | `joint_name` | `string` | `motor_joint` | Joint name inside `JointState.name[]` |
-| `amplitude_rad_s` | `double` | `1.0` | Sine velocity amplitude (rad/s) |
-| `omega_rad_s` | `double` | `1.0` | Sine angular frequency (rad/s) — use `2π ≈ 6.283` for 1 Hz |
-| `kp` | `double` | `1.0` | Proportional gain |
-| `ki` | `double` | `0.0` | Integral gain |
+| `amplitude_rad_s` | `double` | `15.0` | Sine velocity amplitude (rad/s) |
+| `omega_rad_s` | `double` | `3.14` | Sine angular frequency (rad/s) — use `2π ≈ 6.283` for 1 Hz |
+| `kp` | `double` | `0.03` | Proportional gain |
+| `ki` | `double` | `0.1` | Integral gain |
 | `kd` | `double` | `0.0` | Derivative gain |
-| `kff` | `double` | `0.0` | Velocity feedforward gain — scales desired velocity to produce anticipatory torque (compensates viscous friction / back-EMF) |
-| `kaff` | `double` | `0.0` | Acceleration feedforward gain — scales desired acceleration to produce anticipatory torque (compensates rotor inertia, `kaff ≈ J`) |
-| `torque_limit_nm` | `double` | `10.0` | Output torque saturation limit (N·m) |
-| `integral_limit` | `double` | `5.0` | Integral accumulator clamp (rad/s · s) |
+| `kff` | `double` | `0.015` | Velocity feedforward gain — scales desired velocity to produce anticipatory torque (compensates viscous friction / back-EMF) |
+| `kaff` | `double` | `0.003` | Acceleration feedforward gain — scales desired acceleration to produce anticipatory torque (compensates rotor inertia, `kaff ≈ J`) |
+| `torque_limit_nm` | `double` | `0.5` | Output torque saturation limit (N·m) |
+| `integral_limit` | `double` | `0.3` | Integral accumulator clamp (rad/s · s) |
 | `deadband_rad_s` | `double` | `0.0` | Error deadband — velocity errors smaller than this are treated as zero |
 | `rate_hz` | `double` | `100.0` | Control loop rate (Hz) |
-| `filter_alpha` | `double` | `0.3` | Exponential moving average on velocity feedback (`0.0` = off, closer to `1.0` = heavier smoothing) |
+| `filter_alpha` | `double` | `0.7` | Exponential moving average on velocity feedback (`0.0` = off, closer to `1.0` = heavier smoothing) |
 | `invert_output` | `bool` | `false` | Negate the torque command — set `true` if positive torque produces negative velocity |
 
 ---
 
 ## Tuning tips
 
-1. **Tune `kff` first** — it provides the bulk of the required torque; with `kff=1.0` the loop pre-compensates for viscous friction / back-EMF proportional to velocity.
-2. **Add `kaff` for inertia compensation** — set `kaff ≈ J` (rotor inertia in kg·m²) to further reduce tracking error at higher accelerations.
-3. **Keep `kp` small** — high `kp` combined with CAN latency causes oscillation. Start at `0.01`–`0.05`.
-4. **Add `ki` last** — only after `kff` and `kp` are stable; small values (`0.01`–`0.05`) remove steady-state drift.
-5. **`filter_alpha` closer to `1.0`** = heavier smoothing (reduces noise but adds phase lag; `0.85` is a good starting point).
-6. **Start with low `torque_limit_nm`** for safety; increase once the loop is stable.
-7. **Motor sign convention** — on this hardware: +0.5 Nm torque → +30 rad/s velocity, so `invert_output:=false`.
+1. **Start with low `torque_limit_nm`** (0.3-0.5 Nm) and low `omega_rad_s` (0.5-1.0) for safety
+2. **Tune `kff` first** — it provides the bulk of the required torque without noise amplification. If the motor overshoots to 2× desired speed, halve `kff`
+3. **Add `kaff` for inertia compensation** — set `kaff ≈ J` (rotor inertia in kg·m²). Start with `0.003`
+4. **Keep `kp` small** (0.01-0.05) — CAN velocity noise (±5-10 rad/s) gets amplified by `kp`, causing oscillation at higher values
+5. **Add `ki` last** — small values (0.05-0.2) remove steady-state drift. The directional anti-windup prevents integrator lockup
+6. **`filter_alpha=0.7`** is a good starting point — `0.5` lets too much CAN noise through, `0.85` adds too much phase lag
+7. **Increase `rate_hz` to 100** — 100 Hz gave noticeably tighter tracking than 50 Hz on this hardware
+8. **Motor sign convention** — on this hardware: +0.5 Nm torque → +30 rad/s velocity, so `invert_output:=false`
+
+---
+
+## Motor characterization (from hardware tuning)
+
+| Property | Estimated value | How determined |
+|----------|----------------|----------------|
+| Viscous friction coefficient | ~0.015 Nm/(rad/s) | `kff` that gives best tracking without overshoot |
+| Rotor inertia J | ~0.003 kg·m² | `kaff` value; matches `τ = J·α` at observed accelerations |
+| Max safe torque reversal rate | ~0.5 Nm | Motor trips (overcurrent) at ±1.0 Nm during fast sinusoidal reversals |
+| CAN velocity noise floor | ±5-10 rad/s | Observed measurement scatter at zero command |
+| Usable `kp` range | 0.01-0.05 | Higher values amplify CAN noise into oscillation |
+| Optimal filter alpha | 0.7 | `0.85` too laggy (overshoots), `0.5` too noisy (jitters) |
 
 ---
 

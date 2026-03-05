@@ -23,14 +23,19 @@ source install/setup.bash
 
 ## Run
 
+The defaults are hardware-tuned — no parameters needed for basic operation:
+
+```bash
+ros2 run odrive_velocity_pid velocity_pid_node
+```
+
+Override specific parameters with `--ros-args -p key:=value`. For example:
+
 ```bash
 ros2 run odrive_velocity_pid velocity_pid_node \
   --ros-args \
-  -p kp:=2.0 \
-  -p ki:=0.5 \
-  -p kd:=0.05 \
-  -p amplitude_rad_s:=1.5 \
-  -p omega_rad_s:=0.5
+  -p amplitude_rad_s:=5.0 \
+  -p torque_limit_nm:=0.3
 ```
 
 To load the bundled controller configuration when using `ros2_control`:
@@ -56,18 +61,32 @@ ros2 launch <your_hardware_launch> \
 | `joint_state_topic` | `string` | `/joint_states` | Topic for `sensor_msgs/JointState` feedback |
 | `command_topic` | `string` | `/motor_effort_controller/commands` | Topic for `std_msgs/Float64MultiArray` torque output |
 | `joint_name` | `string` | `motor_joint` | Name of the joint inside `JointState.name[]` |
-| `amplitude_rad_s` | `double` | `1.0` | Amplitude of the sine reference in rad/s |
-| `omega_rad_s` | `double` | `1.0` | Angular frequency of the sine reference in rad/s |
-| `kp` | `double` | `1.0` | Proportional gain |
-| `ki` | `double` | `0.0` | Integral gain |
+| `amplitude_rad_s` | `double` | `15.0` | Amplitude of the sine reference in rad/s |
+| `omega_rad_s` | `double` | `3.14` | Angular frequency of the sine reference in rad/s |
+| `kp` | `double` | `0.03` | Proportional gain |
+| `ki` | `double` | `0.1` | Integral gain |
 | `kd` | `double` | `0.0` | Derivative gain |
-| `kff` | `double` | `0.0` | Velocity feedforward gain — scales desired velocity to produce anticipatory torque (compensates viscous friction / back-EMF) |
-| `kaff` | `double` | `0.0` | Acceleration feedforward gain — scales desired acceleration to produce anticipatory torque (compensates rotor inertia, `kaff ≈ J`) |
-| `torque_limit_nm` | `double` | `10.0` | Output torque saturation limit (N·m) |
-| `integral_limit` | `double` | `5.0` | Integral term clamp (rad/s · s) |
+| `kff` | `double` | `0.015` | Velocity feedforward gain — scales desired velocity to produce anticipatory torque (compensates viscous friction / back-EMF) |
+| `kaff` | `double` | `0.003` | Acceleration feedforward gain — scales desired acceleration to produce anticipatory torque (compensates rotor inertia, `kaff ≈ J`) |
+| `torque_limit_nm` | `double` | `0.5` | Output torque saturation limit (N·m) |
+| `integral_limit` | `double` | `0.3` | Integral term clamp (rad/s · s) |
 | `deadband_rad_s` | `double` | `0.0` | Error deadband — errors smaller than this are treated as zero |
 | `rate_hz` | `double` | `100.0` | Control loop rate (Hz) |
-| `filter_alpha` | `double` | `0.3` | Exponential moving average coefficient for velocity smoothing (0.0 = no filter, closer to 1.0 = heavier smoothing) |
+| `filter_alpha` | `double` | `0.7` | Exponential moving average coefficient for velocity smoothing (0.0 = no filter, closer to 1.0 = heavier smoothing) |
+
+---
+
+## Hardware-tuned defaults
+
+The default parameter values above were tuned on real hardware (ODrive motor over CAN bus) with 15+ second stable runs, zero saturation, and ±3-6 rad/s tracking error on a ±15 rad/s sine at ω=3.14 rad/s. They are safe to use out of the box for a similar motor setup.
+
+Key results from hardware tuning:
+- **`kff=0.015`**: motor reached ~2× desired speed with `kff=0.03`, so `0.015` gives correct steady-state torque
+- **`kaff=0.003`**: matches rotor inertia `J ≈ 0.003 kg·m²` from `τ = J·α` at observed accelerations
+- **`kp=0.03`**: higher values (>0.05) amplify CAN velocity noise (±5-10 rad/s) causing oscillation
+- **`ki=0.1`**: removes steady-state drift; directional anti-windup prevents integrator lockup
+- **`filter_alpha=0.7`**: `0.85` was too laggy (overshoot), `0.5` was too noisy (jitter)
+- **`torque_limit_nm=0.5`**: motor trips (overcurrent) at ±1.0 Nm during fast reversals; `0.5` provides margin
 
 ---
 

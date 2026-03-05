@@ -26,20 +26,20 @@ public:
     this->declare_parameter<std::string>("command_topic", "/motor_effort_controller/commands");
     this->declare_parameter<std::string>("joint_name", "motor_joint");
 
-    this->declare_parameter<double>("amplitude_rad_s", 1.0);
-    this->declare_parameter<double>("omega_rad_s", 1.0);
+    this->declare_parameter<double>("amplitude_rad_s", 15.0);
+    this->declare_parameter<double>("omega_rad_s", 3.14);
 
-    this->declare_parameter<double>("kp", 1.0);
-    this->declare_parameter<double>("ki", 0.0);
+    this->declare_parameter<double>("kp", 0.03);
+    this->declare_parameter<double>("ki", 0.1);
     this->declare_parameter<double>("kd", 0.0);
-    this->declare_parameter<double>("kff", 0.0);
-    this->declare_parameter<double>("kaff", 0.0);
+    this->declare_parameter<double>("kff", 0.015);
+    this->declare_parameter<double>("kaff", 0.003);
 
-    this->declare_parameter<double>("torque_limit_nm", 10.0);
-    this->declare_parameter<double>("integral_limit", 5.0);
+    this->declare_parameter<double>("torque_limit_nm", 0.5);
+    this->declare_parameter<double>("integral_limit", 0.3);
     this->declare_parameter<double>("deadband_rad_s", 0.0);
     this->declare_parameter<double>("rate_hz", 100.0);
-    this->declare_parameter<double>("filter_alpha", 0.3);
+    this->declare_parameter<double>("filter_alpha", 0.7);
     this->declare_parameter<bool>("invert_output", false);
 
     // Read parameters
@@ -69,16 +69,16 @@ public:
       rate_hz_ = 100.0;
     }
     if (torque_limit_nm_ <= 0.0) {
-      RCLCPP_WARN(this->get_logger(), "torque_limit_nm must be positive; defaulting to 10.0");
-      torque_limit_nm_ = 10.0;
+      RCLCPP_WARN(this->get_logger(), "torque_limit_nm must be positive; defaulting to 0.5");
+      torque_limit_nm_ = 0.5;
     }
     if (integral_limit_ <= 0.0) {
-      RCLCPP_WARN(this->get_logger(), "integral_limit must be positive; defaulting to 5.0");
-      integral_limit_ = 5.0;
+      RCLCPP_WARN(this->get_logger(), "integral_limit must be positive; defaulting to 0.3");
+      integral_limit_ = 0.3;
     }
     if (filter_alpha_ < 0.0 || filter_alpha_ >= 1.0) {
-      RCLCPP_WARN(this->get_logger(), "filter_alpha must be in [0.0, 1.0); defaulting to 0.3");
-      filter_alpha_ = 0.3;
+      RCLCPP_WARN(this->get_logger(), "filter_alpha must be in [0.0, 1.0); defaulting to 0.7");
+      filter_alpha_ = 0.7;
     }
 
     dt_ = 1.0 / rate_hz_;
