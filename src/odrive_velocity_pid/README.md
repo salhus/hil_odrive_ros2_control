@@ -83,6 +83,24 @@ The `~/` prefix scopes topics under the node name (e.g. `/velocity_pid_node/desi
 
 ---
 
+## Console Debug Logging
+
+The control loop emits a throttled `INFO` log at ~10 Hz (100 ms interval) that summarises each PID iteration:
+
+```
+[PID] des=0.300 meas=0.012 err=0.288 out=0.029 sat=0
+```
+
+| Field | Description |
+|---|---|
+| `des` | Desired (reference) velocity in rad/s |
+| `meas` | Measured (filtered) velocity in rad/s |
+| `err` | Tracking error (desired − measured) in rad/s |
+| `out` | PID output torque (after saturation) in N·m |
+| `sat` | `1` if the output is currently saturated, `0` otherwise |
+
+---
+
 ## Safety Features
 
 - **Torque saturation** – output is clamped to `[-torque_limit_nm, torque_limit_nm]`.
