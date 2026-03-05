@@ -70,6 +70,19 @@ ros2 launch <your_hardware_launch> \
 
 ---
 
+## Published Topics
+
+| Topic | Type | Description |
+|---|---|---|
+| `command_topic` (default `/motor_effort_controller/commands`) | `std_msgs/Float64MultiArray` | Torque command sent to the effort controller |
+| `~/desired_velocity` | `std_msgs/Float64` | Sine-wave reference velocity (rad/s) |
+| `~/measured_velocity` | `std_msgs/Float64` | Filtered encoder feedback velocity (rad/s) |
+| `~/velocity_error` | `std_msgs/Float64` | Tracking error: desired − measured (rad/s) |
+
+The `~/` prefix scopes topics under the node name (e.g. `/velocity_pid_node/desired_velocity`). These topics are useful for plotting in tools like PlotJuggler or `rqt_plot`.
+
+---
+
 ## Safety Features
 
 - **Torque saturation** – output is clamped to `[-torque_limit_nm, torque_limit_nm]`.
