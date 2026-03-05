@@ -96,6 +96,7 @@ ros2 run odrive_velocity_pid velocity_pid_node --ros-args \
   -p ki:=0.02 \
   -p kd:=0.0 \
   -p kff:=1.0 \
+  -p kaff:=0.0 \
   -p amplitude_rad_s:=0.5 \
   -p omega_rad_s:=3.14 \
   -p torque_limit_nm:=15.0 \
@@ -108,7 +109,8 @@ ros2 run odrive_velocity_pid velocity_pid_node --ros-args \
 
 | Parameter | Value | Rationale |
 |---|---|---|
-| `kff` | `1.0` | **Feedforward does the heavy lifting** — provides smooth anticipatory torque proportional to desired acceleration |
+| `kff` | `1.0` | **Velocity feedforward does the heavy lifting** — provides smooth anticipatory torque proportional to desired velocity (compensates viscous friction / back-EMF) |
+| `kaff` | `0.0` | Acceleration feedforward gain (compensates rotor inertia, `kaff ≈ J`); set to `0.0` to disable |
 | `kp` | `0.025` | Small proportional feedback corrects residual tracking errors without causing jitter |
 | `ki` | `0.02` | Removes steady-state drift once `kff` and `kp` are stable |
 | `kd` | `0.0` | Not needed — feedforward already handles the dynamics |
@@ -139,7 +141,8 @@ ros2 run odrive_velocity_pid velocity_pid_node --ros-args \
 | `kp` | `double` | `1.0` | Proportional gain |
 | `ki` | `double` | `0.0` | Integral gain |
 | `kd` | `double` | `0.0` | Derivative gain |
-| `kff` | `double` | `0.0` | Feedforward gain — scales desired acceleration to produce anticipatory torque |
+| `kff` | `double` | `0.0` | Velocity feedforward gain — scales desired velocity to produce anticipatory torque (compensates viscous friction / back-EMF) |
+| `kaff` | `double` | `0.0` | Acceleration feedforward gain — scales desired acceleration to produce anticipatory torque (compensates rotor inertia, `kaff ≈ J`) |
 | `torque_limit_nm` | `double` | `10.0` | Output torque saturation limit (N·m) |
 | `integral_limit` | `double` | `5.0` | Integral accumulator clamp (rad/s · s) |
 | `deadband_rad_s` | `double` | `0.0` | Error deadband — velocity errors smaller than this are treated as zero |
@@ -151,12 +154,13 @@ ros2 run odrive_velocity_pid velocity_pid_node --ros-args \
 
 ## Tuning tips
 
-1. **Tune `kff` first** — it provides the bulk of the required torque; with `kff=1.0` the loop roughly pre-compensates for inertia.
-2. **Keep `kp` small** — high `kp` combined with CAN latency causes oscillation. Start at `0.01`–`0.05`.
-3. **Add `ki` last** — only after `kff` and `kp` are stable; small values (`0.01`–`0.05`) remove steady-state drift.
-4. **`filter_alpha` closer to `1.0`** = heavier smoothing (reduces noise but adds phase lag; `0.85` is a good starting point).
-5. **Start with low `torque_limit_nm`** for safety; increase once the loop is stable.
-6. **Motor sign convention** — on this hardware: +0.5 Nm torque → +30 rad/s velocity, so `invert_output:=false`.
+1. **Tune `kff` first** — it provides the bulk of the required torque; with `kff=1.0` the loop pre-compensates for viscous friction / back-EMF proportional to velocity.
+2. **Add `kaff` for inertia compensation** — set `kaff ≈ J` (rotor inertia in kg·m²) to further reduce tracking error at higher accelerations.
+3. **Keep `kp` small** — high `kp` combined with CAN latency causes oscillation. Start at `0.01`–`0.05`.
+4. **Add `ki` last** — only after `kff` and `kp` are stable; small values (`0.01`–`0.05`) remove steady-state drift.
+5. **`filter_alpha` closer to `1.0`** = heavier smoothing (reduces noise but adds phase lag; `0.85` is a good starting point).
+6. **Start with low `torque_limit_nm`** for safety; increase once the loop is stable.
+7. **Motor sign convention** — on this hardware: +0.5 Nm torque → +30 rad/s velocity, so `invert_output:=false`.
 
 ---
 

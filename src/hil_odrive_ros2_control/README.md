@@ -259,6 +259,8 @@ ros2 run odrive_velocity_pid velocity_pid_node --ros-args \
 | `kp` | double | `1.0` | Proportional gain |
 | `ki` | double | `0.0` | Integral gain |
 | `kd` | double | `0.0` | Derivative gain |
+| `kff` | double | `0.0` | Velocity feedforward gain — scales desired velocity to produce anticipatory torque (compensates viscous friction / back-EMF) |
+| `kaff` | double | `0.0` | Acceleration feedforward gain — scales desired acceleration to produce anticipatory torque (compensates rotor inertia, `kaff ≈ J`) |
 | `torque_limit_nm` | double | `10.0` | Output torque saturation limit |
 | `integral_limit` | double | `5.0` | Integral accumulator clamp |
 | `deadband_rad_s` | double | `0.0` | Error deadband on velocity error |
