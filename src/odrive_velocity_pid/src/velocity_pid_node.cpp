@@ -14,9 +14,10 @@ public:
   VelocityPidNode()
   : Node("velocity_pid_node"),
     integral_(0.0),
-    prev_error_(0.0),
+    prev_measured_vel_(0.0),
     last_measured_vel_(0.0),
     filtered_vel_(0.0),
+    filter_initialized_(false),
     joint_index_(-1),
     saturated_(false)
   {
@@ -32,6 +33,7 @@ public:
     this->declare_parameter<double>("ki", 0.0);
     this->declare_parameter<double>("kd", 0.0);
     this->declare_parameter<double>("kff", 0.0);
+    this->declare_parameter<double>("kaff", 0.0);
 
     this->declare_parameter<double>("torque_limit_nm", 10.0);
     this->declare_parameter<double>("integral_limit", 5.0);
@@ -52,6 +54,7 @@ public:
     ki_ = this->get_parameter("ki").as_double();
     kd_ = this->get_parameter("kd").as_double();
     kff_ = this->get_parameter("kff").as_double();
+    kaff_ = this->get_parameter("kaff").as_double();
 
     torque_limit_nm_ = this->get_parameter("torque_limit_nm").as_double();
     integral_limit_  = this->get_parameter("integral_limit").as_double();
@@ -80,6 +83,8 @@ public:
 
     dt_ = 1.0 / rate_hz_;
 
+    last_loop_time_ = this->now();
+
     // Subscriber
     joint_state_sub_ = this->create_subscription<sensor_msgs::msg::JointState>(
       joint_state_topic_, 10,
@@ -102,8 +107,8 @@ public:
     start_time_ = this->now();
 
     RCLCPP_INFO(this->get_logger(),
-      "VelocityPidNode started: joint='%s', rate=%.1f Hz, kp=%.3f ki=%.3f kd=%.3f kff=%.3f",
-      joint_name_.c_str(), rate_hz_, kp_, ki_, kd_, kff_);
+      "VelocityPidNode started: joint='%s', rate=%.1f Hz, kp=%.3f ki=%.3f kd=%.3f kff=%.3f kaff=%.3f",
+      joint_name_.c_str(), rate_hz_, kp_, ki_, kd_, kff_, kaff_);
   }
 
 private:
@@ -137,7 +142,12 @@ private:
       if (invert_output_) {
         raw = -raw;
       }
-      filtered_vel_ = filter_alpha_ * filtered_vel_ + (1.0 - filter_alpha_) * raw;
+      if (!filter_initialized_) {
+        filtered_vel_ = raw;
+        filter_initialized_ = true;
+      } else {
+        filtered_vel_ = filter_alpha_ * filtered_vel_ + (1.0 - filter_alpha_) * raw;
+      }
       last_measured_vel_ = filtered_vel_;
     }
   }
@@ -150,8 +160,14 @@ private:
       return;
     }
 
+    // Measure actual elapsed time since last iteration (Bug 3 fix)
+    const auto now = this->now();
+    const double actual_dt = (now - last_loop_time_).seconds();
+    last_loop_time_ = now;
+    const double dt = (actual_dt > 0.0) ? actual_dt : dt_;
+
     // Elapsed time from node start
-    const double t = (this->now() - start_time_).seconds();
+    const double t = (now - start_time_).seconds();
 
     // Desired velocity (sine trajectory)
     const double desired_vel = amplitude_rad_s_ * std::sin(omega_rad_s_ * t);
@@ -164,19 +180,20 @@ private:
       error = 0.0;
     }
 
-    // Derivative
-    const double derivative = (error - prev_error_) / dt_;
+    // Derivative-on-measurement (Bug 2 fix): avoids derivative kick from setpoint changes
+    const double derivative = -(last_measured_vel_ - prev_measured_vel_) / dt;
 
     // Anti-windup: only integrate when not saturated
     if (!saturated_) {
-      integral_ += error * dt_;
+      integral_ += error * dt;
       // Integral clamp
       integral_ = std::clamp(integral_, -integral_limit_, integral_limit_);
     }
 
-    // Feedforward: desired acceleration = d/dt[A·sin(ω·t)] = A·ω·cos(ω·t)
+    // Feedforward: velocity-FF + acceleration-FF (Bug 1 fix)
+    // desired_vel = A·sin(ω·t), desired_accel = d/dt[A·sin(ω·t)] = A·ω·cos(ω·t)
     const double desired_accel = amplitude_rad_s_ * omega_rad_s_ * std::cos(omega_rad_s_ * t);
-    const double feedforward = kff_ * desired_accel;
+    const double feedforward = (kff_ * desired_vel) + (kaff_ * desired_accel);
 
     // PID output with feedforward
     double output = feedforward + kp_ * error + ki_ * integral_ + kd_ * derivative;
@@ -191,7 +208,7 @@ private:
       integral_ = std::clamp(integral_, -integral_limit_, integral_limit_);
     }
 
-    prev_error_ = error;
+    prev_measured_vel_ = last_measured_vel_;
 
     RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 100,
       "[PID] des=%.3f meas=%.3f err=%.3f out=%.3f sat=%d",
@@ -236,6 +253,7 @@ private:
   double ki_;
   double kd_;
   double kff_;
+  double kaff_;
   double torque_limit_nm_;
   double integral_limit_;
   double deadband_rad_s_;
@@ -246,12 +264,14 @@ private:
 
   // State
   double integral_;
-  double prev_error_;
+  double prev_measured_vel_;
   double last_measured_vel_;
   double filtered_vel_;
+  bool filter_initialized_;
   int joint_index_;
   bool saturated_;
   rclcpp::Time start_time_;
+  rclcpp::Time last_loop_time_;
 };
 
 int main(int argc, char * argv[])
