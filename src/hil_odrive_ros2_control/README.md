@@ -235,17 +235,15 @@ In a second terminal:
 source /opt/ros/jazzy/setup.bash
 source ~/ws/install/setup.bash
 
+ros2 run odrive_velocity_pid velocity_pid_node
+```
+
+The defaults are hardware-tuned — no parameters needed for basic operation. Override specific parameters with `--ros-args -p key:=value`. For example:
+
+```bash
 ros2 run odrive_velocity_pid velocity_pid_node --ros-args \
-  -p joint_name:=motor_joint \
-  -p joint_state_topic:=/joint_states \
-  -p command_topic:=/motor_effort_controller/commands \
-  -p kp:=1.0 -p ki:=0.0 -p kd:=0.0 \
-  -p amplitude_rad_s:=2.0 \
-  -p omega_rad_s:=6.283185307 \
-  -p torque_limit_nm:=1.0 \
-  -p integral_limit:=5.0 \
-  -p deadband_rad_s:=0.0 \
-  -p rate_hz:=200.0
+  -p amplitude_rad_s:=5.0 \
+  -p torque_limit_nm:=0.3
 ```
 
 ### PID node parameters (`odrive_velocity_pid`)
@@ -254,24 +252,28 @@ ros2 run odrive_velocity_pid velocity_pid_node --ros-args \
 | `joint_state_topic` | string | `/joint_states` | JointState feedback topic |
 | `command_topic` | string | `/motor_effort_controller/commands` | Effort command output topic (`std_msgs/Float64MultiArray`) |
 | `joint_name` | string | `motor_joint` | Joint name inside `/joint_states.name[]` |
-| `amplitude_rad_s` | double | `1.0` | Sine velocity amplitude (rad/s) |
-| `omega_rad_s` | double | `1.0` | Sine angular frequency (rad/s). For 1 Hz use `2*pi ≈ 6.283` |
-| `kp` | double | `1.0` | Proportional gain |
-| `ki` | double | `0.0` | Integral gain |
+| `amplitude_rad_s` | double | `15.0` | Sine velocity amplitude (rad/s) |
+| `omega_rad_s` | double | `3.14` | Sine angular frequency (rad/s). For 1 Hz use `2*pi ≈ 6.283` |
+| `kp` | double | `0.03` | Proportional gain |
+| `ki` | double | `0.1` | Integral gain |
 | `kd` | double | `0.0` | Derivative gain |
-| `kff` | double | `0.0` | Velocity feedforward gain — scales desired velocity to produce anticipatory torque (compensates viscous friction / back-EMF) |
-| `kaff` | double | `0.0` | Acceleration feedforward gain — scales desired acceleration to produce anticipatory torque (compensates rotor inertia, `kaff ≈ J`) |
-| `torque_limit_nm` | double | `10.0` | Output torque saturation limit |
-| `integral_limit` | double | `5.0` | Integral accumulator clamp |
+| `kff` | double | `0.015` | Velocity feedforward gain — scales desired velocity to produce anticipatory torque (compensates viscous friction / back-EMF) |
+| `kaff` | double | `0.003` | Acceleration feedforward gain — scales desired acceleration to produce anticipatory torque (compensates rotor inertia, `kaff ≈ J`) |
+| `torque_limit_nm` | double | `0.5` | Output torque saturation limit |
+| `integral_limit` | double | `0.3` | Integral accumulator clamp |
 | `deadband_rad_s` | double | `0.0` | Error deadband on velocity error |
 | `rate_hz` | double | `100.0` | Control-loop frequency |
-| `filter_alpha` | double | `0.3` | Exponential moving average coefficient for velocity smoothing (0.0 = no filter, closer to 1.0 = heavier smoothing) |
+| `filter_alpha` | double | `0.7` | Exponential moving average coefficient for velocity smoothing (0.0 = no filter, closer to 1.0 = heavier smoothing) |
 
 ### Practical tuning guidance
-- Start with small `amplitude_rad_s` and small `torque_limit_nm`.
-- Start with `ki=0`, `kd=0`. Increase `kp` until tracking is acceptable without oscillation.
-- Add a small `kd` if you get oscillation/overshoot.
-- Add `ki` last to remove steady-state error (watch for windup).
+1. **Start with low `torque_limit_nm`** (0.3-0.5 Nm) and low `omega_rad_s` (0.5-1.0) for safety
+2. **Tune `kff` first** — it provides the bulk of the required torque without noise amplification. If the motor overshoots to 2× desired speed, halve `kff`
+3. **Add `kaff` for inertia compensation** — set `kaff ≈ J` (rotor inertia in kg·m²). Start with `0.003`
+4. **Keep `kp` small** (0.01-0.05) — CAN velocity noise (±5-10 rad/s) gets amplified by `kp`, causing oscillation at higher values
+5. **Add `ki` last** — small values (0.05-0.2) remove steady-state drift. The directional anti-windup prevents integrator lockup
+6. **`filter_alpha=0.7`** is a good starting point — `0.5` lets too much CAN noise through, `0.85` adds too much phase lag
+7. **Increase `rate_hz` to 100** — 100 Hz gave noticeably tighter tracking than 50 Hz on this hardware
+8. **Motor sign convention** — on this hardware: +0.5 Nm torque → +30 rad/s velocity, so `invert_output:=false`
 
 ---
 
