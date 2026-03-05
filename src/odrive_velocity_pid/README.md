@@ -106,7 +106,7 @@ The control loop emits a throttled `INFO` log at ~10 Hz (100 ms interval) that s
 
 - **Torque saturation** – output is clamped to `[-torque_limit_nm, torque_limit_nm]`.
 - **Integral clamp** – integral accumulator is clamped to `[-integral_limit, integral_limit]`.
-- **Anti-windup** – integrator is frozen while the output is saturated.
+- **Anti-windup** – directional (conditional) anti-windup: when the output is saturated, integration is only allowed in the direction that *unwinds* the integrator (i.e. when the error has the opposite sign from the current integral). This prevents permanent integrator lockup by ensuring the integral can always recover when the error reverses, while still preventing further wind-up in the saturation direction.
 - **Error deadband** – small velocity errors (< `deadband_rad_s`) are ignored to reduce chatter.
 
 ---

@@ -183,10 +183,11 @@ private:
     // Derivative-on-measurement (Bug 2 fix): avoids derivative kick from setpoint changes
     const double derivative = -(last_measured_vel_ - prev_measured_vel_) / dt;
 
-    // Anti-windup: only integrate when not saturated
-    if (!saturated_) {
+    // Directional anti-windup: allow integration that UNWINDS the integral
+    // (error opposes integral sign), but freeze integration that would
+    // wind up further in the saturation direction.
+    if (!saturated_ || (error * integral_ <= 0.0)) {
       integral_ += error * dt;
-      // Integral clamp
       integral_ = std::clamp(integral_, -integral_limit_, integral_limit_);
     }
 
