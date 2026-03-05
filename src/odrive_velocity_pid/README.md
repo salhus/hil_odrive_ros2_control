@@ -70,6 +70,37 @@ ros2 launch <your_hardware_launch> \
 
 ---
 
+## Published Topics
+
+| Topic | Type | Description |
+|---|---|---|
+| `command_topic` (default `/motor_effort_controller/commands`) | `std_msgs/Float64MultiArray` | Torque command sent to the effort controller |
+| `~/desired_velocity` | `std_msgs/Float64` | Sine-wave reference velocity (rad/s) |
+| `~/measured_velocity` | `std_msgs/Float64` | Filtered encoder feedback velocity (rad/s) |
+| `~/velocity_error` | `std_msgs/Float64` | Tracking error: desired − measured (rad/s) |
+
+The `~/` prefix scopes topics under the node name (e.g. `/velocity_pid_node/desired_velocity`). These topics are useful for plotting in tools like PlotJuggler or `rqt_plot`.
+
+---
+
+## Console Debug Logging
+
+The control loop emits a throttled `INFO` log at ~10 Hz (100 ms interval) that summarises each PID iteration:
+
+```
+[PID] des=0.300 meas=0.012 err=0.288 out=0.029 sat=0
+```
+
+| Field | Description |
+|---|---|
+| `des` | Desired (reference) velocity in rad/s |
+| `meas` | Measured (filtered) velocity in rad/s |
+| `err` | Tracking error (desired − measured) in rad/s |
+| `out` | PID output torque (after saturation) in N·m |
+| `sat` | `1` if the output is currently saturated, `0` otherwise |
+
+---
+
 ## Safety Features
 
 - **Torque saturation** – output is clamped to `[-torque_limit_nm, torque_limit_nm]`.

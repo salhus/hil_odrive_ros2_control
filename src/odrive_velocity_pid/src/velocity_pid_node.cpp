@@ -5,6 +5,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/joint_state.hpp"
+#include "std_msgs/msg/float64.hpp"
 #include "std_msgs/msg/float64_multi_array.hpp"
 
 class VelocityPidNode : public rclcpp::Node
@@ -88,6 +89,9 @@ public:
 
     // Publisher
     torque_pub_ = this->create_publisher<std_msgs::msg::Float64MultiArray>(command_topic_, 10);
+    desired_vel_pub_   = this->create_publisher<std_msgs::msg::Float64>("~/desired_velocity", 10);
+    measured_vel_pub_  = this->create_publisher<std_msgs::msg::Float64>("~/measured_velocity", 10);
+    velocity_error_pub_ = this->create_publisher<std_msgs::msg::Float64>("~/velocity_error", 10);
 
     // Control loop timer
     const auto period_ms = std::chrono::duration<double>(dt_);
@@ -189,7 +193,23 @@ private:
 
     prev_error_ = error;
 
+    RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 100,
+      "[PID] des=%.3f meas=%.3f err=%.3f out=%.3f sat=%d",
+      desired_vel, last_measured_vel_, error, output, static_cast<int>(saturated_));
+
     publish_torque(output);
+
+    std_msgs::msg::Float64 desired_msg;
+    desired_msg.data = desired_vel;
+    desired_vel_pub_->publish(desired_msg);
+
+    std_msgs::msg::Float64 measured_msg;
+    measured_msg.data = last_measured_vel_;
+    measured_vel_pub_->publish(measured_msg);
+
+    std_msgs::msg::Float64 error_msg;
+    error_msg.data = error;
+    velocity_error_pub_->publish(error_msg);
   }
 
   void publish_torque(double torque)
@@ -201,6 +221,9 @@ private:
   // ROS interfaces
   rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr joint_state_sub_;
   rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr torque_pub_;
+  rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr desired_vel_pub_;
+  rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr measured_vel_pub_;
+  rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr velocity_error_pub_;
   rclcpp::TimerBase::SharedPtr timer_;
 
   // Parameters
