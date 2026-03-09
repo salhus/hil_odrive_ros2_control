@@ -3,6 +3,7 @@
 #include <cmath>
 #include <string>
 
+#include "rcl_interfaces/msg/set_parameters_result.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/joint_state.hpp"
 #include "std_msgs/msg/float64.hpp"
@@ -109,9 +110,115 @@ public:
     RCLCPP_INFO(this->get_logger(),
       "VelocityPidNode started: joint='%s', rate=%.1f Hz, kp=%.3f ki=%.3f kd=%.3f kff=%.3f kaff=%.3f",
       joint_name_.c_str(), rate_hz_, kp_, ki_, kd_, kff_, kaff_);
+
+    // Register parameter change callback for runtime reconfiguration
+    param_callback_handle_ = this->add_on_set_parameters_callback(
+      [this](const std::vector<rclcpp::Parameter> & params) {
+        return on_set_parameters(params);
+      });
   }
 
 private:
+  rcl_interfaces::msg::SetParametersResult on_set_parameters(
+    const std::vector<rclcpp::Parameter> & parameters)
+  {
+    rcl_interfaces::msg::SetParametersResult result;
+    result.successful = true;
+
+    // Check for non-reconfigurable parameters first
+    for (const auto & param : parameters) {
+      const auto & name = param.get_name();
+      if (name == "joint_state_topic" || name == "command_topic" ||
+          name == "joint_name" || name == "rate_hz")
+      {
+        result.successful = false;
+        result.reason = "Parameter '" + name +
+          "' cannot be changed at runtime (requires node restart).";
+        return result;
+      }
+    }
+
+    // Validate all parameters before applying any
+    for (const auto & param : parameters) {
+      const auto & name = param.get_name();
+      if (name == "torque_limit_nm" && param.as_double() <= 0.0) {
+        result.successful = false;
+        result.reason = "torque_limit_nm must be positive.";
+        return result;
+      }
+      if (name == "integral_limit" && param.as_double() <= 0.0) {
+        result.successful = false;
+        result.reason = "integral_limit must be positive.";
+        return result;
+      }
+      if (name == "filter_alpha" &&
+          (param.as_double() < 0.0 || param.as_double() >= 1.0))
+      {
+        result.successful = false;
+        result.reason = "filter_alpha must be in [0.0, 1.0).";
+        return result;
+      }
+    }
+
+    // Apply validated parameters
+    bool pid_gains_changed = false;
+    for (const auto & param : parameters) {
+      const auto & name = param.get_name();
+      if (name == "kp") {
+        kp_ = param.as_double();
+        pid_gains_changed = true;
+        RCLCPP_INFO(this->get_logger(), "Parameter updated: kp = %.4f", kp_);
+      } else if (name == "ki") {
+        ki_ = param.as_double();
+        pid_gains_changed = true;
+        RCLCPP_INFO(this->get_logger(), "Parameter updated: ki = %.4f", ki_);
+      } else if (name == "kd") {
+        kd_ = param.as_double();
+        pid_gains_changed = true;
+        RCLCPP_INFO(this->get_logger(), "Parameter updated: kd = %.4f", kd_);
+      } else if (name == "kff") {
+        kff_ = param.as_double();
+        // Feedforward gains do not affect the integral term, so no reset needed.
+        RCLCPP_INFO(this->get_logger(), "Parameter updated: kff = %.4f", kff_);
+      } else if (name == "kaff") {
+        kaff_ = param.as_double();
+        // Feedforward gains do not affect the integral term, so no reset needed.
+        RCLCPP_INFO(this->get_logger(), "Parameter updated: kaff = %.4f", kaff_);
+      } else if (name == "amplitude_rad_s") {
+        amplitude_rad_s_ = param.as_double();
+        RCLCPP_INFO(this->get_logger(), "Parameter updated: amplitude_rad_s = %.4f", amplitude_rad_s_);
+      } else if (name == "omega_rad_s") {
+        omega_rad_s_ = param.as_double();
+        RCLCPP_INFO(this->get_logger(), "Parameter updated: omega_rad_s = %.4f", omega_rad_s_);
+      } else if (name == "torque_limit_nm") {
+        torque_limit_nm_ = param.as_double();
+        RCLCPP_INFO(this->get_logger(), "Parameter updated: torque_limit_nm = %.4f", torque_limit_nm_);
+      } else if (name == "integral_limit") {
+        integral_limit_ = param.as_double();
+        RCLCPP_INFO(this->get_logger(), "Parameter updated: integral_limit = %.4f", integral_limit_);
+      } else if (name == "deadband_rad_s") {
+        deadband_rad_s_ = param.as_double();
+        RCLCPP_INFO(this->get_logger(), "Parameter updated: deadband_rad_s = %.4f", deadband_rad_s_);
+      } else if (name == "filter_alpha") {
+        filter_alpha_ = param.as_double();
+        RCLCPP_INFO(this->get_logger(), "Parameter updated: filter_alpha = %.4f", filter_alpha_);
+      } else if (name == "invert_output") {
+        invert_output_ = param.as_bool();
+        RCLCPP_INFO(this->get_logger(), "Parameter updated: invert_output = %s",
+          invert_output_ ? "true" : "false");
+      }
+    }
+
+    if (pid_gains_changed) {
+      integral_ = 0.0;
+      RCLCPP_INFO(this->get_logger(),
+        "PID gains changed — integral reset to 0. New gains: kp=%.4f ki=%.4f kd=%.4f",
+        kp_, ki_, kd_);
+    }
+
+    return result;
+  }
+
   void joint_state_callback(const sensor_msgs::msg::JointState::SharedPtr msg)
   {
     // Find joint index once (or re-check if it changes)
@@ -243,6 +350,7 @@ private:
   rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr measured_vel_pub_;
   rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr velocity_error_pub_;
   rclcpp::TimerBase::SharedPtr timer_;
+  rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr param_callback_handle_;
 
   // Parameters
   std::string joint_state_topic_;
