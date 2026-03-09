@@ -75,22 +75,6 @@ This starts `ros2_control_node`, `robot_state_publisher`, `joint_state_broadcast
 
 ---
 
-## Set up visual feedback
-```bash
-source install/setup.bash
-ros2 run plotjuggler plotjuggler
-```
-
-This opens plot juggler where you can start streaming data. Drag and drop "/velocity_pid_node/desired_velocity/data" and "velocity_pid_node/measured_velocity/data" to an empty plot to get started.
-
-```bash
-source install/setup.bash
-ros2 run rqt_reconfigure rqt_reconfigure
-```
-This opens rqt_reconfigure, where you can refresh the parameter list and select velocity_pid_node to access and change most pid parameters.
-
----
-
 ## Verify
 
 ```bash
@@ -130,6 +114,24 @@ ros2 run odrive_velocity_pid velocity_pid_node --ros-args -p amplitude_rad_s:=5.
 | `torque_limit_nm` | `0.5` | Safe torque limit — motor trips at ±1.0 Nm during fast reversals. `0.5` provides margin |
 | `integral_limit` | `0.3` | Caps integrator contribution to `ki × 0.3 = 0.03 Nm` max |
 | `invert_output` | `false` | Normal sign convention: positive torque → positive velocity |
+
+---
+
+## Set up visual feedback
+When the system is running:
+
+```bash
+source install/setup.bash
+ros2 run plotjuggler plotjuggler
+```
+
+This opens plot juggler where you can start streaming data. Drag and drop "/velocity_pid_node/desired_velocity/data" and "velocity_pid_node/measured_velocity/data" to an empty plot to get started.
+
+```bash
+source install/setup.bash
+ros2 run rqt_reconfigure rqt_reconfigure
+```
+This opens rqt_reconfigure, where you can refresh the parameter list and select velocity_pid_node to access and change most pid parameters.
 
 ---
 
