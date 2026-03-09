@@ -75,6 +75,22 @@ This starts `ros2_control_node`, `robot_state_publisher`, `joint_state_broadcast
 
 ---
 
+## Set up visual feedback
+'''bash
+source install/setup.bash
+ros2 run plotjuggler plotjuggler
+'''
+
+This opens plot juggler where you can start streaming data. Drag and drop /velocity_pid_node/desired_velocity/data and velocity_pid_node/measured_velocity/data to get started.
+
+'''bash
+source install/setup.bash
+ros2 run rqt_reconfigure rqt_reconfigure
+'''
+This opens rqt_reconfigure, where you can refresh the parameter list and select velocity_pid_node to access and change most pid parameters.
+
+---
+
 ## Verify
 
 ```bash
