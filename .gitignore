@@ -1,0 +1,8 @@
+# Build output files
+build/
+install/
+log/
+
+# Emacs temp files
+\#*\#
+*~
