@@ -1,1 +1,0 @@
-/home/pneumatic8/Documents/odrive_hil_ros2control/build/hil_odrive_ros2_control/ament_cmake_environment_hooks/local_setup.zsh
