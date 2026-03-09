@@ -118,6 +118,17 @@ public:
       });
   }
 
+  ~VelocityPidNode()
+  {
+    if (timer_) {
+	timer_->cancel();
+    }
+    if (torque_pub_) {
+	publish_torque(0.0);
+	RCLCPP_INFO(this->get_logger(), "Shutdown: 0 torque");
+    }
+  }
+	
 private:
   rcl_interfaces::msg::SetParametersResult on_set_parameters(
     const std::vector<rclcpp::Parameter> & parameters)
@@ -322,6 +333,7 @@ private:
       "[PID] des=%.3f meas=%.3f err=%.3f out=%.3f sat=%d",
       desired_vel, last_measured_vel_, error, output, static_cast<int>(saturated_));
 
+    // Publishing the data to topic. Really don't need the function. 
     publish_torque(output);
 
     std_msgs::msg::Float64 desired_msg;
