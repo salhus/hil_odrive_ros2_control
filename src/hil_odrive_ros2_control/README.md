@@ -1,29 +1,50 @@
 # hil_odrive_ros2_control (ROS 2 Jazzy)
 
-This repository is a self-contained ROS 2 Jazzy workspace repo for controlling an **ODrive** over **SocketCAN (CAN bus)** using **ros2_control**, plus a companion node that performs **velocity PID control** (tracking a sine-wave velocity reference) and outputs **torque/effort commands**.
+This repository is a self-contained ROS 2 Jazzy workspace implementing a **Wave Energy Converter (WEC) Hardware-in-the-Loop (HIL) dynamometer** test bench. Two ODrive motors on a shared shaft are controlled over **SocketCAN (CAN bus)** via **ros2_control**:
+
+- **Motor 1 (Hydro Emulator, axis0, `node_id=0`)** — driven by `velocity_pid_node` to replay wave-driven shaft motion (sine-wave velocity trajectory)
+- **Motor 2 (PTO / Power Take-Off, axis1, `node_id=1`)** — passively resists shaft motion with `τ = -B · ω`. In Phase 1 the ODrive's onboard velocity controller handles the damping; no extra ROS control node is needed.
 
 It is designed so you can:
 
 - clone this repo into a fresh ROS 2 Jazzy workspace (`~/ws/src`)
 - `colcon build`
 - launch `ros2_control_node` + controllers
-- run the velocity PID node and command the motor
+- run the velocity PID node and command the hydro emulator motor
 
 ---
 
-## What’s in this repo
+## WEC HIL dyno concept
+
+```
+                    ┌─────────────────────┐
+  can0 ◄───────────┤   ODrive (1 board)   │
+                    │                     │
+                    │  axis0 (node_id=0)  │──── Motor 1: Hydro Emulator (motor_joint)
+                    │                     │         ║
+                    │                     │     shared shaft
+                    │                     │         ║
+                    │  axis1 (node_id=1)  │──── Motor 2: PTO passive damper (pto_joint)
+                    └─────────────────────┘
+```
+
+Both motors share the same ODrive board and CAN bus (`can0`). The second joint (`pto_joint`) is registered inside the same `<ros2_control name="ODriveSystem">` hardware block in the URDF.
+
+---
+
+## What's in this repo
 
 ### Packages
 
 - **`hil_odrive_ros2_control`** (root package)
-  - Purpose: installs the launch file, controller YAML, and a minimal URDF/Xacro for a single joint named `motor_joint`
+  - Purpose: installs the launch file, controller YAML, and URDF/Xacro for `motor_joint` (axis0) and `pto_joint` (axis1)
   - Key paths:
     - `launch/motor_control.launch.py`
     - `config/controllers.yaml`
     - `description/urdf/motor.urdf.xacro`
 
 - **`odrive_velocity_pid`** (package)
-  - Purpose: reads measured velocity from `/joint_states`, tracks a sine-wave reference velocity, runs a PID loop, and publishes torque (effort) commands
+  - Purpose: reads measured velocity from `/joint_states`, tracks a sine-wave reference velocity for `motor_joint`, runs a PID loop, and publishes torque (effort) commands
 
 ### Upstream ODrive packages
 
@@ -42,17 +63,22 @@ See [`VENDORED.md`](VENDORED.md) for provenance and licensing details.
 
 1. **`ros2_control_node`** (from `controller_manager`)
    - loads the ODrive hardware plugin declared in the URDF
-   - exposes ros2_control state and command interfaces for `motor_joint`
+   - exposes ros2_control state and command interfaces for `motor_joint` (axis0) and `pto_joint` (axis1)
 
 2. **`joint_state_broadcaster`**
    - publishes `sensor_msgs/msg/JointState` on `/joint_states`
-   - this provides measured velocity feedback used by the PID node
+   - provides measured velocity feedback for both joints
 
 3. **`motor_effort_controller`**
    - accepts `std_msgs/msg/Float64MultiArray` commands on `/motor_effort_controller/commands`
    - forwards them to the ros2_control effort command interface for `motor_joint`
 
-4. **`odrive_velocity_pid/velocity_pid_node`**
+4. **`pto_effort_controller`**
+   - accepts `std_msgs/msg/Float64MultiArray` commands on `/pto_effort_controller/commands`
+   - forwards them to the ros2_control effort command interface for `pto_joint`
+   - In Phase 1 this controller is spawned but not actively commanded from ROS — the ODrive's onboard velocity controller handles passive damping on axis1
+
+5. **`odrive_velocity_pid/velocity_pid_node`**
    - subscribes to `/joint_states`
    - extracts measured velocity for `motor_joint`
    - generates desired velocity:  
@@ -62,7 +88,11 @@ See [`VENDORED.md`](VENDORED.md) for provenance and licensing details.
 
 ### Data flow summary
 
-`/joint_states (measured velocity)` → **velocity PID node** → `/motor_effort_controller/commands (effort)` → **effort controller** → **ODrive ros2_control hardware plugin** → **CAN** → ODrive
+```
+/joint_states (measured velocity) → velocity PID node → /motor_effort_controller/commands (effort) → effort controller → ODrive ros2_control hardware plugin → CAN → ODrive axis0 (motor_joint)
+
+ODrive axis1 (pto_joint) ← passive damping τ = -B·ω configured via odrivetool
+```
 
 ---
 
@@ -118,7 +148,7 @@ If `candump` shows nothing, common causes include: wrong bitrate, wiring/termina
 
 ---
 
-## Configuration you MUST check (CAN + node_id)
+## Configuration you MUST check (CAN + node_ids)
 
 The ODrive hardware plugin configuration is in:
 
@@ -131,16 +161,40 @@ Key parameters:
 <param name="can">can0</param>
 ```
 
-### ODrive CAN node ID mapped to `motor_joint`
+### ODrive CAN node IDs
 ```xml
+<!-- Motor 1: Hydro Emulator (ODrive axis0) -->
 <joint name="motor_joint">
   <param name="node_id">0</param>
+</joint>
+
+<!-- Motor 2: PTO passive damper (ODrive axis1) -->
+<joint name="pto_joint">
+  <param name="node_id">1</param>
 </joint>
 ```
 
 Make sure:
 - your SocketCAN interface is actually `can0` (or change it)
-- your ODrive node ID is actually `0` (or change it)
+- ODrive `node_id=0` is axis0 (hydro emulator) and `node_id=1` is axis1 (PTO)
+
+---
+
+## PTO motor configuration (Phase 1 — passive linear damper)
+
+Configure ODrive axis1 directly via `odrivetool` so it resists shaft motion proportionally to velocity:
+
+```python
+# In odrivetool
+odrv0.axis1.controller.config.control_mode = ControlMode.VELOCITY_CONTROL
+odrv0.axis1.controller.config.vel_setpoint = 0
+odrv0.axis1.controller.config.vel_gain = B   # damping coefficient B (Nm·s/rad)
+odrv0.axis1.requested_state = AxisState.CLOSED_LOOP_CONTROL
+```
+
+The velocity controller's P-gain acts as damping coefficient `B`. When Motor 1 spins the shaft at ω, axis1 applies `τ = -B · ω`.
+
+**Power measurement:** probe `V_bus` and `I_bus` on the PTO motor's DC bus with an oscilloscope. Instantaneous extracted power = `V_bus × I_bus`.
 
 ---
 
@@ -180,7 +234,7 @@ You should see packages like:
 
 ## Run: bring up ros2_control + controllers
 
-Launch the included single-motor setup:
+Launch the WEC HIL dyno setup:
 
 ```bash
 source /opt/ros/jazzy/setup.bash
@@ -194,7 +248,8 @@ This launch file should:
 - start `robot_state_publisher`
 - spawn/activate:
   - `joint_state_broadcaster`
-  - `motor_effort_controller`
+  - `motor_effort_controller` (Motor 1, hydro emulator)
+  - `pto_effort_controller` (Motor 2, PTO — spawned but passively controlled by ODrive in Phase 1)
 
 ---
 
@@ -205,16 +260,17 @@ This launch file should:
 ros2 control list_controllers
 ```
 
-You want (at minimum) both of these to show as `active`:
+You want all three of these to show as `active`:
 - `joint_state_broadcaster`
 - `motor_effort_controller`
+- `pto_effort_controller`
 
 ### Check hardware interfaces
 ```bash
 ros2 control list_hardware_interfaces
 ```
 
-Look for `motor_joint` interfaces. You should see an effort command interface and state interfaces (e.g., velocity).
+Look for both `motor_joint` and `pto_joint` interfaces.
 
 ### Check feedback stream
 ```bash
@@ -222,12 +278,12 @@ ros2 topic echo /joint_states --once
 ```
 
 Confirm:
-- `motor_joint` appears in `name: [...]`
-- `velocity: [...]` has a sensible value (not NaN)
+- Both `motor_joint` and `pto_joint` appear in `name: [...]`
+- `velocity: [...]` has sensible values (not NaN) for both joints
 
 ---
 
-## Run: velocity PID node (sine velocity → torque)
+## Run: velocity PID node (hydro emulator — sine velocity → torque)
 
 In a second terminal:
 
@@ -295,11 +351,11 @@ Symptoms:
 - CAN is up, but hardware plugin never gets valid feedback / joint stays NaN
 
 Fix:
-- Update `node_id` in `description/urdf/motor.urdf.xacro` to match the ODrive CAN node id
+- Update `node_id` values in `description/urdf/motor.urdf.xacro` to match the ODrive CAN node IDs
 
 ### 3) Controllers not active
 Symptoms:
-- PID publishes torque commands but motor doesn’t respond
+- PID publishes torque commands but motor doesn't respond
 - `/motor_effort_controller/commands` exists but effort interface not claimed
 
 Checks:
@@ -309,7 +365,7 @@ ros2 control list_hardware_interfaces
 ```
 
 Fix:
-- make sure `motor_effort_controller` is `active` (spawner should do this)
+- make sure `motor_effort_controller` and `pto_effort_controller` are `active` (spawner should do this)
 - verify controller manager is running and reachable at `/controller_manager`
 
 ### 4) Effort controller type not available
@@ -325,14 +381,13 @@ Fix:
 - install `ros-jazzy-ros2-controllers` (or equivalent)
 - update `config/controllers.yaml` to use an effort controller type that exists on your system
 
-### 5) No `motor_joint` in `/joint_states`
+### 5) `pto_joint` missing from `/joint_states`
 Symptoms:
-- `/joint_states` publishes but `motor_joint` isn’t present
+- `/joint_states` publishes but `pto_joint` isn't present
 
 Fix:
-- confirm the URDF joint name is exactly `motor_joint`
-- confirm the controllers are spawned successfully
-- check `ros2_control_node` logs for hardware/plugin load errors
+- confirm axis1 on the ODrive is calibrated and set to `CLOSED_LOOP_CONTROL` via `odrivetool`
+- check `ros2_control_node` logs for hardware/plugin load errors for `node_id=1`
 
 ### 6) ODrive not in a state that accepts torque commands
 Symptoms:
@@ -341,6 +396,21 @@ Symptoms:
 Fix:
 - ensure the ODrive is calibrated/configured for closed-loop control
 - confirm it accepts CAN setpoints as expected for your ODrive firmware/config
+
+---
+
+## Phase 2 (planned)
+
+Phase 2 will add a **pluggable PTO control framework** for comparing WEC control strategies on the same hardware bench:
+
+| Strategy | Law |
+|---|---|
+| Passive damping (baseline) | `τ = -B·ω` |
+| Optimal passive | `τ = -B_opt·ω` (B_opt matches radiation damping) |
+| Reactive (complex conjugate) | `τ = -B·ω - K·x` |
+| Latching | Lock shaft at extremes, release at optimal phase |
+| Declutching | Free shaft periodically, engage at optimal phase |
+| MPC | Model-predictive with wave prediction horizon |
 
 ---
 
