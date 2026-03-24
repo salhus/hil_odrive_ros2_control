@@ -1,6 +1,35 @@
 # hil_odrive_ros2_control
 
-A self-contained **ROS 2 Jazzy** workspace for controlling an **ODrive** motor over **SocketCAN (CAN bus)** using **ros2_control**. Includes a companion velocity PID node that tracks a sinusoidal velocity reference and outputs torque commands using a **feedforward + PID** architecture for smooth closed-loop velocity control.
+A self-contained **ROS 2 Jazzy** workspace implementing a **Wave Energy Converter (WEC) Hardware-in-the-Loop (HIL) dynamometer** test bench using two ODrive motors on a shared shaft, controlled over **SocketCAN (CAN bus)** via **ros2_control**.
+
+**Motor 1 (Hydro Emulator, axis0)** — driven by the existing `velocity_pid_node` to replay wave-driven shaft motion (sine-wave velocity trajectory).  
+**Motor 2 (PTO / Power Take-Off, axis1)** — passively resists shaft motion with `τ = -B · ω` (linear damper). In Phase 1 the damping is configured directly on the ODrive; no extra ROS control node is needed.
+
+---
+
+## WEC HIL dyno concept
+
+```
+                    ┌─────────────────────┐
+  can0 ◄───────────┤   ODrive (1 board)   │
+                    │                     │
+                    │  axis0 (node_id=0)  │──── Motor 1: Hydro Emulator (motor_joint)
+                    │                     │         ║
+                    │                     │     shared shaft
+                    │                     │         ║
+                    │  axis1 (node_id=1)  │──── Motor 2: PTO passive damper (pto_joint)
+                    └─────────────────────┘
+
+  velocity_pid_node ──τ_wave──▶ motor_effort_controller ──▶ ODrive axis0
+  (sine wave, hydro emulator)
+
+  ODrive axis1 configured as passive damper via odrivetool
+  (velocity mode, setpoint = 0, P-gain = damping coefficient B)
+
+  Power measurement: oscilloscope on PTO motor DC bus (V_bus × I_bus)
+```
+
+Both motors are on the **same ODrive board** (`can0`). axis0 = `node_id=0` (hydro emulator), axis1 = `node_id=1` (PTO).
 
 ---
 
@@ -9,14 +38,14 @@ A self-contained **ROS 2 Jazzy** workspace for controlling an **ODrive** motor o
 ```
 hil_odrive_ros2_control/
 └── src/
-    ├── hil_odrive_ros2_control/   # Launch files, controller YAML, URDF/Xacro for motor_joint
+    ├── hil_odrive_ros2_control/   # Launch files, controller YAML, URDF/Xacro (motor_joint + pto_joint)
     ├── odrive_base/               # ODrive base library (from upstream odriverobotics/ros_odrive)
     ├── odrive_ros2_control/       # ODrive ros2_control hardware interface plugin (from upstream odriverobotics/ros_odrive)
-    └── odrive_velocity_pid/       # Velocity PID + feedforward node
+    └── odrive_velocity_pid/       # Velocity PID + feedforward node (hydro emulator)
 ```
 
-- **`src/hil_odrive_ros2_control/`** — launch file (`motor_control.launch.py`), controller YAML (`config/controllers.yaml`), and URDF/Xacro (`description/urdf/motor.urdf.xacro`) for `motor_joint`
-- **`src/odrive_velocity_pid/`** — velocity PID + feedforward node that reads `/joint_states`, generates a sinusoidal velocity reference, and publishes torque commands
+- **`src/hil_odrive_ros2_control/`** — launch file (`motor_control.launch.py`), controller YAML (`config/controllers.yaml`), and URDF/Xacro (`description/urdf/motor.urdf.xacro`) for `motor_joint` (axis0) and `pto_joint` (axis1)
+- **`src/odrive_velocity_pid/`** — velocity PID + feedforward node that reads `/joint_states`, generates a sinusoidal velocity reference, and publishes torque commands for Motor 1
 - **`src/odrive_base/`** and **`src/odrive_ros2_control/`** — ODrive `ros2_control` hardware interface plugin and its base library, sourced from the upstream [`odriverobotics/ros_odrive`](https://github.com/odriverobotics/ros_odrive) repository
 
 ---
@@ -26,7 +55,7 @@ hil_odrive_ros2_control/
 - **ROS 2 Jazzy** — source `/opt/ros/jazzy/setup.bash` in every terminal
 - **ros2_control + ros2_controllers** — `ros-jazzy-ros2-control`, `ros-jazzy-ros2-controllers`
 - **SocketCAN + can-utils** — `sudo apt-get install can-utils`
-- **ODrive** configured for CAN communication (correct node ID, CAN bitrate set to 250 kbps)
+- **ODrive** configured for CAN communication (correct node IDs, CAN bitrate set to 250 kbps)
 
 ---
 
@@ -71,7 +100,7 @@ source install/setup.bash
 ros2 launch hil_odrive_ros2_control motor_control.launch.py
 ```
 
-This starts `ros2_control_node`, `robot_state_publisher`, `joint_state_broadcaster`, and `motor_effort_controller`.
+This starts `ros2_control_node`, `robot_state_publisher`, `joint_state_broadcaster`, `motor_effort_controller`, and `pto_effort_controller`.
 
 ---
 
@@ -82,11 +111,29 @@ ros2 control list_controllers
 ros2 topic echo /joint_states --once
 ```
 
-Both `joint_state_broadcaster` and `motor_effort_controller` should show as **active**. The `/joint_states` message should contain `motor_joint` with a valid (non-NaN) velocity.
+`joint_state_broadcaster`, `motor_effort_controller`, and `pto_effort_controller` should all show as **active**. The `/joint_states` message should contain both `motor_joint` and `pto_joint` with valid (non-NaN) velocities.
 
 ---
 
-## Run the velocity PID node
+## PTO motor configuration (Phase 1 — passive linear damper)
+
+Configure ODrive axis1 as a passive linear damper directly via `odrivetool`. The velocity controller's P-gain acts as the damping coefficient `B`:
+
+```python
+# In odrivetool
+odrv0.axis1.controller.config.control_mode = ControlMode.VELOCITY_CONTROL
+odrv0.axis1.controller.config.vel_setpoint = 0
+odrv0.axis1.controller.config.vel_gain = B   # damping coefficient (Nm·s/rad)
+odrv0.axis1.requested_state = AxisState.CLOSED_LOOP_CONTROL
+```
+
+When Motor 1 spins the shaft at angular velocity ω, axis1 applies resistive torque `τ = -B · ω`. Power is extracted and dissipated electrically.
+
+**Power measurement:** probe `V_bus` and `I_bus` on the PTO motor's DC bus with an oscilloscope. Instantaneous extracted power = `V_bus × I_bus`.
+
+---
+
+## Run the velocity PID node (hydro emulator)
 
 The defaults are hardware-tuned — no parameters needed for basic operation:
 
@@ -138,7 +185,9 @@ This opens rqt_reconfigure, where you can refresh the parameter list and select 
 ## Data flow
 
 ```
-/joint_states → velocity_pid_node → /motor_effort_controller/commands → effort_controller → ODrive HW plugin → CAN → ODrive
+/joint_states → velocity_pid_node → /motor_effort_controller/commands → effort_controller → ODrive HW plugin → CAN → ODrive axis0 (motor_joint)
+
+ODrive axis1 (pto_joint) ← passive damping configured via odrivetool (τ = -B·ω)
 ```
 
 ---
@@ -202,6 +251,22 @@ This opens rqt_reconfigure, where you can refresh the parameter list and select 
 | Motor not moving | `torque_limit_nm` too low to overcome friction | Increase `torque_limit_nm` |
 | `/joint_states` has NaN velocity | Wrong ODrive node ID in URDF | Update `node_id` in `description/urdf/motor.urdf.xacro` |
 | Controller type not found | `ros-jazzy-ros2-controllers` not installed | `sudo apt-get install ros-jazzy-ros2-controllers` |
+| `pto_joint` missing from `/joint_states` | axis1 not calibrated/active on ODrive | Calibrate axis1 via `odrivetool` and set to `CLOSED_LOOP_CONTROL` |
+
+---
+
+## Phase 2 (planned)
+
+Phase 2 will add a **pluggable PTO control framework** for comparing WEC control strategies on the same hardware bench:
+
+| Strategy | Law |
+|---|---|
+| Passive damping (baseline) | `τ = -B·ω` |
+| Optimal passive | `τ = -B_opt·ω` (B_opt matches radiation damping) |
+| Reactive (complex conjugate) | `τ = -B·ω - K·x` |
+| Latching | Lock shaft at extremes, release at optimal phase |
+| Declutching | Free shaft periodically, engage at optimal phase |
+| MPC | Model-predictive with wave prediction horizon |
 
 ---
 

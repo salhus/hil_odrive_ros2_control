@@ -60,6 +60,13 @@ def generate_launch_description():
         output="both",
     )
 
+    pto_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["pto_effort_controller", "--controller-manager", "/controller_manager"],
+        output="both",
+    )
+
     return LaunchDescription(
         declared_arguments
         + [
@@ -67,5 +74,6 @@ def generate_launch_description():
             robot_state_pub_node,
             joint_state_broadcaster_spawner,
             effort_controller_spawner,
+            pto_controller_spawner,
         ]
     )

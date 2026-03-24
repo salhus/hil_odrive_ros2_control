@@ -8,7 +8,15 @@ controller_manager:
     motor_effort_controller:
       type: effort_controllers/JointGroupEffortController
 
+    pto_effort_controller:
+      type: effort_controllers/JointGroupEffortController
+
 motor_effort_controller:
   ros__parameters:
     joints:
       - motor_joint
+
+pto_effort_controller:
+  ros__parameters:
+    joints:
+      - pto_joint

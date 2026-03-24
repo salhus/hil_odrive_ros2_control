@@ -11,3 +11,9 @@ motor_effort_controller:
     type: effort_controllers/JointGroupEffortController
     joints:
       - motor_joint
+
+pto_effort_controller:
+  ros__parameters:
+    type: effort_controllers/JointGroupEffortController
+    joints:
+      - pto_joint
