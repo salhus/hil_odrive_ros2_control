@@ -69,7 +69,7 @@ public:
     param_defs_ = {
       // name              default               member ptr                       validator                          resets_integral
       {"amplitude_rad_s",  0.00,  &VelocityPidNode::amplitude_rad_s_,  {},                                         false},
-      {"omega_rad_s",      1.25,  &VelocityPidNode::omega_rad_s_,      {},                                         false},
+      {"omega_rad_s",      0.00,  &VelocityPidNode::omega_rad_s_,      {},                                         false},
       {"kp",               0.3,   &VelocityPidNode::kp_,               {},                                         true},
       {"ki",               2.5,   &VelocityPidNode::ki_,               {},                                         true},
       {"kd",               0.00,  &VelocityPidNode::kd_,               {},                                         true},
