@@ -72,7 +72,7 @@ public:
       {"omega_rad_s",      1.25,  &VelocityPidNode::omega_rad_s_,      {},                                         false},
       {"kp",               0.3,   &VelocityPidNode::kp_,               {},                                         true},
       {"ki",               2.5,   &VelocityPidNode::ki_,               {},                                         true},
-      {"kd",               0.01,  &VelocityPidNode::kd_,               {},                                         true},
+      {"kd",               0.00,  &VelocityPidNode::kd_,               {},                                         true},
       {"kff",              0.25,  &VelocityPidNode::kff_,              {},                                         false},
       {"kaff",             0.50,  &VelocityPidNode::kaff_,             {},                                         false},
       {"torque_limit_nm",  5.00,  &VelocityPidNode::torque_limit_nm_,  positive_validator("torque_limit_nm"),      false},
