@@ -79,7 +79,7 @@ public:
       {"integral_limit",   0.30,  &VelocityPidNode::integral_limit_,   positive_validator("integral_limit"),       false},
       {"deadband_rad_s",   0.00,  &VelocityPidNode::deadband_rad_s_,   {},                                         false},
       {"rate_hz",         100.0,  &VelocityPidNode::rate_hz_,          positive_validator("rate_hz"),              false},
-      {"filter_alpha",     0.50,  &VelocityPidNode::filter_alpha_,     unit_range_validator("filter_alpha"),       false},
+      {"filter_alpha",     0.90,  &VelocityPidNode::filter_alpha_,     unit_range_validator("filter_alpha"),       false},
       {"invert_output",   false,  &VelocityPidNode::invert_output_,    {},                                         false},
       {"kp_pos",           0.0,   &VelocityPidNode::kp_pos_,           {},                                         false},
       {"position_setpoint", 0.0,  &VelocityPidNode::position_setpoint_, {},                                        false},
