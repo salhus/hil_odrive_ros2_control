@@ -42,7 +42,8 @@ public:
     filtered_vel_(0.0),
     filter_initialized_(false),
     joint_index_(-1),
-    saturated_(false)
+    saturated_(false),
+    last_measured_pos_(0.0)
   {
     // ── String parameters (not runtime-reconfigurable, handled before the table) ──────────────
     // These three parameters determine which topics and joint to use.  Changing them at runtime
@@ -71,15 +72,17 @@ public:
       {"omega_rad_s",      1.25,  &VelocityPidNode::omega_rad_s_,      {},                                         false},
       {"kp",               0.3,   &VelocityPidNode::kp_,               {},                                         true},
       {"ki",               2.5,   &VelocityPidNode::ki_,               {},                                         true},
-      {"kd",               0.00,  &VelocityPidNode::kd_,               {},                                         true},
+      {"kd",               0.01,  &VelocityPidNode::kd_,               {},                                         true},
       {"kff",              0.25,  &VelocityPidNode::kff_,              {},                                         false},
       {"kaff",             0.50,  &VelocityPidNode::kaff_,             {},                                         false},
       {"torque_limit_nm",  5.00,  &VelocityPidNode::torque_limit_nm_,  positive_validator("torque_limit_nm"),      false},
       {"integral_limit",   0.30,  &VelocityPidNode::integral_limit_,   positive_validator("integral_limit"),       false},
       {"deadband_rad_s",   0.00,  &VelocityPidNode::deadband_rad_s_,   {},                                         false},
       {"rate_hz",         100.0,  &VelocityPidNode::rate_hz_,          positive_validator("rate_hz"),              false},
-      {"filter_alpha",     0.90,  &VelocityPidNode::filter_alpha_,     unit_range_validator("filter_alpha"),       false},
+      {"filter_alpha",     0.50,  &VelocityPidNode::filter_alpha_,     unit_range_validator("filter_alpha"),       false},
       {"invert_output",   false,  &VelocityPidNode::invert_output_,    {},                                         false},
+      {"kp_pos",           0.0,   &VelocityPidNode::kp_pos_,           {},                                         false},
+      {"position_setpoint", 0.0,  &VelocityPidNode::position_setpoint_, {},                                        false},
     };
 
     // ── Declare, read, and validate each parameter from the table ────────────────────────────
@@ -129,10 +132,12 @@ public:
     // ── Publishers ───────────────────────────────────────────────────────────────────────────
     // torque_pub_: effort command consumed by the hardware interface / ODrive driver.
     // The ~/... topics expose diagnostics for rqt_plot, RViz, and rosbag recording.
-    torque_pub_         = this->create_publisher<std_msgs::msg::Float64MultiArray>(command_topic_, 10);
-    desired_vel_pub_    = this->create_publisher<std_msgs::msg::Float64>("~/desired_velocity", 10);
-    measured_vel_pub_   = this->create_publisher<std_msgs::msg::Float64>("~/measured_velocity", 10);
-    velocity_error_pub_ = this->create_publisher<std_msgs::msg::Float64>("~/velocity_error", 10);
+    torque_pub_             = this->create_publisher<std_msgs::msg::Float64MultiArray>(command_topic_, 10);
+    desired_vel_pub_        = this->create_publisher<std_msgs::msg::Float64>("~/desired_velocity", 10);
+    measured_vel_pub_       = this->create_publisher<std_msgs::msg::Float64>("~/measured_velocity", 10);
+    velocity_error_pub_     = this->create_publisher<std_msgs::msg::Float64>("~/velocity_error", 10);
+    measured_position_pub_  = this->create_publisher<std_msgs::msg::Float64>("~/measured_position", 10);
+    position_error_pub_     = this->create_publisher<std_msgs::msg::Float64>("~/position_error", 10);
 
     // ── Control loop timer ───────────────────────────────────────────────────────────────────
     // Fires at the nominal rate; actual elapsed time is measured inside control_loop() to
@@ -413,6 +418,15 @@ private:
       }
       last_measured_vel_ = filtered_vel_;
     }
+
+    // Read position estimate (already smooth from ODrive encoder; no filtering needed).
+    if (idx < msg->position.size()) {
+      double raw_pos = msg->position[idx];
+      if (invert_output_) {
+        raw_pos = -raw_pos;
+      }
+      last_measured_pos_ = raw_pos;
+    }
   }
 
   // ══════════════════════════════════════════════════════════════════════════════════════════════
@@ -467,8 +481,14 @@ private:
     const double desired_accel = amplitude_rad_s_ * omega_rad_s_ * std::cos(omega_rad_s_ * t);
     const double feedforward   = kff_ * desired_vel + kaff_ * desired_accel;
 
+    // Position feedforward: spring-like restoring force toward position_setpoint_.
+    // Acts as a stabilising anchor that prevents the position from drifting over time.
+    // kp_pos = 0.0 (default) disables this term entirely for backward compatibility.
+    const double position_error = last_measured_pos_ - position_setpoint_;
+    const double position_ff    = -kp_pos_ * position_error;
+
     // Full PID + feedforward output.
-    double output = feedforward + kp_ * error + ki_ * integral_ + kd_ * derivative;
+    double output = feedforward + position_ff + kp_ * error + ki_ * integral_ + kd_ * derivative;
 
     // Torque saturation: clamp the output and track whether we are currently saturated.
     const bool was_saturated = saturated_;
@@ -496,9 +516,11 @@ private:
       m.data = val;
       publisher->publish(m);
     };
-    pub_float64(desired_vel_pub_,    desired_vel);
-    pub_float64(measured_vel_pub_,   last_measured_vel_);
-    pub_float64(velocity_error_pub_, error);
+    pub_float64(desired_vel_pub_,       desired_vel);
+    pub_float64(measured_vel_pub_,      last_measured_vel_);
+    pub_float64(velocity_error_pub_,    error);
+    pub_float64(measured_position_pub_, last_measured_pos_);
+    pub_float64(position_error_pub_,    position_error);
   }
 
   void publish_torque(double torque)
@@ -514,6 +536,8 @@ private:
   rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr desired_vel_pub_;
   rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr measured_vel_pub_;
   rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr velocity_error_pub_;
+  rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr measured_position_pub_;
+  rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr position_error_pub_;
   rclcpp::TimerBase::SharedPtr timer_;
   // Callback handles must be stored as members; if they go out of scope the callbacks are
   // automatically deregistered by rclcpp.
@@ -538,6 +562,8 @@ private:
   double dt_;
   double filter_alpha_;
   bool invert_output_;
+  double kp_pos_;
+  double position_setpoint_;
 
   // ── State ─────────────────────────────────────────────────────────────────────────────────────
   double integral_;
@@ -547,6 +573,7 @@ private:
   bool filter_initialized_;
   int joint_index_;
   bool saturated_;
+  double last_measured_pos_;
   rclcpp::Time start_time_;
   rclcpp::Time last_loop_time_;
 
