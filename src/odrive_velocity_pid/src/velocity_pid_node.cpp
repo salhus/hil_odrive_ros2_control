@@ -70,11 +70,11 @@ public:
       // name              default               member ptr                       validator                          resets_integral
       {"amplitude_rad_s",  0.00,  &VelocityPidNode::amplitude_rad_s_,  {},                                         false},
       {"omega_rad_s",      0.00,  &VelocityPidNode::omega_rad_s_,      {},                                         false},
-      {"kp",               0.3,   &VelocityPidNode::kp_,               {},                                         true},
-      {"ki",               2.5,   &VelocityPidNode::ki_,               {},                                         true},
+      {"kp",               0.00,   &VelocityPidNode::kp_,               {},                                         true},
+      {"ki",               0.00,   &VelocityPidNode::ki_,               {},                                         true},
       {"kd",               0.00,  &VelocityPidNode::kd_,               {},                                         true},
-      {"kff",              0.25,  &VelocityPidNode::kff_,              {},                                         false},
-      {"kaff",             0.50,  &VelocityPidNode::kaff_,             {},                                         false},
+      {"kff",              0.00,  &VelocityPidNode::kff_,              {},                                         false},
+      {"kaff",             0.00,  &VelocityPidNode::kaff_,             {},                                         false},
       {"torque_limit_nm",  5.00,  &VelocityPidNode::torque_limit_nm_,  positive_validator("torque_limit_nm"),      false},
       {"integral_limit",   0.30,  &VelocityPidNode::integral_limit_,   positive_validator("integral_limit"),       false},
       {"deadband_rad_s",   0.00,  &VelocityPidNode::deadband_rad_s_,   {},                                         false},
@@ -452,9 +452,24 @@ private:
     // Elapsed time from node start — used to evaluate the sine reference trajectory.
     const double t = (now - start_time_).seconds();
 
+    // Position feedforward: spring-like restoring force toward position_setpoint_.
+    // Acts as a stabilising anchor that prevents the position from drifting over time.
+    // kp_pos = 0.0 (default) disables this term entirely for backward compatibility.
+    const double position_error = last_measured_pos_ - position_setpoint_;
+    const double position_ff    = -kp_pos_ * position_error;
+
     // Sine-wave reference trajectory: desired_vel = A · sin(ω · t)
     const double desired_vel = amplitude_rad_s_ * std::sin(omega_rad_s_ * t);
+    // For a sine reference: desired_accel = A · ω · cos(ω · t)
+    const double desired_accel = amplitude_rad_s_ * omega_rad_s_ * std::cos(omega_rad_s_ * t);
+    
+    // Feedforward terms:
+    //   velocity FF:     kff  * desired_vel    (proportional to reference velocity)
+    //   acceleration FF: kaff * desired_accel  (proportional to d/dt[desired_vel])
 
+    const double feedforward   = kff_ * desired_vel + kaff_ * desired_accel;
+
+    
     // Tracking error; clamped to zero inside the deadband to suppress small oscillations.
     double error = desired_vel - last_measured_vel_;
     if (std::abs(error) < deadband_rad_s_) {
@@ -474,18 +489,7 @@ private:
       integral_ = std::clamp(integral_, -integral_limit_, integral_limit_);
     }
 
-    // Feedforward terms:
-    //   velocity FF:     kff  * desired_vel    (proportional to reference velocity)
-    //   acceleration FF: kaff * desired_accel  (proportional to d/dt[desired_vel])
-    // For a sine reference: desired_accel = A · ω · cos(ω · t)
-    const double desired_accel = amplitude_rad_s_ * omega_rad_s_ * std::cos(omega_rad_s_ * t);
-    const double feedforward   = kff_ * desired_vel + kaff_ * desired_accel;
 
-    // Position feedforward: spring-like restoring force toward position_setpoint_.
-    // Acts as a stabilising anchor that prevents the position from drifting over time.
-    // kp_pos = 0.0 (default) disables this term entirely for backward compatibility.
-    const double position_error = last_measured_pos_ - position_setpoint_;
-    const double position_ff    = -kp_pos_ * position_error;
 
     // Full PID + feedforward output.
     double output = feedforward + position_ff + kp_ * error + ki_ * integral_ + kd_ * derivative;
