@@ -78,7 +78,7 @@ public:
       {"torque_limit_nm",  5.00,  &VelocityPidNode::torque_limit_nm_,  positive_validator("torque_limit_nm"),      false},
       {"integral_limit",   0.30,  &VelocityPidNode::integral_limit_,   positive_validator("integral_limit"),       false},
       {"deadband_rad_s",   0.00,  &VelocityPidNode::deadband_rad_s_,   {},                                         false},
-      {"rate_hz",         100.0,  &VelocityPidNode::rate_hz_,          positive_validator("rate_hz"),              false},
+      {"rate_hz",         200.0,  &VelocityPidNode::rate_hz_,          positive_validator("rate_hz"),              false},
       {"filter_alpha",     0.90,  &VelocityPidNode::filter_alpha_,     unit_range_validator("filter_alpha"),       false},
       {"invert_output",   false,  &VelocityPidNode::invert_output_,    {},                                         false},
       {"kp_pos",           0.0,   &VelocityPidNode::kp_pos_,           {},                                         false},
