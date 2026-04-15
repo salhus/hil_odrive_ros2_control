@@ -36,6 +36,7 @@
 #include <algorithm>
 #include <chrono>
 #include <cmath>
+#include <cstdint>
 #include <functional>
 #include <set>
 #include <string>
@@ -88,41 +89,39 @@ public:
     // for one tunable numeric or bool parameter.  Adding a parameter requires one line here.
     //
     // Fields:
-    //   name                – ROS parameter name
-    //   default_value       – default (also encodes the C++ type via the variant alternative)
-    //   member              – pointer-to-member for direct assignment in loops
-    //   validator           – optional ValidatorFn; empty = always valid
-    //   resets_integral     – reset the velocity (inner) PID integrator when this param changes
-    //   resets_pos_integral – reset the position (outer) PID integrator when this param changes
+    //   name         – ROS parameter name
+    //   default_value – default (also encodes the C++ type via the variant alternative)
+    //   member       – pointer-to-member for direct assignment in loops
+    //   validator    – optional ValidatorFn; empty = always valid
+    //   reset_flags  – bitmask: kResetVel (1) resets inner PID, kResetPos (2) resets outer PID
     param_defs_ = {
       // ── Trajectory ─────────────────────────────────────────────────────────────────────────
-      // name                   default  member ptr                               validator                                vel_reset  pos_reset
-      {"amplitude_rad_s",        0.00,   &VelocityPidNode::amplitude_rad_s_,     {},                                      false,     false},
-      {"omega_rad_s",            0.00,   &VelocityPidNode::omega_rad_s_,         {},                                      false,     false},
+      {"amplitude_rad_s",        0.00,   &VelocityPidNode::amplitude_rad_s_,     {},                                      0},
+      {"omega_rad_s",            0.00,   &VelocityPidNode::omega_rad_s_,         {},                                      0},
       // ── Inner loop (velocity PID) gains ────────────────────────────────────────────────────
-      {"kp",                     0.00,   &VelocityPidNode::kp_,                  {},                                      true,      false},
-      {"ki",                     0.00,   &VelocityPidNode::ki_,                  {},                                      true,      false},
-      {"kd",                     0.00,   &VelocityPidNode::kd_,                  {},                                      true,      false},
-      {"kff",                    0.00,   &VelocityPidNode::kff_,                 {},                                      false,     false},
-      {"kaff",                   0.00,   &VelocityPidNode::kaff_,                {},                                      false,     false},
+      {"kp",                     0.00,   &VelocityPidNode::kp_,                  {},                                      kResetVel},
+      {"ki",                     0.00,   &VelocityPidNode::ki_,                  {},                                      kResetVel},
+      {"kd",                     0.00,   &VelocityPidNode::kd_,                  {},                                      kResetVel},
+      {"kff",                    0.00,   &VelocityPidNode::kff_,                 {},                                      0},
+      {"kaff",                   0.00,   &VelocityPidNode::kaff_,                {},                                      0},
       // ── Inner loop limits ──────────────────────────────────────────────────────────────────
-      {"torque_limit_nm",        5.00,   &VelocityPidNode::torque_limit_nm_,     positive_validator("torque_limit_nm"),   false,     false},
-      {"integral_limit",         0.30,   &VelocityPidNode::integral_limit_,      positive_validator("integral_limit"),    false,     false},
-      {"deadband_rad_s",         0.00,   &VelocityPidNode::deadband_rad_s_,      {},                                      false,     false},
+      {"torque_limit_nm",        5.00,   &VelocityPidNode::torque_limit_nm_,     positive_validator("torque_limit_nm"),   0},
+      {"integral_limit",         0.30,   &VelocityPidNode::integral_limit_,      positive_validator("integral_limit"),    0},
+      {"deadband_rad_s",         0.00,   &VelocityPidNode::deadband_rad_s_,      {},                                      0},
       // ── Outer loop (position PID) gains ────────────────────────────────────────────────────
-      {"kp_pos",                 0.00,   &VelocityPidNode::kp_pos_,              {},                                      false,     true},
-      {"ki_pos",                 0.00,   &VelocityPidNode::ki_pos_,              {},                                      false,     true},
-      {"kd_pos",                 0.00,   &VelocityPidNode::kd_pos_,              {},                                      false,     true},
+      {"kp_pos",                 0.00,   &VelocityPidNode::kp_pos_,              {},                                      kResetPos},
+      {"ki_pos",                 0.00,   &VelocityPidNode::ki_pos_,              {},                                      kResetPos},
+      {"kd_pos",                 0.00,   &VelocityPidNode::kd_pos_,              {},                                      kResetPos},
       // ── Outer loop limits ──────────────────────────────────────────────────────────────────
-      {"pos_integral_limit",     1.00,   &VelocityPidNode::pos_integral_limit_,  positive_validator("pos_integral_limit"), false,    false},
-      {"pos_output_limit",      50.00,   &VelocityPidNode::pos_output_limit_,    positive_validator("pos_output_limit"),  false,     false},
+      {"pos_integral_limit",     1.00,   &VelocityPidNode::pos_integral_limit_,  positive_validator("pos_integral_limit"), 0},
+      {"pos_output_limit",      50.00,   &VelocityPidNode::pos_output_limit_,    positive_validator("pos_output_limit"),  0},
       // ── Outer loop rate divider ─────────────────────────────────────────────────────────────
-      {"outer_loop_divider",     1.00,   &VelocityPidNode::outer_loop_divider_,  positive_validator("outer_loop_divider"), false,    false},
+      {"outer_loop_divider",     1.00,   &VelocityPidNode::outer_loop_divider_,  positive_validator("outer_loop_divider"), 0},
       // ── Misc ───────────────────────────────────────────────────────────────────────────────
-      {"rate_hz",              100.0,    &VelocityPidNode::rate_hz_,             positive_validator("rate_hz"),           false,     false},
-      {"filter_alpha",           0.90,   &VelocityPidNode::filter_alpha_,        unit_range_validator("filter_alpha"),    false,     false},
-      {"invert_output",         false,   &VelocityPidNode::invert_output_,       {},                                      false,     false},
-      {"position_setpoint",      0.00,   &VelocityPidNode::position_setpoint_,   {},                                      false,     false},
+      {"rate_hz",              100.0,    &VelocityPidNode::rate_hz_,             positive_validator("rate_hz"),           0},
+      {"filter_alpha",           0.90,   &VelocityPidNode::filter_alpha_,        unit_range_validator("filter_alpha"),    0},
+      {"invert_output",         false,   &VelocityPidNode::invert_output_,       {},                                      0},
+      {"position_setpoint",      0.00,   &VelocityPidNode::position_setpoint_,   {},                                      0},
     };
 
     // ── Declare, read, and startup-validate each table parameter ─────────────────────────────
@@ -223,14 +222,16 @@ private:
   using ParamValue  = std::variant<double, bool>;
   using ValidatorFn = std::function<rcl_interfaces::msg::SetParametersResult(const ParamValue &)>;
 
+  static constexpr uint8_t kResetVel = 1;  // bitmask: reset inner (velocity) PID integrator
+  static constexpr uint8_t kResetPos = 2;  // bitmask: reset outer (position) PID integrator
+
   struct ParamDef
   {
     std::string  name;
     ParamValue   default_value;
     MemberPtr    member;
     ValidatorFn  validator;
-    bool         resets_integral     = false;  // reset velocity (inner) PID integrator on change
-    bool         resets_pos_integral = false;  // reset position (outer) PID integrator on change
+    uint8_t      reset_flags = 0;  // kResetVel | kResetPos as needed
   };
 
   // ── Validator factories ───────────────────────────────────────────────────────────────────────
@@ -367,8 +368,8 @@ private:
           }
         }, def.member);
 
-        if (def.resets_integral)     { vel_gains_changed = true; }
-        if (def.resets_pos_integral) { pos_gains_changed = true; }
+        if (def.reset_flags & kResetVel) { vel_gains_changed = true; }
+        if (def.reset_flags & kResetPos) { pos_gains_changed = true; }
         break;
       }
     }
@@ -473,160 +474,113 @@ private:
   }
 
   // ══════════════════════════════════════════════════════════════════════════════════════════════
+  //  Helper: publish a Float64 message
+  // ══════════════════════════════════════════════════════════════════════════════════════════════
+
+  void pub_f64(rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr & pub, double val)
+  {
+    std_msgs::msg::Float64 m;
+    m.data = val;
+    pub->publish(m);
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════════════════════════
+  //  Trajectory reference
+  // ══════════════════════════════════════════════════════════════════════════════════════════════
+
+  struct TrajectoryRef { double pos, vel, accel; };
+
+  TrajectoryRef compute_trajectory(double t) const
+  {
+    TrajectoryRef ref{position_setpoint_, 0.0, 0.0};
+    if (std::abs(omega_rad_s_) > 1e-9) {
+      ref.vel   = amplitude_rad_s_ * std::sin(omega_rad_s_ * t);
+      ref.accel = amplitude_rad_s_ * omega_rad_s_ * std::cos(omega_rad_s_ * t);
+      if (control_mode_ != "velocity_only") {
+        ref.pos = position_setpoint_ +
+          (amplitude_rad_s_ / omega_rad_s_) * (1.0 - std::cos(omega_rad_s_ * t));
+      }
+    }
+    return ref;
+  }
+
+  // ── run_inner_loop — clamped torque from velocity PID + feedforward ────────────────────────────
+  double run_inner_loop(double vel_setpoint, double accel_ff, double dt)
+  {
+    double pid_out = vel_pid_.compute(vel_setpoint, last_measured_vel_, dt);
+    double torque  = pid_out + kff_ * vel_setpoint + kaff_ * accel_ff;
+    torque         = std::clamp(torque, -torque_limit_nm_, torque_limit_nm_);
+    vel_pid_.saturated = (std::abs(torque) >= torque_limit_nm_);
+    return torque;
+  }
+
+  // ── run_outer_loop — position PID → v_cmd_, rate-divided ──────────────────────────────────────
+  void run_outer_loop(double pos_ref, double vel_ff, double dt)
+  {
+    outer_dt_accum_ += dt;
+    if (++outer_loop_counter_ >= static_cast<int>(std::llround(outer_loop_divider_))) {
+      outer_loop_counter_ = 0;
+      double pid_out = pos_pid_.compute(pos_ref, last_measured_pos_, outer_dt_accum_);
+      v_cmd_ = std::clamp(pid_out + vel_ff, -pos_output_limit_, pos_output_limit_);
+      pos_pid_.saturated = (std::abs(v_cmd_) >= pos_output_limit_);
+      outer_dt_accum_ = 0.0;
+    }
+  }
+
+  // ── publish_diagnostics — shared Float64 publishing after mode dispatch ────────────────────────
+  void publish_diagnostics(double vel_ref, double vel_error, double pos_ref, double pos_error)
+  {
+    pub_f64(desired_vel_pub_,       vel_ref);
+    pub_f64(measured_vel_pub_,      last_measured_vel_);
+    pub_f64(velocity_error_pub_,    vel_error);
+    pub_f64(measured_position_pub_, last_measured_pos_);
+    pub_f64(position_error_pub_,    pos_error);
+    pub_f64(position_command_pub_,  pos_ref);
+    pub_f64(velocity_command_pub_,  v_cmd_);
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════════════════════════
   //  Control loop
   // ══════════════════════════════════════════════════════════════════════════════════════════════
 
   void control_loop()
   {
-    if (joint_index_ < 0) {
-      publish_torque(0.0);
-      return;
-    }
+    if (joint_index_ < 0) { publish_torque(0.0); return; }
 
-    // ── Timing ──────────────────────────────────────────────────────────────────────────────────
-    const auto   now       = this->now();
+    const auto now = this->now();
     const double actual_dt = (now - last_loop_time_).seconds();
-    last_loop_time_        = now;
-    const double dt        = (actual_dt > 0.0) ? actual_dt : dt_;
-    const double t         = (now - start_time_).seconds();
+    last_loop_time_ = now;
+    const double dt = (actual_dt > 0.0) ? actual_dt : dt_;
+    const double t  = (now - start_time_).seconds();
 
-    // ── Sync gains (ensures any runtime param change is reflected this tick) ────────────────────
-    apply_vel_pid_config();
-    apply_pos_pid_config();
+    const auto traj = compute_trajectory(t);
 
-    // ── Trajectory reference computation ────────────────────────────────────────────────────────
-    // vel_ref  : first derivative of the position trajectory  (velocity FF for outer loop)
-    // accel_ref: second derivative                            (acceleration FF for inner loop)
-    // pos_ref  : integral of vel_ref, offset by position_setpoint_ so trajectory starts there
-    double pos_ref   = position_setpoint_;
-    double vel_ref   = 0.0;
-    double accel_ref = 0.0;
+    double torque    = 0.0;
+    double vel_error = 0.0;
+    double pos_error = traj.pos - last_measured_pos_;
 
-    if (std::abs(omega_rad_s_) > 1e-9) {
-      vel_ref   = amplitude_rad_s_ * std::sin(omega_rad_s_ * t);
-      accel_ref = amplitude_rad_s_ * omega_rad_s_ * std::cos(omega_rad_s_ * t);
-      if (control_mode_ == "cascade" || control_mode_ == "position_only") {
-        // pos_ref(t) = setpoint + (A/ω)(1 − cos(ω·t))
-        pos_ref = position_setpoint_ +
-          (amplitude_rad_s_ / omega_rad_s_) * (1.0 - std::cos(omega_rad_s_ * t));
-      }
-    }
-
-    // ── Shared lambda: publish a Float64 message ─────────────────────────────────────────────────
-    auto pub_f64 = [](auto & pub, double val) {
-      std_msgs::msg::Float64 m;
-      m.data = val;
-      pub->publish(m);
-    };
-
-    // ────────────────────────────────────────────────────────────────────────────────────────────
-    //  MODE: velocity_only  (backward-compatible single-loop)
-    // ────────────────────────────────────────────────────────────────────────────────────────────
-    if (control_mode_ == "velocity_only") {
-      const double desired_vel = vel_ref;
-      const double vel_error   = desired_vel - last_measured_vel_;
-      const double ff          = kff_ * desired_vel + kaff_ * accel_ref;
-
-      double pid_out = vel_pid_.compute(desired_vel, last_measured_vel_, dt);
-      double torque  = pid_out + ff;
-      torque         = std::clamp(torque, -torque_limit_nm_, torque_limit_nm_);
-      // Inform PID of the total-output saturation for correct anti-windup next tick.
-      vel_pid_.saturated = (std::abs(torque) >= torque_limit_nm_);
-
-      v_cmd_ = desired_vel;  // keep velocity_command diagnostic meaningful
-
-      RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 100,
-        "[vel_only] des=%.3f meas=%.3f err=%.3f out=%.3f sat=%d",
-        desired_vel, last_measured_vel_, vel_error, torque,
-        static_cast<int>(vel_pid_.saturated));
-
-      publish_torque(torque);
-      pub_f64(desired_vel_pub_,       desired_vel);
-      pub_f64(measured_vel_pub_,      last_measured_vel_);
-      pub_f64(velocity_error_pub_,    vel_error);
-      pub_f64(measured_position_pub_, last_measured_pos_);
-      pub_f64(position_error_pub_,    pos_ref - last_measured_pos_);
-      pub_f64(position_command_pub_,  pos_ref);
-      pub_f64(velocity_command_pub_,  v_cmd_);
-      return;
-    }
-
-    // ────────────────────────────────────────────────────────────────────────────────────────────
-    //  MODE: cascade  (outer position loop → inner velocity loop)
-    // ────────────────────────────────────────────────────────────────────────────────────────────
     if (control_mode_ == "cascade") {
-      // ── Outer loop (position → velocity command) ───────────────────────────────────────────
-      // Runs every outer_loop_divider_ inner ticks; holds v_cmd_ between executions.
-      outer_dt_accum_ += dt;
-      if (++outer_loop_counter_ >= static_cast<int>(std::llround(outer_loop_divider_))) {
-        outer_loop_counter_ = 0;
-
-        const double pos_pid_out = pos_pid_.compute(pos_ref, last_measured_pos_, outer_dt_accum_);
-        // Add velocity feedforward (analytical derivative of the position trajectory).
-        v_cmd_ = pos_pid_out + vel_ref;
-        v_cmd_ = std::clamp(v_cmd_, -pos_output_limit_, pos_output_limit_);
-        // Update outer-loop saturation for anti-windup on the next outer tick.
-        pos_pid_.saturated = (std::abs(v_cmd_) >= pos_output_limit_);
-
-        outer_dt_accum_ = 0.0;
-      }
-
-      // ── Inner loop (velocity → torque) ────────────────────────────────────────────────────
-      const double vel_error = v_cmd_ - last_measured_vel_;
-      // Feedforward: kff scales the velocity command; kaff scales the acceleration reference.
-      const double ff = kff_ * v_cmd_ + kaff_ * accel_ref;
-
-      double pid_out = vel_pid_.compute(v_cmd_, last_measured_vel_, dt);
-      double torque  = pid_out + ff;
-      torque         = std::clamp(torque, -torque_limit_nm_, torque_limit_nm_);
-      vel_pid_.saturated = (std::abs(torque) >= torque_limit_nm_);
-
-      const double pos_error = pos_ref - last_measured_pos_;
-
-      RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 100,
-        "[cascade] pos_err=%.3f v_cmd=%.3f vel_err=%.3f torque=%.3f sat=%d",
-        pos_error, v_cmd_, vel_error, torque, static_cast<int>(vel_pid_.saturated));
-
-      publish_torque(torque);
-      pub_f64(desired_vel_pub_,       vel_ref);
-      pub_f64(measured_vel_pub_,      last_measured_vel_);
-      pub_f64(velocity_error_pub_,    vel_error);
-      pub_f64(measured_position_pub_, last_measured_pos_);
-      pub_f64(position_error_pub_,    pos_error);
-      pub_f64(position_command_pub_,  pos_ref);
-      pub_f64(velocity_command_pub_,  v_cmd_);
-      return;
-    }
-
-    // ────────────────────────────────────────────────────────────────────────────────────────────
-    //  MODE: position_only  (outer position loop directly drives torque — no inner velocity loop)
-    // ────────────────────────────────────────────────────────────────────────────────────────────
-    if (control_mode_ == "position_only") {
-      const double pos_error = pos_ref - last_measured_pos_;
-
-      double torque = pos_pid_.compute(pos_ref, last_measured_pos_, dt);
-      torque        = std::clamp(torque, -torque_limit_nm_, torque_limit_nm_);
+      run_outer_loop(traj.pos, traj.vel, dt);
+      torque    = run_inner_loop(v_cmd_, traj.accel, dt);
+      vel_error = v_cmd_ - last_measured_vel_;
+    } else if (control_mode_ == "position_only") {
+      torque = pos_pid_.compute(traj.pos, last_measured_pos_, dt);
+      torque = std::clamp(torque, -torque_limit_nm_, torque_limit_nm_);
       pos_pid_.saturated = (std::abs(torque) >= torque_limit_nm_);
-
       v_cmd_ = 0.0;
-
-      RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 100,
-        "[pos_only] pos_err=%.3f torque=%.3f sat=%d",
-        pos_error, torque, static_cast<int>(pos_pid_.saturated));
-
-      publish_torque(torque);
-      pub_f64(desired_vel_pub_,       vel_ref);
-      pub_f64(measured_vel_pub_,      last_measured_vel_);
-      pub_f64(velocity_error_pub_,    0.0);
-      pub_f64(measured_position_pub_, last_measured_pos_);
-      pub_f64(position_error_pub_,    pos_error);
-      pub_f64(position_command_pub_,  pos_ref);
-      pub_f64(velocity_command_pub_,  v_cmd_);
-      return;
+    } else {  // velocity_only
+      v_cmd_    = traj.vel;
+      torque    = run_inner_loop(traj.vel, traj.accel, dt);
+      vel_error = traj.vel - last_measured_vel_;
     }
 
-    // Fallback — unknown mode: publish zero torque safely.
-    publish_torque(0.0);
+    RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 100,
+      "[%s] pos_err=%.3f v_cmd=%.3f vel_err=%.3f torque=%.3f sat=%d",
+      control_mode_.c_str(), pos_error, v_cmd_, vel_error, torque,
+      static_cast<int>(vel_pid_.saturated));
+
+    publish_torque(torque);
+    publish_diagnostics(traj.vel, vel_error, traj.pos, pos_error);
   }
 
   void publish_torque(double torque)
