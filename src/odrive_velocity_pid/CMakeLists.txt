@@ -14,6 +14,9 @@ find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 
 add_executable(velocity_pid_node src/velocity_pid_node.cpp)
+target_include_directories(velocity_pid_node PRIVATE
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+)
 ament_target_dependencies(velocity_pid_node
   rclcpp
   sensor_msgs
