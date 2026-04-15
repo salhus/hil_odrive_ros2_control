@@ -76,12 +76,12 @@ public:
     joint_name_        = this->get_parameter("joint_name").as_string();
 
     // ── control_mode string (runtime-reconfigurable, handled separately) ─────────────────────
-    this->declare_parameter<std::string>("control_mode", "velocity_only");
+    this->declare_parameter<std::string>("control_mode", "position_only");
     control_mode_ = this->get_parameter("control_mode").as_string();
     if (!is_valid_control_mode(control_mode_)) {
       RCLCPP_WARN(this->get_logger(),
-        "Invalid control_mode '%s'; falling back to 'velocity_only'", control_mode_.c_str());
-      control_mode_ = "velocity_only";
+        "Invalid control_mode '%s'; falling back to 'position_only'", control_mode_.c_str());
+      control_mode_ = "position_only";
     }
 
     // ── Build the parameter definition table ─────────────────────────────────────────────────
@@ -109,9 +109,9 @@ public:
       {"integral_limit",         0.30,   &VelocityPidNode::integral_limit_,      positive_validator("integral_limit"),    0},
       {"deadband_rad_s",         0.00,   &VelocityPidNode::deadband_rad_s_,      {},                                      0},
       // ── Outer loop (position PID) gains ────────────────────────────────────────────────────
-      {"kp_pos",                 0.00,   &VelocityPidNode::kp_pos_,              {},                                      kResetPos},
-      {"ki_pos",                 0.00,   &VelocityPidNode::ki_pos_,              {},                                      kResetPos},
-      {"kd_pos",                 0.00,   &VelocityPidNode::kd_pos_,              {},                                      kResetPos},
+      {"kp_pos",                 0.50,   &VelocityPidNode::kp_pos_,              {},                                      kResetPos},
+      {"ki_pos",                 0.25,   &VelocityPidNode::ki_pos_,              {},                                      kResetPos},
+      {"kd_pos",                 0.01,   &VelocityPidNode::kd_pos_,              {},                                      kResetPos},
       // ── Outer loop limits ──────────────────────────────────────────────────────────────────
       {"pos_integral_limit",     1.00,   &VelocityPidNode::pos_integral_limit_,  positive_validator("pos_integral_limit"), 0},
       {"pos_output_limit",       2.00,   &VelocityPidNode::pos_output_limit_,    positive_validator("pos_output_limit"),  0},
