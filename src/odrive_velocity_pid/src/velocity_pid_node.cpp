@@ -102,8 +102,8 @@ public:
       {"kp",                     0.00,   &VelocityPidNode::kp_,                  {},                                      kResetVel},
       {"ki",                     0.00,   &VelocityPidNode::ki_,                  {},                                      kResetVel},
       {"kd",                     0.00,   &VelocityPidNode::kd_,                  {},                                      kResetVel},
-      {"kff",                    0.00,   &VelocityPidNode::kff_,                 {},                                      0},
-      {"kaff",                   0.00,   &VelocityPidNode::kaff_,                {},                                      0},
+      {"kff",                    0.00,   &VelocityPidNode::kff_,                 {},                                      kResetVel},
+      {"kaff",                   0.00,   &VelocityPidNode::kaff_,                {},                                      kResetVel},
       // ── Inner loop limits ──────────────────────────────────────────────────────────────────
       {"torque_limit_nm",        5.00,   &VelocityPidNode::torque_limit_nm_,     positive_validator("torque_limit_nm"),   0},
       {"integral_limit",         0.30,   &VelocityPidNode::integral_limit_,      positive_validator("integral_limit"),    0},
@@ -508,7 +508,19 @@ private:
   double run_inner_loop(double vel_setpoint, double accel_ff, double dt)
   {
     double pid_out = vel_pid_.compute(vel_setpoint, last_measured_vel_, dt);
-    double torque  = pid_out + kff_ * vel_setpoint + kaff_ * accel_ff;
+    // Feedforward is only safe when kp_ > 0 provides damping feedback.
+    // Without feedback, kff/kaff inject open-loop torque that causes runaway.
+    double ff = 0.0;
+    if (kp_ > 0.0) {
+      ff = kff_ * vel_setpoint + kaff_ * accel_ff;
+    } else if (kff_ != 0.0 || kaff_ != 0.0) {
+      RCLCPP_WARN_THROTTLE(
+        this->get_logger(), *this->get_clock(), 2000,
+        "Feedforward gains (kff=%.3f, kaff=%.3f) are nonzero but kp=0; "
+        "feedforward suppressed to prevent open-loop runaway.",
+        kff_, kaff_);
+    }
+    double torque = pid_out + ff;
     torque         = std::clamp(torque, -torque_limit_nm_, torque_limit_nm_);
     vel_pid_.saturated = (std::abs(torque) >= torque_limit_nm_);
     return torque;
