@@ -70,8 +70,8 @@ public:
       // name              default               member ptr                       validator                          resets_integral
       {"amplitude_rad_s",  0.00,  &VelocityPidNode::amplitude_rad_s_,  {},                                         false},
       {"omega_rad_s",      0.00,  &VelocityPidNode::omega_rad_s_,      {},                                         false},
-      {"kp",               0.00,   &VelocityPidNode::kp_,               {},                                         true},
-      {"ki",               0.00,   &VelocityPidNode::ki_,               {},                                         true},
+      {"kp",               0.00,  &VelocityPidNode::kp_,               {},                                         true},
+      {"ki",               0.00,  &VelocityPidNode::ki_,               {},                                         true},
       {"kd",               0.00,  &VelocityPidNode::kd_,               {},                                         true},
       {"kff",              0.00,  &VelocityPidNode::kff_,              {},                                         false},
       {"kaff",             0.00,  &VelocityPidNode::kaff_,             {},                                         false},
