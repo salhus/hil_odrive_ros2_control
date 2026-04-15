@@ -558,7 +558,7 @@ private:
       // ── Outer loop (position → velocity command) ───────────────────────────────────────────
       // Runs every outer_loop_divider_ inner ticks; holds v_cmd_ between executions.
       outer_dt_accum_ += dt;
-      if (++outer_loop_counter_ >= static_cast<int>(outer_loop_divider_)) {
+      if (++outer_loop_counter_ >= static_cast<int>(std::llround(outer_loop_divider_))) {
         outer_loop_counter_ = 0;
 
         const double pos_pid_out = pos_pid_.compute(pos_ref, last_measured_pos_, outer_dt_accum_);

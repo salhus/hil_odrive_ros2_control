@@ -93,6 +93,8 @@ public:
     // ── Output saturation ────────────────────────────────────────────────────────────────────────
     const bool was_saturated = saturated;
     output    = std::clamp(output, output_min, output_max);
+    // Inclusive boundary: output == output_max or output == output_min is treated as saturated,
+    // consistent with the original code's  (|output| >= limit)  check.
     saturated = (output >= output_max || output <= output_min);
 
     // On the first cycle after leaving saturation, re-clamp the integral to clear any
