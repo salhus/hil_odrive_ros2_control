@@ -105,7 +105,7 @@ public:
       {"kff",                    0.00,   &VelocityPidNode::kff_,                 {},                                      kResetVel},
       {"kaff",                   0.00,   &VelocityPidNode::kaff_,                {},                                      kResetVel},
       // ── Inner loop limits ──────────────────────────────────────────────────────────────────
-      {"torque_limit_nm",        1.00,   &VelocityPidNode::torque_limit_nm_,     positive_validator("torque_limit_nm"),   0},
+      {"torque_limit_nm",        0.30,   &VelocityPidNode::torque_limit_nm_,     positive_validator("torque_limit_nm"),   0},
       {"integral_limit",         0.30,   &VelocityPidNode::integral_limit_,      positive_validator("integral_limit"),    0},
       {"deadband_rad_s",         0.00,   &VelocityPidNode::deadband_rad_s_,      {},                                      0},
       // ── Outer loop (position PID) gains ────────────────────────────────────────────────────
@@ -114,7 +114,7 @@ public:
       {"kd_pos",                 0.00,   &VelocityPidNode::kd_pos_,              {},                                      kResetPos},
       // ── Outer loop limits ──────────────────────────────────────────────────────────────────
       {"pos_integral_limit",     1.00,   &VelocityPidNode::pos_integral_limit_,  positive_validator("pos_integral_limit"), 0},
-      {"pos_output_limit",      50.00,   &VelocityPidNode::pos_output_limit_,    positive_validator("pos_output_limit"),  0},
+      {"pos_output_limit",       2.00,   &VelocityPidNode::pos_output_limit_,    positive_validator("pos_output_limit"),  0},
       // ── Outer loop rate divider ─────────────────────────────────────────────────────────────
       {"outer_loop_divider",     1.00,   &VelocityPidNode::outer_loop_divider_,  positive_validator("outer_loop_divider"), 0},
       // ── Misc ───────────────────────────────────────────────────────────────────────────────
