@@ -113,7 +113,10 @@ ros2 topic echo /joint_states --once
 
 `joint_state_broadcaster`, `motor_effort_controller`, and `pto_effort_controller` should all show as **active**. The `/joint_states` message should contain both `motor_joint` and `pto_joint` with valid (non-NaN) velocities.
 
-> **Power telemetry:** The `electrical_power` and `mechanical_power` state interfaces are also available but will read NaN until you configure the ODrive to broadcast `Get_Powers` messages. See the [ODrive CAN broadcast setup](#pto-motor-configuration-phase-1--passive-linear-damper) section for the required `get_powers_msg_rate_ms` configuration step.
+> **Power telemetry:** The `electrical_power` and `mechanical_power` state interfaces are also available but will read NaN until you configure the ODrive to broadcast `Get_Powers` messages. See the [ODrive CAN broadcast setup](#pto-motor-configuration-phase-1--passive-linear-damper) section for the required `get_powers_msg_rate_ms` configuration step. Power values appear on the `/dynamic_joint_states` topic (not `/joint_states`):
+> ```bash
+> ros2 topic echo /dynamic_joint_states
+> ```
 
 ---
 
@@ -140,7 +143,7 @@ odrv0.axis1.config.can.get_powers_msg_rate_ms = 100
 odrv0.save_configuration()
 ```
 
-Once configured, power values appear in `/joint_states` — no oscilloscope needed.
+Once configured, power values appear in `/dynamic_joint_states` — no oscilloscope needed.
 
 ---
 
@@ -227,7 +230,7 @@ This opens `rqt_reconfigure`, where you can refresh the parameter list and selec
 
 ODrive axis1 (pto_joint) ← passive damping configured via odrivetool (τ = -B·ω)
 
-CAN → ODrive HW plugin → electrical_power, mechanical_power state interfaces → /joint_states
+CAN → ODrive HW plugin → electrical_power, mechanical_power state interfaces → /dynamic_joint_states
 ```
 
 `velocity_pid_node` is a **standalone node** — not a ros2_control controller plugin. It reads

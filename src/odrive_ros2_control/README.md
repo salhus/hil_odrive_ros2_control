@@ -28,12 +28,12 @@ ros2_control_node
 The `joint_state_broadcaster` reads position, velocity, and effort state interfaces from this
 plugin and publishes them on `/joint_states`, which the `velocity_pid_node` subscribes to.
 The `electrical_power` and `mechanical_power` state interfaces are populated from ODrive
-`Get_Powers` CAN broadcast messages.
+`Get_Powers` CAN broadcast messages and appear on `/dynamic_joint_states`.
 
 ## Power telemetry (`electrical_power` / `mechanical_power`)
 
 The ODrive does **not** broadcast `Get_Powers` messages by default. You must configure the
-broadcast rate via `odrivetool` before power values will appear in `/joint_states`:
+broadcast rate via `odrivetool` before power values will appear in `/dynamic_joint_states`:
 
 ```python
 # In odrivetool — enable power telemetry broadcast on both axes
@@ -42,7 +42,7 @@ odrv0.axis1.config.can.get_powers_msg_rate_ms = 100
 odrv0.save_configuration()
 ```
 
-Once configured, `electrical_power` and `mechanical_power` will be non-NaN in `/joint_states`.
+Once configured, `electrical_power` and `mechanical_power` will be non-NaN in `/dynamic_joint_states`.
 
 ## URDF configuration
 
