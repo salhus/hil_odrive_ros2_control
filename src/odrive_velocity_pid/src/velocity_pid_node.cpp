@@ -101,7 +101,7 @@ public:
       // ── Inner loop (velocity PID) gains ────────────────────────────────────────────────────
       {"kp",                     0.35,   &VelocityPidNode::kp_,                  {},                                      kResetVel},
       {"ki",                     0.01,   &VelocityPidNode::ki_,                  {},                                      kResetVel},
-      {"kd",                     0.02,   &VelocityPidNode::kd_,                  {},                                      kResetVel},
+      {"kd",                     0.00,   &VelocityPidNode::kd_,                  {},                                      kResetVel},
       {"kff",                    0.40,   &VelocityPidNode::kff_,                 {},                                      kResetVel},
       {"kaff",                   0.20,   &VelocityPidNode::kaff_,                {},                                      kResetVel},
       // ── Inner loop limits ──────────────────────────────────────────────────────────────────
