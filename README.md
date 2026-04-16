@@ -26,7 +26,7 @@ A self-contained **ROS 2 Jazzy** workspace implementing a **Wave Energy Converte
   ODrive axis1 configured as passive damper via odrivetool
   (velocity mode, setpoint = 0, P-gain = damping coefficient B)
 
-  Power measurement: oscilloscope on PTO motor DC bus (V_bus × I_bus)
+  Power measurement: electrical_power + mechanical_power state interfaces (via Get_Powers CAN broadcast)
 ```
 
 Both motors are on the **same ODrive board** (`can0`). axis0 = `node_id=0` (hydro emulator), axis1 = `node_id=1` (PTO).
@@ -113,6 +113,8 @@ ros2 topic echo /joint_states --once
 
 `joint_state_broadcaster`, `motor_effort_controller`, and `pto_effort_controller` should all show as **active**. The `/joint_states` message should contain both `motor_joint` and `pto_joint` with valid (non-NaN) velocities.
 
+> **Power telemetry:** The `electrical_power` and `mechanical_power` state interfaces are also available but will read NaN until you configure the ODrive to broadcast `Get_Powers` messages. See the [ODrive CAN broadcast setup](#pto-motor-configuration-phase-1--passive-linear-damper) section for the required `get_powers_msg_rate_ms` configuration step.
+
 ---
 
 ## PTO motor configuration (Phase 1 — passive linear damper)
@@ -129,7 +131,16 @@ odrv0.axis1.requested_state = AxisState.CLOSED_LOOP_CONTROL
 
 When Motor 1 spins the shaft at angular velocity ω, axis1 applies resistive torque `τ = -B · ω`. Power is extracted and dissipated electrically.
 
-**Power measurement:** probe `V_bus` and `I_bus` on the PTO motor's DC bus with an oscilloscope. Instantaneous extracted power = `V_bus × I_bus`.
+**Power telemetry:** The hardware plugin exposes `electrical_power` and `mechanical_power` state interfaces read from ODrive `Get_Powers` CAN broadcast messages. Enable the broadcast in `odrivetool`:
+
+```python
+# In odrivetool — enable power telemetry broadcast on both axes (10 Hz)
+odrv0.axis0.config.can.get_powers_msg_rate_ms = 100
+odrv0.axis1.config.can.get_powers_msg_rate_ms = 100
+odrv0.save_configuration()
+```
+
+Once configured, power values appear in `/joint_states` — no oscilloscope needed.
 
 ---
 
@@ -215,6 +226,8 @@ This opens `rqt_reconfigure`, where you can refresh the parameter list and selec
 /joint_states → velocity_pid_node → /motor_effort_controller/commands → effort_controller → ODrive HW plugin → CAN → ODrive axis0 (motor_joint)
 
 ODrive axis1 (pto_joint) ← passive damping configured via odrivetool (τ = -B·ω)
+
+CAN → ODrive HW plugin → electrical_power, mechanical_power state interfaces → /joint_states
 ```
 
 `velocity_pid_node` is a **standalone node** — not a ros2_control controller plugin. It reads

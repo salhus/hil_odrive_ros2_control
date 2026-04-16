@@ -201,7 +201,21 @@ odrv0.axis1.requested_state = AxisState.CLOSED_LOOP_CONTROL
 
 The velocity controller's P-gain acts as damping coefficient `B`. When Motor 1 spins the shaft at ω, axis1 applies `τ = -B · ω`.
 
-**Power measurement:** probe `V_bus` and `I_bus` on the PTO motor's DC bus with an oscilloscope. Instantaneous extracted power = `V_bus × I_bus`.
+### Power telemetry via ros2_control state interfaces
+
+The hardware plugin exposes `electrical_power` and `mechanical_power` state interfaces for both
+joints, populated from ODrive `Get_Powers` CAN broadcast messages. However, the ODrive does
+**not** broadcast these by default. Enable the broadcast rate via `odrivetool`:
+
+```python
+# In odrivetool — enable power telemetry broadcast on both axes (10 Hz)
+odrv0.axis0.config.can.get_powers_msg_rate_ms = 100
+odrv0.axis1.config.can.get_powers_msg_rate_ms = 100
+odrv0.save_configuration()
+```
+
+Once configured, `electrical_power` and `mechanical_power` will be non-NaN in `/joint_states`.
+This replaces the need to probe `V_bus × I_bus` on the DC bus with an oscilloscope.
 
 ---
 
@@ -277,7 +291,8 @@ You want all three of these to show as `active`:
 ros2 control list_hardware_interfaces
 ```
 
-Look for both `motor_joint` and `pto_joint` interfaces.
+Look for both `motor_joint` and `pto_joint` interfaces, including state interfaces for
+`position`, `velocity`, `effort`, `electrical_power`, and `mechanical_power`.
 
 ### Check feedback stream
 ```bash
