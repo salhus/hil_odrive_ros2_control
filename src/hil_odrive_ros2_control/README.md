@@ -214,7 +214,7 @@ odrv0.axis1.config.can.get_powers_msg_rate_ms = 100
 odrv0.save_configuration()
 ```
 
-Once configured, `electrical_power` and `mechanical_power` will be non-NaN in `/joint_states`.
+Once configured, `electrical_power` and `mechanical_power` will be non-NaN in `/dynamic_joint_states`.
 This replaces the need to probe `V_bus × I_bus` on the DC bus with an oscilloscope.
 
 ---
@@ -302,6 +302,15 @@ ros2 topic echo /joint_states --once
 Confirm:
 - Both `motor_joint` and `pto_joint` appear in `name: [...]`
 - `velocity: [...]` has sensible values (not NaN) for both joints
+
+### Check power telemetry
+```bash
+ros2 topic echo /dynamic_joint_states
+```
+
+`electrical_power` and `mechanical_power` appear here (not on `/joint_states`) once the ODrive
+is configured to broadcast `Get_Powers` messages. See the
+[power telemetry configuration](#power-telemetry-via-ros2_control-state-interfaces) section.
 
 ---
 
