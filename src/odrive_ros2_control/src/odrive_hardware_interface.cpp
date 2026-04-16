@@ -73,6 +73,8 @@ struct Axis {
     // double iq_measured_ = NAN;
     double torque_target_ = NAN; // [Nm]
     double torque_estimate_ = NAN; // [Nm]
+    double electrical_power_ = NAN; // [W]
+    double mechanical_power_ = NAN; // [W]
     // uint32_t active_errors_ = 0;
     // uint32_t disarm_reason_ = 0;
     // double fet_temperature_ = NAN;
@@ -182,6 +184,16 @@ std::vector<hardware_interface::StateInterface> ODriveHardwareInterface::export_
             info_.joints[i].name,
             hardware_interface::HW_IF_POSITION,
             &axes_[i].pos_estimate_
+        ));
+        state_interfaces.emplace_back(hardware_interface::StateInterface(
+            info_.joints[i].name,
+            "electrical_power",
+            &axes_[i].electrical_power_
+        ));
+        state_interfaces.emplace_back(hardware_interface::StateInterface(
+            info_.joints[i].name,
+            "mechanical_power",
+            &axes_[i].mechanical_power_
         ));
     }
 
@@ -356,6 +368,12 @@ void Axis::on_can_msg(const rclcpp::Time&, const can_frame& frame) {
             if (Get_Torques_msg_t msg; try_decode(msg)) {
                 torque_target_ = msg.Torque_Target;
                 torque_estimate_ = msg.Torque_Estimate;
+            }
+        } break;
+        case Get_Powers_msg_t::cmd_id: {
+            if (Get_Powers_msg_t msg; try_decode(msg)) {
+                electrical_power_ = msg.Electrical_Power;
+                mechanical_power_ = msg.Mechanical_Power;
             }
         } break;
             // silently ignore unimplemented command IDs
