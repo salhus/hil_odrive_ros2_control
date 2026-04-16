@@ -79,20 +79,27 @@ See [`VENDORED.md`](VENDORED.md) for provenance and licensing details.
    - In Phase 1 this controller is spawned but not actively commanded from ROS — the ODrive's onboard velocity controller handles passive damping on axis1
 
 5. **`odrive_velocity_pid/velocity_pid_node`**
+   - a **standalone ROS 2 node** (not a ros2_control controller plugin)
    - subscribes to `/joint_states`
-   - extracts measured velocity for `motor_joint`
-   - generates desired velocity:  
-     **v_des(t) = amplitude_rad_s · sin(omega_rad_s · t)**
-   - computes PID on velocity error
+   - extracts measured position and velocity for `motor_joint`
+   - generates a sine trajectory reference:  
+     **pos_ref(t) = position_setpoint + (A/ω)·(1 − cos(ω·t))**  
+     **vel_ref(t) = A·sin(ω·t)**  
+     **accel_ref(t) = A·ω·cos(ω·t)**
+   - runs a cascaded PID (configurable mode: `position_only`, `cascade`, or `velocity_only`)
    - publishes torque command as `std_msgs/msg/Float64MultiArray` to `/motor_effort_controller/commands`
 
 ### Data flow summary
 
 ```
-/joint_states (measured velocity) → velocity PID node → /motor_effort_controller/commands (effort) → effort controller → ODrive ros2_control hardware plugin → CAN → ODrive axis0 (motor_joint)
+/joint_states (position + velocity) → velocity_pid_node → /motor_effort_controller/commands (effort) → effort controller → ODrive ros2_control hardware plugin → CAN → ODrive axis0 (motor_joint)
 
 ODrive axis1 (pto_joint) ← passive damping τ = -B·ω configured via odrivetool
 ```
+
+Note: `velocity_pid_node` is a standalone node — it is **not** a ros2_control controller plugin.
+It reads from the joint state broadcaster's output topic and writes directly to the effort
+controller's command topic.
 
 ---
 
@@ -283,7 +290,7 @@ Confirm:
 
 ---
 
-## Run: velocity PID node (hydro emulator — sine velocity → torque)
+## Run: velocity PID node (hydro emulator — sine trajectory → torque)
 
 In a second terminal:
 
@@ -294,42 +301,71 @@ source ~/ws/install/setup.bash
 ros2 run odrive_velocity_pid velocity_pid_node
 ```
 
-The defaults are hardware-tuned — no parameters needed for basic operation. Override specific parameters with `--ros-args -p key:=value`. For example:
+The node starts in `position_only` mode with trajectory amplitude and frequency set to `0.0`
+(stationary). Override parameters with `--ros-args -p key:=value`:
 
 ```bash
 ros2 run odrive_velocity_pid velocity_pid_node --ros-args \
-  -p amplitude_rad_s:=5.0 \
-  -p torque_limit_nm:=0.3
+  -p control_mode:=cascade \
+  -p amplitude_rad_s:=0.25 \
+  -p omega_rad_s:=0.25 \
+  -p torque_limit_nm:=0.4
+```
+
+> **Architecture note:** `VelocityPidNode` is a **standalone ROS 2 node** — it is *not* a
+> ros2_control controller plugin. It subscribes to `/joint_states` for feedback and publishes
+> directly to the effort controller topic. This means it can be started, stopped, and tuned
+> independently of the controller manager.
+
+### Control modes
+
+| Mode | Description |
+|---|---|
+| `position_only` *(default)* | Outer position PID → torque directly. Good for commissioning. |
+| `cascade` | Outer position PID → velocity command → inner velocity PID → torque. Best for trajectory tracking. |
+| `velocity_only` | Single velocity PID loop. Backward-compatible flat-PID behaviour. |
+
+Switch mode at runtime:
+
+```bash
+ros2 param set /velocity_pid_node control_mode cascade
 ```
 
 ### PID node parameters (`odrive_velocity_pid`)
-| Parameter | Type | Default | Description |
-|---|---:|---:|---|
-| `joint_state_topic` | string | `/joint_states` | JointState feedback topic |
-| `command_topic` | string | `/motor_effort_controller/commands` | Effort command output topic (`std_msgs/Float64MultiArray`) |
-| `joint_name` | string | `motor_joint` | Joint name inside `/joint_states.name[]` |
-| `amplitude_rad_s` | double | `15.0` | Sine velocity amplitude (rad/s) |
-| `omega_rad_s` | double | `3.14` | Sine angular frequency (rad/s). For 1 Hz use `2*pi ≈ 6.283` |
-| `kp` | double | `0.03` | Proportional gain |
-| `ki` | double | `0.1` | Integral gain |
-| `kd` | double | `0.0` | Derivative gain |
-| `kff` | double | `0.015` | Velocity feedforward gain — scales desired velocity to produce anticipatory torque (compensates viscous friction / back-EMF) |
-| `kaff` | double | `0.003` | Acceleration feedforward gain — scales desired acceleration to produce anticipatory torque (compensates rotor inertia, `kaff ≈ J`) |
-| `torque_limit_nm` | double | `0.5` | Output torque saturation limit |
-| `integral_limit` | double | `0.3` | Integral accumulator clamp |
-| `deadband_rad_s` | double | `0.0` | Error deadband on velocity error |
-| `rate_hz` | double | `100.0` | Control-loop frequency |
-| `filter_alpha` | double | `0.7` | Exponential moving average coefficient for velocity smoothing (0.0 = no filter, closer to 1.0 = heavier smoothing) |
 
-### Practical tuning guidance
-1. **Start with low `torque_limit_nm`** (0.3-0.5 Nm) and low `omega_rad_s` (0.5-1.0) for safety
-2. **Tune `kff` first** — it provides the bulk of the required torque without noise amplification. If the motor overshoots to 2× desired speed, halve `kff`
-3. **Add `kaff` for inertia compensation** — set `kaff ≈ J` (rotor inertia in kg·m²). Start with `0.003`
-4. **Keep `kp` small** (0.01-0.05) — CAN velocity noise (±5-10 rad/s) gets amplified by `kp`, causing oscillation at higher values
-5. **Add `ki` last** — small values (0.05-0.2) remove steady-state drift. The directional anti-windup prevents integrator lockup
-6. **`filter_alpha=0.7`** is a good starting point — `0.5` lets too much CAN noise through, `0.85` adds too much phase lag
-7. **Increase `rate_hz` to 100** — 100 Hz gave noticeably tighter tracking than 50 Hz on this hardware
-8. **Motor sign convention** — on this hardware: +0.5 Nm torque → +30 rad/s velocity, so `invert_output:=false`
+#### Immutable (require node restart)
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `joint_state_topic` | string | `/joint_states` | JointState feedback topic |
+| `command_topic` | string | `/motor_effort_controller/commands` | Effort command output topic |
+| `joint_name` | string | `motor_joint` | Joint name inside `/joint_states.name[]` |
+| `rate_hz` | double | `100.0` | Control-loop frequency (Hz) |
+
+#### Runtime-reconfigurable
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `control_mode` | string | `position_only` | Active control mode: `position_only`, `cascade`, or `velocity_only` |
+| `amplitude_rad_s` | double | `0.0` | Sine trajectory amplitude (rad/s in velocity_only; rad in cascade/position_only). `0.0` = stationary. |
+| `omega_rad_s` | double | `0.0` | Sine angular frequency (rad/s). For 1 Hz use `2π ≈ 6.283`. `0.0` = stationary. |
+| `position_setpoint` | double | `0.0` | Static position setpoint (rad). Sine oscillates around this value. |
+| `kp` | double | `0.35` | Inner-loop proportional gain |
+| `ki` | double | `0.01` | Inner-loop integral gain |
+| `kd` | double | `0.0` | Inner-loop derivative gain |
+| `kff` | double | `0.40` | Velocity feedforward gain (suppressed when `kp=0`) |
+| `kaff` | double | `0.20` | Acceleration feedforward gain (suppressed when `kp=0`) |
+| `torque_limit_nm` | double | `0.40` | Output torque saturation limit (N·m) |
+| `integral_limit` | double | `0.0` | Inner-loop integral clamp. Must be positive to take effect. |
+| `deadband_rad_s` | double | `0.0` | Velocity error deadband |
+| `kp_pos` | double | `2.0` | Outer-loop proportional gain |
+| `ki_pos` | double | `0.01` | Outer-loop integral gain |
+| `kd_pos` | double | `0.025` | Outer-loop derivative gain |
+| `pos_integral_limit` | double | `1.0` | Outer-loop integral clamp (must be positive) |
+| `pos_output_limit` | double | `2.0` | Max velocity command from the outer loop (rad/s) |
+| `outer_loop_divider` | double | `1.0` | Run outer loop every N inner-loop ticks |
+| `filter_alpha` | double | `0.90` | Velocity EMA smoothing coefficient (`[0.0, 1.0)`) |
+| `invert_output` | bool | `false` | Negate torque and flip measured signs |
 
 ---
 

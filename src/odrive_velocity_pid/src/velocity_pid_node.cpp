@@ -5,18 +5,19 @@
 // Architecture overview:
 //   Three operating modes are selected by the `control_mode` parameter:
 //
-//   "velocity_only" (default, backward-compatible):
-//     Single velocity-tracking loop.  The sine trajectory produces a velocity setpoint directly.
-//     Identical to the previous flat-PID behaviour when kp_pos == 0.
+//   "position_only" (default):
+//     Outer position PID drives the torque directly.  Useful for checking position gains before
+//     enabling the full cascade.  The sine trajectory produces a position reference; the position
+//     PID output is saturated and sent directly as torque.
 //
-//   "cascade" (recommended for stability):
+//   "cascade" (recommended for full trajectory tracking):
 //     Outer loop (position PID) → velocity command → inner loop (velocity PID) → torque.
 //     The sine trajectory produces a position reference with analytical velocity/accel derivatives
 //     used as feedforwards at each level.  Proper bandwidth separation greatly improves stability.
 //
-//   "position_only" (testing / commissioning):
-//     Outer position PID drives the torque directly.  Useful for checking position gains before
-//     enabling the full cascade.
+//   "velocity_only" (backward-compatible):
+//     Single velocity-tracking loop.  The sine trajectory produces a velocity setpoint directly.
+//     Equivalent to the original flat-PID behaviour.
 //
 // PID controller:
 //   Both loops use the same generic PidController class (pid_controller.hpp) which encapsulates
