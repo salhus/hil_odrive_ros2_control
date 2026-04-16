@@ -41,6 +41,8 @@
       <state_interface name="effort"/>
       <state_interface name="velocity"/>
       <state_interface name="position"/>
+      <state_interface name="electrical_power"/>
+      <state_interface name="mechanical_power"/>
     </joint>
 
     <!-- Motor 2: PTO / Power Take-Off (ODrive axis1, node_id=1) -->
@@ -56,6 +58,8 @@
       <state_interface name="effort"/>
       <state_interface name="velocity"/>
       <state_interface name="position"/>
+      <state_interface name="electrical_power"/>
+      <state_interface name="mechanical_power"/>
     </joint>
   </ros2_control>
 
