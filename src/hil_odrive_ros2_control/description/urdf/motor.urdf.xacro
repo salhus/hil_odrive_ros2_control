@@ -12,6 +12,7 @@
   </joint>
 
   <!-- PTO motor (axis1) — same shaft as motor_joint, passive linear damper -->
+  <!-- Commented out to fix rviz2 TF tree (overlapping frame on same shaft as motor_joint)
   <link name="pto_link"/>
   <joint name="pto_joint" type="continuous">
     <parent link="motor_link"/>
@@ -19,6 +20,7 @@
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
   </joint>
+  -->
 
   <!-- ros2_control hardware — both axes on the same ODrive board / CAN bus -->
   <ros2_control name="ODriveSystem" type="system">
